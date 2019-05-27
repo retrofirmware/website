@@ -1,0 +1,470 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>STC STC15W4K56S4</h3>
+<p><b>驅動2.8吋IPS 320x240顯示屏(S6D04M0X21)</b></p>
+<hr size="1">
+<p>
+[Github] <a href="https://github.com/steward-fu/gh_stc15w4k56s4_s6d04m0x21.git">https://github.com/steward-fu/gh_stc15w4k56s4_s6d04m0x21.git</a>
+</p>
+
+<p>
+<img src="s6d04m0x21/1.jpg" class="maxSize">
+</p>
+
+<p>
+<img src="s6d04m0x21/2.jpg" class="maxSize">
+</p>
+
+<p>
+<img src="../../handheld/a330/ips_s6d04m0x21/6.jpg" class="maxSize">
+</p>
+
+<p>
+<img src="s6d04m0x21/3.jpg" class="maxSize">
+</p>
+
+<pre class="brush:cpp">
+//======================================================================
+// Copyright (c) 2016 by Steward Fu
+// All rights reserved
+// 2016/11/14
+//======================================================================
+#include "../include/stc15w4k56s4.h"
+
+#define RS   P54
+#define CS   P43
+#define RD   P42
+#define WR   P41
+#define RST  P40
+
+void delayms(unsigned int ms)
+{
+  unsigned int cnt;
+  while(ms--){
+    for(cnt=0; cnt&lt;1000; cnt++);
+  }
+}
+
+void lcd_write(unsigned char rs, unsigned int val)
+{
+  CS = 0;
+  if(rs){
+    RS = 1;
+  }
+  else{
+    RS = 0;
+  }
+  RD = 1;
+  WR = 1;
+
+  P0 = val;
+  P2 = (val >> 8);
+  WR = 0;
+  WR = 1;
+  CS = 1;
+}
+
+void lcd_write_cmd(unsigned int val)
+{
+  lcd_write(0, val);
+}
+
+void lcd_write_data(unsigned int val)
+{
+  lcd_write(1, val);
+}
+
+void lcd_set_color(void)
+{
+  unsigned int i, j, color[]={0xf800, 0x7e0, 0x1f, 0};
+
+  lcd_write_cmd(0x002a);    
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x00ef);  
+
+  lcd_write_cmd(0x002b);    
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0001);
+  lcd_write_data(0x003f);
+  lcd_write_cmd(0x002c);
+
+  for(i=0; i&lt;240; i++){
+    for (j=0; j&lt;320; j++){
+      lcd_write_data(color[i/80]);
+    }
+  }
+}
+
+void lcd_init(void)
+{
+  delayms(120);  
+  lcd_write_cmd(0x0001);
+  delayms(120);
+
+  lcd_write_cmd(0x00f0);    
+  lcd_write_data(0x005a); 
+  lcd_write_data(0x005a);
+
+  lcd_write_cmd(0x00f3);    
+  lcd_write_data(0x0000); 
+
+  lcd_write_cmd(0x00ff);    
+  lcd_write_data(0x0030); 
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000); 
+  lcd_write_data(0x0040); 
+
+  lcd_write_cmd(0x0011);
+  delayms(120);
+
+  lcd_write_cmd(0x00f3);
+  lcd_write_data(0x0001);    
+  lcd_write_data(0x0026);
+  lcd_write_data(0x0026);
+  lcd_write_data(0x0007); 
+  lcd_write_data(0x0011);//*****//
+  lcd_write_data(0x0057);
+  lcd_write_data(0x0057); 
+  lcd_write_data(0x002c); 
+
+  lcd_write_cmd(0x00f4);    
+  lcd_write_data(0x0060);//*****//
+  lcd_write_data(0x0060);//*****//
+  lcd_write_data(0x006F);//*****//
+  lcd_write_data(0x006F);//*****// 
+  lcd_write_data(0x0044);
+
+  lcd_write_cmd(0x00f5);    
+  lcd_write_data(0x0012);
+  lcd_write_data(0x0011);
+  lcd_write_data(0x0003);
+  lcd_write_data(0x00f0); 
+  lcd_write_data(0x0030);
+  lcd_write_data(0x001f);
+
+  delayms(10);
+  lcd_write_cmd(0x00f3);    
+  lcd_write_data(0x0003);
+  delayms(20);
+
+  lcd_write_cmd(0x00ff);    
+  lcd_write_data(0x0030); 
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000); 
+  lcd_write_data(0x0070);  
+  delayms(20);
+
+  lcd_write_cmd(0x00f3);    
+  lcd_write_data(0x000f);
+
+  lcd_write_cmd(0x00ff);    
+  lcd_write_data(0x0030); 
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000); 
+  lcd_write_data(0x0078);    
+  delayms(20);
+
+  lcd_write_cmd(0x00f3);    
+  lcd_write_data(0x001f);
+
+  lcd_write_cmd(0x00ff);    
+  lcd_write_data(0x0000); 
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000); 
+  lcd_write_data(0x0078);  
+
+  delayms(20);
+  lcd_write_cmd(0x00f3);    
+  lcd_write_data(0x001f); 
+  delayms(40); 
+
+          
+  lcd_write_cmd(0x00f3);    
+  lcd_write_data(0x00ff);//changed
+  lcd_write_data(0x0026);
+  lcd_write_data(0x0026);
+  lcd_write_data(0x0007);//changed 
+  lcd_write_data(0x0055);
+  lcd_write_data(0x0057);
+  lcd_write_data(0x0057); 
+  lcd_write_data(0x002c); 
+
+  delayms(50);  
+  lcd_write_cmd(0x0011);
+  delayms(100); 
+
+  //initializing sequence         
+  lcd_write_cmd(0x00f2);    
+  lcd_write_data(0x0013);
+  lcd_write_data(0x0013);
+  lcd_write_data(0x0001);
+  lcd_write_data(0x0008); 
+  lcd_write_data(0x0008);
+  lcd_write_data(0x0008); 
+  lcd_write_data(0x0008); 
+  lcd_write_data(0x0010); 
+  lcd_write_data(0x0000);//changed
+  lcd_write_data(0x0010);
+  lcd_write_data(0x0010);
+
+  lcd_write_cmd(0x00fd);    
+  lcd_write_data(0x0055); 
+
+  lcd_write_cmd(0x0035); 
+  lcd_write_data(0x0000);    
+
+  lcd_write_cmd(0x0036);    
+  lcd_write_data(0x0048); 
+
+  lcd_write_cmd(0x003a);    
+  lcd_write_data(0x0055); 
+
+  lcd_write_cmd(0x00fe);    
+  lcd_write_data(0x0016);
+  lcd_write_data(0x0016);
+  lcd_write_data(0x0028);
+  lcd_write_data(0x0000); 
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0006); 
+         
+  lcd_write_cmd(0x00f6);    
+  lcd_write_data(0x0010);
+  lcd_write_data(0x0080);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0010);   
+         
+  lcd_write_cmd(0x0051);    
+  lcd_write_data(0x00ff);   
+         
+  lcd_write_cmd(0x0053);    
+  lcd_write_data(0x0000);   
+         
+  lcd_write_cmd(0x0055);    
+  lcd_write_data(0x0000);   
+         
+  lcd_write_cmd(0x005e);    
+  lcd_write_data(0x0000);   
+         
+  lcd_write_cmd(0x00ca);    
+  lcd_write_data(0x0080);
+  lcd_write_data(0x0080);
+  lcd_write_data(0x0020);  
+
+  lcd_write_cmd(0x00cb);    
+  lcd_write_data(0x0001); 
+
+  //gamma setting          
+  lcd_write_cmd(0x00f7);    
+  lcd_write_data(0x0092);
+  lcd_write_data(0x001a);
+  lcd_write_data(0x001e);
+  lcd_write_data(0x001a); 
+  lcd_write_data(0x001d);
+  lcd_write_data(0x001d); 
+  lcd_write_data(0x001e); 
+  lcd_write_data(0x0026); 
+  lcd_write_data(0x001c);
+  lcd_write_data(0x001c);
+  lcd_write_data(0x0024);
+  lcd_write_data(0x001b); 
+  lcd_write_data(0x0009);
+  lcd_write_data(0x0011);
+  lcd_write_data(0x0018);
+
+  lcd_write_cmd(0x00f8);    
+  lcd_write_data(0x001a);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x001e);
+  lcd_write_data(0x001a); 
+  lcd_write_data(0x001d);
+  lcd_write_data(0x001a); 
+  lcd_write_data(0x001d); 
+  lcd_write_data(0x0024); 
+  lcd_write_data(0x001e);
+  lcd_write_data(0x001f);
+  lcd_write_data(0x0027);
+  lcd_write_data(0x001e); 
+  lcd_write_data(0x000a);
+  lcd_write_data(0x0011);
+  lcd_write_data(0x0011);
+
+  lcd_write_cmd(0x00f9);    
+  lcd_write_data(0x0086);
+  lcd_write_data(0x001a);
+  lcd_write_data(0x0010);
+  lcd_write_data(0x0010); 
+  lcd_write_data(0x001d);
+  lcd_write_data(0x001b); 
+  lcd_write_data(0x001f); 
+  lcd_write_data(0x0027); 
+  lcd_write_data(0x001b);
+  lcd_write_data(0x001f);
+  lcd_write_data(0x0027);
+  lcd_write_data(0x001e); 
+  lcd_write_data(0x000a);
+  lcd_write_data(0x0011);
+  lcd_write_data(0x0018);
+
+  lcd_write_cmd(0x00fa);    
+  lcd_write_data(0x001a);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x001e);
+  lcd_write_data(0x001a); 
+  lcd_write_data(0x001d);
+  lcd_write_data(0x001a); 
+  lcd_write_data(0x001d); 
+  lcd_write_data(0x0024); 
+  lcd_write_data(0x001e);
+  lcd_write_data(0x001f);
+  lcd_write_data(0x0027);
+  lcd_write_data(0x001e); 
+  lcd_write_data(0x000a);
+  lcd_write_data(0x0011);
+  lcd_write_data(0x0011);
+
+  lcd_write_cmd(0x00fb);    
+  lcd_write_data(0x0080);
+  lcd_write_data(0x001a);
+  lcd_write_data(0x001e);
+  lcd_write_data(0x001a); 
+  lcd_write_data(0x001d);
+  lcd_write_data(0x001b); 
+  lcd_write_data(0x001e); 
+  lcd_write_data(0x0026); 
+  lcd_write_data(0x0017);
+  lcd_write_data(0x001a);
+  lcd_write_data(0x001d);
+  lcd_write_data(0x0014); 
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0011);
+  lcd_write_data(0x0018);
+
+  lcd_write_cmd(0x00fc);    
+  lcd_write_data(0x001a);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x001e);
+  lcd_write_data(0x001a); 
+  lcd_write_data(0x001d);
+  lcd_write_data(0x001a); 
+  lcd_write_data(0x001d); 
+  lcd_write_data(0x0024); 
+  lcd_write_data(0x001e);
+  lcd_write_data(0x001f);
+  lcd_write_data(0x0027);
+  lcd_write_data(0x001e); 
+  lcd_write_data(0x000a);
+  lcd_write_data(0x0011);
+  lcd_write_data(0x0011);
+
+  // address set  
+  lcd_write_cmd(0x002a);    
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x00ef);  
+
+  lcd_write_cmd(0x002b);    
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0000);
+  lcd_write_data(0x0001);
+  lcd_write_data(0x003f);
+
+  // display on 
+  lcd_write_cmd(0x0029); 
+
+  // RAM write
+  lcd_write_cmd(0x002c); 
+}
+void gpio_init(void)
+{
+  P0M0 = 0x00;
+  P0M1 = 0x00;
+  P1M0 = 0x00;
+  P1M1 = 0x00;
+  P2M0 = 0x00;
+  P2M1 = 0x00;
+  P3M0 = 0x00;
+  P3M1 = 0x00;
+  P4M0 = 0x00;
+  P4M1 = 0x00;
+  P5M0 = 0x00;
+  P5M1 = 0x00;
+}
+
+void main(void)
+{
+  gpio_init();
+  AUXR|= 0x80;
+
+  RST = 0;
+  delayms(150);
+  RST = 1;
+  delayms(150);
+
+  lcd_init();
+  lcd_set_color();
+  while(1){
+    P55 = 0;
+    delayms(1000);
+    P55 = 1;
+    delayms(1000);
+  }
+}
+</pre>
+
+<p>
+<br><a href="../../mcu.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

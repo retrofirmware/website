@@ -1,0 +1,378 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>STC STC15W4K56S4</h3>
+<p><b>驅動0.96吋單色OLED 128x128顯示屏(SSD1306)</b></p>
+<hr size="1">
+<p>
+[Github] <a href="https://github.com/steward-fu/gh_ssd1351_doc.git">https://github.com/steward-fu/gh_ssd1351_doc.git</a>
+</p>
+
+<p>
+<img src="ssd1351/1.jpg" class="maxSize">
+</p>
+
+<p><img src="ssd1351/2.jpg" class="maxSize">
+</p><br>
+
+<pre class="brush:cpp">
+/*========================================================================================================
+  Basically, all of files downloaded from my website can be modified or redistributed for any purpose.
+  It is my honor to share my interesting to everybody.
+  If you find any illeage content out from my website, please contact me firstly.
+  I will remove all of the illeage parts.
+  Thanks :)
+   
+  Steward Fu
+  steward.fu@gmail.com
+  https://steward-fu.github.io/website/index.htm
+========================================================================================================*/
+#include "../include/stc15w4k56s4.h"
+
+#define DC    P54
+#define SDI    P43
+#define RST    P42
+#define SCK    P41
+#define CS    P40
+
+// SSD1351 Commands
+enum
+{
+  SSD1351_CMD_SETCOLUMNADDRESS          = 0x15,
+  SSD1351_CMD_SETROWADDRESS             = 0x75,
+  SSD1351_CMD_WRITERAM                  = 0x5C, // Write data to GRAM and increment until another command is sent
+  SSD1351_CMD_READRAM                   = 0x5D, // Read data from GRAM and increment until another command is sent
+  SSD1351_CMD_COLORDEPTH                = 0xA0, // Numerous functions include increment direction ... see DS 
+                                                // A0[0] = Address Increment Mode (0 = horizontal, 1 = vertical)
+                                                // A0[1] = Column Address Remap (0 = left to right, 1 = right to left)
+                                                // A0[2] = Color Remap (0 = ABC, 1 = CBA) - HW RGB/BGR switch
+                                                // A0[4] = COM Scan Direction (0 = top to bottom, 1 = bottom to top)
+                                                // A0[5] = Odd/Even Paid Split
+                                                // A0[7:6] = Display Color Mode (00 = 8-bit, 01 = 65K, 10/11 = 262K, 8/16-bit interface only)
+  SSD1351_CMD_SETDISPLAYSTARTLINE       = 0xA1,
+  SSD1351_CMD_SETDISPLAYOFFSET          = 0xA2, 
+  SSD1351_CMD_SETDISPLAYMODE_ALLOFF     = 0xA4, // Force entire display area to grayscale GS0
+  SSD1351_CMD_SETDISPLAYMODE_ALLON      = 0xA5, // Force entire display area to grayscale GS63
+  SSD1351_CMD_SETDISPLAYMODE_RESET      = 0xA6, // Resets the display area relative to the above two commands
+  SSD1351_CMD_SETDISPLAYMODE_INVERT     = 0xA7, // Inverts the display contents (GS0 -> GS63, GS63 -> GS0, etc.)
+  SSD1351_CMD_FUNCTIONSELECTION         = 0xAB, // Enable/Disable the internal VDD regulator
+  SSD1351_CMD_SLEEPMODE_DISPLAYOFF      = 0xAE, // Sleep mode on (display off)
+  SSD1351_CMD_SLEEPMODE_DISPLAYON       = 0xAF, // Sleep mode off (display on)
+  SSD1351_CMD_SETPHASELENGTH            = 0xB1, // Larger capacitance may require larger delay to discharge previous pixel state
+  SSD1351_CMD_ENHANCEDDRIVINGSCHEME     = 0xB2, 
+  SSD1351_CMD_SETFRONTCLOCKDIV          = 0xB3, // DCLK divide ration fro CLK (from 1 to 16)
+  SSD1351_CMD_SETSEGMENTLOWVOLTAGE      = 0xB4,
+  SSD1351_CMD_SETGPIO                   = 0xB5,
+  SSD1351_CMD_SETSECONDPRECHARGEPERIOD  = 0xB6,
+  SSD1351_CMD_GRAYSCALELOOKUP           = 0xB8,
+  SSD1351_CMD_LINEARLUT                 = 0xB9,
+  SSD1351_CMD_SETPRECHARGEVOLTAGE       = 0xBB,
+  SSD1351_CMD_SETVCOMHVOLTAGE           = 0xBE,
+  SSD1351_CMD_SETCONTRAST               = 0xC1,
+  SSD1351_CMD_MASTERCONTRAST            = 0xC7,
+  SSD1351_CMD_SETMUXRRATIO              = 0xCA,
+  SSD1351_CMD_NOP3                      = 0xD1,
+  SSD1351_CMD_NOP4                      = 0xE3,
+  SSD1351_CMD_SETCOMMANDLOCK            = 0xFD,
+  SSD1351_CMD_HORIZONTALSCROLL          = 0x96,
+  SSD1351_CMD_STOPMOVING                = 0x9E,
+  SSD1351_CMD_STARTMOVING               = 0x9F  
+};
+
+void delayms(unsigned int ms)
+{
+  unsigned int cnt;
+  while(ms--){
+    for(cnt=0; cnt<1000; cnt++);
+  }
+}
+
+void CMD(char cmd)
+{
+  int i=0;
+
+  CS = 0;
+  DC = 0;
+  for(i=0; i<8; i++){
+    SCK = 0;      
+    if((cmd & 0x80) == 0x80){
+      SDI = 1;
+    }
+    else{
+      SDI = 0;
+    }
+    cmd<<= 1;
+    SCK = 1;
+  }
+  CS = 1;
+
+}
+
+void DATA(char dat)
+{
+  int i=0;
+
+  CS = 0;
+  DC = 1;
+  for(i=0; i<8; i++){
+    SCK = 0;      
+    if((dat & 0x80) == 0x80){
+      SDI = 1;
+    }
+    else{
+      SDI = 0;
+    }
+    dat<<= 1;
+    SCK = 1;
+  }
+  CS = 1;
+
+}
+
+void cursor(unsigned char x, unsigned char y)
+{
+  CMD(SSD1351_CMD_WRITERAM);
+  CMD(SSD1351_CMD_SETCOLUMNADDRESS);
+  DATA(x);                            // Start Address
+  DATA(127);    // End Address (0x7F)
+
+  CMD(SSD1351_CMD_SETROWADDRESS);
+  DATA(y);                            // Start Address
+  DATA(127);   // End Address (0x7F)
+  CMD(SSD1351_CMD_WRITERAM);
+}
+
+void reset(void)
+{
+  RST = 0;
+  delayms(100);
+  RST = 1;
+  delayms(100);
+}
+
+void init(void)
+{
+  CMD(SSD1351_CMD_SETCOMMANDLOCK);
+  DATA(0x12);                               // Unlocked to enter commands
+  CMD(SSD1351_CMD_SETCOMMANDLOCK);
+  DATA(0xB1);                               // Make all commands accessible 
+  CMD(SSD1351_CMD_SLEEPMODE_DISPLAYOFF);
+  CMD(SSD1351_CMD_SETFRONTCLOCKDIV);
+  DATA(0xF1);//was F1
+  CMD(SSD1351_CMD_SETMUXRRATIO);
+  DATA(0x7f);//7f
+  CMD(SSD1351_CMD_COLORDEPTH);
+  DATA(0x74);                               // Bit 7:6 = 65,536 Colors, Bit 3 = BGR or RGB
+  CMD(SSD1351_CMD_SETCOLUMNADDRESS);
+  DATA(0x00);
+  DATA(0x7F);
+  CMD(SSD1351_CMD_SETROWADDRESS);
+  DATA(0x00);
+  DATA(0x7F);
+  CMD(SSD1351_CMD_SETDISPLAYSTARTLINE);
+  DATA(0x00);
+  CMD(SSD1351_CMD_SETDISPLAYOFFSET);
+  DATA(0x00);
+  CMD(SSD1351_CMD_SETGPIO);
+  DATA(0x00);                               // Disable GPIO pins
+  CMD(SSD1351_CMD_FUNCTIONSELECTION);
+  DATA(0x01);                               // External VDD (0 = External, 1 = Internal)
+  CMD(SSD1351_CMD_SETPHASELENGTH);
+  DATA(0x32);
+  CMD(SSD1351_CMD_SETSEGMENTLOWVOLTAGE);
+  DATA(0xA0);                               // Enable External VSL
+  DATA(0xB5);
+  DATA(0x55);
+  CMD(SSD1351_CMD_SETPRECHARGEVOLTAGE);
+  DATA(0x17);
+  CMD(SSD1351_CMD_SETVCOMHVOLTAGE);
+  DATA(0x05);
+  CMD(SSD1351_CMD_SETCONTRAST);
+  DATA(0xC8);
+  DATA(0x80);
+  DATA(0xC8);
+  CMD(SSD1351_CMD_MASTERCONTRAST);
+  DATA(0x0F);                               // Maximum contrast
+  CMD(SSD1351_CMD_SETSECONDPRECHARGEPERIOD);
+  DATA(0x01);
+  CMD(SSD1351_CMD_SETDISPLAYMODE_RESET);
+
+
+  // Use default grayscale for now to save flash space (1k), but here are
+  // the values if someone wants to change them ...
+  CMD(SSD1351_CMD_GRAYSCALELOOKUP);
+
+  /*  for(uint8_t i = 1;i < 64; i++)
+  {
+  SET_CS; CLR_CS; SET_DC; ssd1351SendByte( i+12, 0 );SET_CS;
+  }
+  */
+  DATA(0x05);
+  DATA(0x06);
+  DATA(0x07);
+  DATA(0x08);
+  DATA(0x09);
+  DATA(0x0a);
+  DATA(0x0b);
+  DATA(0x0c);
+  DATA(0x0D);
+  DATA(0x0E);
+  DATA(0x0F);
+  DATA(0x10);
+  DATA(0x11);
+  DATA(0x12);
+  DATA(0x13);
+  DATA(0x14);
+  DATA(0x15);
+  DATA(0x16);
+  DATA(0x18);
+  DATA(0x1a);
+  DATA(0x1b);
+  DATA(0x1C);
+  DATA(0x1D);
+  DATA(0x1F);
+  DATA(0x21);
+  DATA(0x23);
+  DATA(0x25);
+  DATA(0x27);
+  DATA(0x2A);
+  DATA(0x2D);
+  DATA(0x30);
+  DATA(0x33);
+  DATA(0x36);
+  DATA(0x39);
+  DATA(0x3C);
+  DATA(0x3F);
+  DATA(0x42);
+  DATA(0x45);
+  DATA(0x48);
+  DATA(0x4C);
+  DATA(0x50);
+  DATA(0x54);
+  DATA(0x58);
+  DATA(0x5C);
+  DATA(0x60);
+  DATA(0x64);
+  DATA(0x68);
+  DATA(0x6C);
+  DATA(0x70);
+  DATA(0x74);
+  DATA(0x78);
+  DATA(0x7D);
+  DATA(0x82);
+  DATA(0x87);
+  DATA(0x8C);
+  DATA(0x91);
+  DATA(0x96);
+  DATA(0x9B);
+  DATA(0xA0);
+  DATA(0xA5);
+  DATA(0xAA);
+  DATA(0xAF);
+  DATA(0xB4);
+  CMD(SSD1351_CMD_SLEEPMODE_DISPLAYON);
+} 
+
+void color(void)
+{
+  int i, j;
+  unsigned char r=0x00;
+  unsigned char g=0x00;
+  unsigned char b=0xff;
+  unsigned char data1 = (r & 0xF8) | (g >> 5);
+  unsigned char data2 = (b >> 3) | ((g >> 2) << 5);
+  cursor(0, 0);
+  for(i=0; i<128; i++){
+      for(j=0; j<128; j++){
+        DATA(data1);
+        DATA(data2);
+      }
+  }
+}
+
+void gpio_init(void)
+{
+  P0M0 = 0x00;
+  P0M1 = 0x00;
+  P1M0 = 0x00;
+  P1M1 = 0x00;
+  P2M0 = 0x00;
+  P2M1 = 0x00;
+  P3M0 = 0x00;
+  P3M1 = 0x00;
+  P4M0 = 0x00;
+  P4M1 = 0x00;
+  P5M0 = 0x00;
+  P5M1 = 0x00;
+}
+
+void main(void)
+{
+  gpio_init();
+  AUXR|= 0x80;
+
+  reset();
+  init();
+  color();
+  while(1){
+    P55 = 0;
+    delayms(1000);
+    P55 = 1;
+    delayms(1000);
+  }
+}
+
+</pre>
+
+<p>
+<br><a href="../../mcu.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

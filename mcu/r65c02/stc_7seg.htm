@@ -1,0 +1,166 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>R65C02 &gt;&gt; STC15F204EA</h3>
+<p><b>七段顯示器測試</b></p>
+<hr size="1">
+<p>
+完成硬體電路後，接著就需要驗證每個元件的功能是否正常，才可以確保硬體電路正常執行，為此，目前先測試七段顯示器是否可以正常運作，如下程式碼會在七段顯示器上，顯示0~9數值。<br><br>
+
+main.s
+</p>
+<pre class="brush:cpp">
+  org 0000h
+  jmp start
+
+  org 0100h
+start:
+  mov r0, #0
+loop:
+  mov a, r0
+  call show_7seg
+  call delay_1s
+  inc r0
+  cjne r0, #10, loop
+  jmp start
+
+delay_20m: 
+  mov r6, #250
+  mov r7, #250
+d1: 
+  djnz r6, d1
+  djnz r7, d1
+  ret
+
+delay_1s: 
+  mov r5, #50
+d2: 
+  call delay_20m
+  djnz r5, d2
+  ret
+
+; p2.0 -> b
+; p2.1 -> e
+; p2.2 -> d
+; p2.3 -> c
+; p3.5 -> g
+; p3.6 -> f
+; p3.7 -> a
+show_7seg:
+  mov dptr, #table
+  push acc
+  clr c
+  rlc a
+  movc a, @a+dptr
+  mov p2, a
+  pop acc
+  clr c
+  rlc a
+  inc a
+  movc a, @a+dptr
+  mov p3, a
+  ret
+
+table:
+  dw 0f02fh ; 0
+  dw 0f6ffh ; 1
+  dw 0f85fh ; 2
+  dw 0f25fh ; 3
+  dw 0f69fh ; 4
+  dw 0f31fh ; 5
+  dw 0f11fh ; 6
+  dw 0f66fh ; 7
+  dw 0f01fh ; 8
+  dw 0f61fh ; 9
+  end
+</pre>
+<p>
+<b>Line 6</b> 查表數值。<br>
+<b>Line 7~12</b> 顯示七段顯示器的數值，每1秒為間隔。<br>
+<b>Line 15~21</b> Delay 20ms。<br>
+<b>Line 23~28</b> Delay 1s。<br>
+<b>Line 37~51</b> 由P2以及P3輸出數值。<br>
+<b>Line 51~62</b> 查表。<br><br>
+
+
+Makefile
+</p>
+<pre class="brush:cpp">
+all:
+  mcu8051ide --compile main.s
+  asem main.s
+
+clean:
+  rm -rf *.lst* *.adf *.hex* *.bin*
+</pre><br>
+
+<p>
+main.hex
+</p>
+<pre class="brush:cpp">
+:03000000020110EA
+:100100007EFA7FFADEFEDFFC227D323100DDFC224A
+:100110007800E812011E310908B80AF680F2900151
+:1001200031C0E0C33393F5A0D0E0C3330493F5B0FE
+:1001300022F02FF6FFF85FF25FF69FF31FF11FF634
+:050140006FF01FF61F27
+:00000001FF
+</pre><br>
+
+<p>
+完成<br>
+<img src="stc_7seg/1.jpg" clas="maxSize">
+</p>
+
+<p>
+<br><a href="../../mcu.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

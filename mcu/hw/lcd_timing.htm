@@ -1,0 +1,82 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>Hardware</h3>
+<p><b>LCD Timing(VBPD、VFBD、VSPW、HBPD、HFPD、HSPW)</b></p>
+<hr size="1">
+<p>
+Ref. <a href="http://www.programering.com/a/MTM5IzMwATI.html">http://www.programering.com/a/MTM5IzMwATI.html</a><br><br>
+
+<img src="lcd_timing/1.jpg" class="maxSize"><br><br>
+
+VBPD(vertical back porch)<br>
+Said at the start of an image, invalid row vertical synchronization signal after the number, the corresponding drive in upper_margin<br><br>
+
+VFBD(vertical front porch)<br>
+Said in a frame image after the end, invalid row vertical synchronization signal before the number, the corresponding drive in lower_margin<br><br>
+
+VSPW(vertical sync pulse width)<br>
+Said vertical sync pulse width, calculated by the number of lines, the corresponding drive in vsync_len<br><br>
+
+HBPD(horizontal back porch)<br>
+Said a number from a horizontal synchronization signal to the data line between the start of VCLK, the corresponding drive in left_margin<br><br>
+
+HFPD(horizontal front porth)<br>
+The number of valid data indicates the end of a line to a horizontal synchronization signal between the start of VCLK, the corresponding drive in right_margin<br><br>
+
+HSPW(horizontal sync pulse width)<br>
+Horizontal sync pulse width, calculated using VCLK, the corresponding drive in hsync_len<br>
+</p>
+
+<p>
+<br><a href="../../mcu.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,399 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../../header.js"></script>
+<div id="page">
+<h3>Dingoo A320 &rArr; OpenDingux</h3>
+<p><b>移植S6D04M0X21驅動程式</b></p>
+<hr size="1">
+<p>
+修改的部份跟ILI9340差不多，僅是差別在初始化程式碼部份，如下說明：
+</p>
+
+<pre>
+diff qi-kernel/drivers/video/jz4740_slcd_panels_orig.c qi-kernel/drivers/video/jz4740_slcd_panels.c
+</pre>
+<pre class="brush:cpp">
+676,969d675
+< 
+< #ifdef CONFIG_JZ_SLCD_S6D04M0X21
+< 
+< #define S6D04M0X21_GPIO_CS_N   JZ_GPIO_PORTB(17)  /* Chip select */
+< #define S6D04M0X21_GPIO_RESET_N   JZ_GPIO_PORTB(18)  /* LCD reset */
+< 
+< static void s6d04m0x21_enable(struct jzfb *jzfb)
+< {
+<   /* RESET pulse */
+<   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 0);
+<   mdelay(100);
+<   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 1);
+<   mdelay(150);
+< 
+<   /* Enable chip select */
+<   gpio_set_value(S6D04M0X21_GPIO_CS_N, 0);
+< 
+<   /* Black magic */
+<   mdelay(160);
+<   send_panel_command(jzfb,0x0001); 
+<   mdelay(120); 
+<   send_panel_command(jzfb,0x00f0); 
+<   send_panel_data(jzfb,0x005a); 
+<   send_panel_data(jzfb,0x005a); 
+<   send_panel_command(jzfb,0x00f3); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_command(jzfb,0x00ff); 
+<   send_panel_data(jzfb,0x0030); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0040); 
+<   send_panel_command(jzfb,0x0011); 
+<   mdelay(120); 
+<   send_panel_command(jzfb,0x00f3); 
+<   send_panel_data(jzfb,0x0001); 
+<   send_panel_data(jzfb,0x0026); 
+<   send_panel_data(jzfb,0x0026); 
+<   send_panel_data(jzfb,0x0007); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_data(jzfb,0x0057); 
+<   send_panel_data(jzfb,0x0057); 
+<   send_panel_data(jzfb,0x002c); 
+<   send_panel_command(jzfb,0x00f4); 
+<   send_panel_data(jzfb,0x0060); 
+<   send_panel_data(jzfb,0x0060); 
+<   send_panel_data(jzfb,0x006F); 
+<   send_panel_data(jzfb,0x006F); 
+<   send_panel_data(jzfb,0x0044); 
+<   send_panel_command(jzfb,0x00f5); 
+<   send_panel_data(jzfb,0x0012); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_data(jzfb,0x0003); 
+<   send_panel_data(jzfb,0x00f0); 
+<   send_panel_data(jzfb,0x0030); 
+<   send_panel_data(jzfb,0x001f); 
+<   mdelay(10); 
+<   send_panel_command(jzfb,0x00f3); 
+<   send_panel_data(jzfb,0x0003); 
+<   mdelay(20); 
+<   send_panel_command(jzfb,0x00ff); 
+<   send_panel_data(jzfb,0x0030); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0070); 
+<   mdelay(20); 
+<   send_panel_command(jzfb,0x00f3); 
+<   send_panel_data(jzfb,0x000f); 
+<   send_panel_command(jzfb,0x00ff); 
+<   send_panel_data(jzfb,0x0030); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0078); 
+<   mdelay(20); 
+<   send_panel_command(jzfb,0x00f3); 
+<   send_panel_data(jzfb,0x001f); 
+<   send_panel_command(jzfb,0x00ff); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0078); 
+<   mdelay(20); 
+<   send_panel_command(jzfb,0x00f3); 
+<   send_panel_data(jzfb,0x001f); 
+<   mdelay(40); 
+<   send_panel_command(jzfb,0x00f3); 
+<   send_panel_data(jzfb,0x00ff); 
+<   send_panel_data(jzfb,0x0026); 
+<   send_panel_data(jzfb,0x0026); 
+<   send_panel_data(jzfb,0x0007); 
+<   send_panel_data(jzfb,0x0055); 
+<   send_panel_data(jzfb,0x0057); 
+<   send_panel_data(jzfb,0x0057); 
+<   send_panel_data(jzfb,0x002c); 
+<   mdelay(50); 
+<   send_panel_command(jzfb,0x0011); 
+<   mdelay(100); 
+<   send_panel_command(jzfb,0x00f2); 
+<   send_panel_data(jzfb,0x0013); 
+<   send_panel_data(jzfb,0x0013); 
+<   send_panel_data(jzfb,0x0001); 
+<   send_panel_data(jzfb,0x0008); 
+<   send_panel_data(jzfb,0x0008); 
+<   send_panel_data(jzfb,0x0008); 
+<   send_panel_data(jzfb,0x0008); 
+<   send_panel_data(jzfb,0x0010); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0010); 
+<   send_panel_data(jzfb,0x0010); 
+<   send_panel_command(jzfb,0x00fd); 
+<   send_panel_data(jzfb,0x0055); 
+<   send_panel_command(jzfb,0x0035); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_command(jzfb,0x0036); 
+<   send_panel_data(jzfb,0x00e8); 
+<   send_panel_command(jzfb,0x003a); 
+<   send_panel_data(jzfb,0x0055); 
+<   send_panel_command(jzfb,0x00fe); 
+<   send_panel_data(jzfb,0x0016); 
+<   send_panel_data(jzfb,0x0016); 
+<   send_panel_data(jzfb,0x0028); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0006); 
+<   send_panel_command(jzfb,0x00f6); 
+<   send_panel_data(jzfb,0x0010); 
+<   send_panel_data(jzfb,0x0080); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0010); 
+<   send_panel_command(jzfb,0x0051); 
+<   send_panel_data(jzfb,0x00ff); 
+<   send_panel_command(jzfb,0x0053); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_command(jzfb,0x0055); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_command(jzfb,0x005e); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_command(jzfb,0x00ca); 
+<   send_panel_data(jzfb,0x0080); 
+<   send_panel_data(jzfb,0x0080); 
+<   send_panel_data(jzfb,0x0020); 
+<   send_panel_command(jzfb,0x00cb); 
+<   send_panel_data(jzfb,0x0001); 
+<   send_panel_command(jzfb,0x00f7); 
+<   send_panel_data(jzfb,0x0092); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x0026); 
+<   send_panel_data(jzfb,0x001c); 
+<   send_panel_data(jzfb,0x001c); 
+<   send_panel_data(jzfb,0x0024); 
+<   send_panel_data(jzfb,0x001b); 
+<   send_panel_data(jzfb,0x0009); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_data(jzfb,0x0018); 
+<   send_panel_command(jzfb,0x00f8); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x0024); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x001f); 
+<   send_panel_data(jzfb,0x0027); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x000a); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_command(jzfb,0x00f9); 
+<   send_panel_data(jzfb,0x0086); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x0010); 
+<   send_panel_data(jzfb,0x0010); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x001b); 
+<   send_panel_data(jzfb,0x001f); 
+<   send_panel_data(jzfb,0x0027); 
+<   send_panel_data(jzfb,0x001b); 
+<   send_panel_data(jzfb,0x001f); 
+<   send_panel_data(jzfb,0x0027); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x000a); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_data(jzfb,0x0018); 
+<   send_panel_command(jzfb,0x00fa); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x0024); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x001f); 
+<   send_panel_data(jzfb,0x0027); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x000a); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_command(jzfb,0x00fb); 
+<   send_panel_data(jzfb,0x0080); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x001b); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x0026); 
+<   send_panel_data(jzfb,0x0017); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x0014); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_data(jzfb,0x0018); 
+<   send_panel_command(jzfb,0x00fc); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x001a); 
+<   send_panel_data(jzfb,0x001d); 
+<   send_panel_data(jzfb,0x0024); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x001f); 
+<   send_panel_data(jzfb,0x0027); 
+<   send_panel_data(jzfb,0x001e); 
+<   send_panel_data(jzfb,0x000a); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_data(jzfb,0x0011); 
+<   send_panel_command(jzfb,0x002a); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0001); 
+<   send_panel_data(jzfb,0x003f); 
+<   send_panel_command(jzfb,0x002b); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x0000); 
+<   send_panel_data(jzfb,0x00ef); 
+<   send_panel_command(jzfb,0x0029); 
+<   send_panel_command(jzfb,0x002c); 
+< }
+< 
+< /* TODO(IGP): make sure LCD power consumption is low in these conditions */
+< static void s6d04m0x21_disable(struct jzfb *jzfb)
+< {
+<   /* Keep chip select disabled */
+<   gpio_set_value(S6D04M0X21_GPIO_CS_N, 1);
+<   /* Keep RESET active */
+<   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 0);
+< }
+< 
+< static int s6d04m0x21_init(struct jzfb *jzfb)
+< {
+<   struct device *dev = &jzfb->pdev->dev;
+<   int ret;
+< 
+<   ret = gpio_request(S6D04M0X21_GPIO_CS_N, dev_name(dev));
+<   if (ret)
+<     goto err_cs;
+<   gpio_direction_output(S6D04M0X21_GPIO_CS_N, 1);
+< 
+<   ret = gpio_request(S6D04M0X21_GPIO_RESET_N, dev_name(dev));
+<   if (ret)
+<     goto err_reset;
+<   gpio_direction_output(S6D04M0X21_GPIO_RESET_N, 0);
+<   
+<   mdelay(100);
+<   return 0;
+< 
+< err_reset:
+<   gpio_free(S6D04M0X21_GPIO_CS_N);
+< err_cs:
+<   dev_err(dev, "Could not reserve GPIO pins for S6D04M0X21 panel driver\n");
+<   return ret;
+< }
+< 
+< static void s6d04m0x21_exit(struct jzfb *jzfb)
+< {
+<   gpio_free(S6D04M0X21_GPIO_CS_N);
+<   gpio_free(S6D04M0X21_GPIO_RESET_N);
+< }
+< 
+< #endif
+< 
+997,1003d702
+<   },
+< #endif
+< #ifdef CONFIG_JZ_SLCD_S6D04M0X21
+<   {
+<     s6d04m0x21_init, s6d04m0x21_exit,
+<     s6d04m0x21_enable, s6d04m0x21_disable,
+<     "s6d04m0x21",
+</pre><br>
+
+<pre>
+diff qi-kernel/drivers/video/Kconfig_orig.c qi-kernel/drivers/video/Kconfig.c
+</pre>
+<pre class="brush:cpp">
+2417a2418,2421
+> config JZ_SLCD_S6D04M0X21
+>   bool "S6D04M0X21 Smart LCD panel"
+>   depends on FB_JZ4740_SLCD
+</pre><br>
+
+<pre>
+$ make menuconfig
+</pre>
+
+<p>
+Device Drivers &rArr; Graphics support &rArr; Support for frame buffer devices<br>
+<img src="port_s6d04m0x21/1.jpg" class="maxSize">
+</p>
+
+<pre>
+$ make
+</pre><br>
+
+<p>
+完成<br>
+<img src="port_s6d04m0x21/2.jpg" class="maxSize"></p>
+</p>
+
+<p>
+<br><a href="../../../handheld.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

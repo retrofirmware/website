@@ -1,0 +1,579 @@
+<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="website.ico">
+  <link rel="stylesheet" type="text/css" href="styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="styles/shThemeEmacs.css" />
+  <link rel="stylesheet" type="text/css" href="css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+  
+  <script type="text/javascript" src="scripts/shCore.js"></script>
+  <script type="text/javascript" src="scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="header.js"></script>
+<ul id="menu" class="four">
+  <li><a href="handheld.htm">
+  <span class="big">掌</span>機</a></li>
+  <li><a href="phone.htm">
+  <span class="big">手</span>機</a></li>
+  <li><a href="system.htm">
+  <span class="big">系</span>統</a></li>
+  <li><a href="compiler.htm">
+  <span class="big">編</span>譯器</a></li>
+  <li><a href="emu.htm">
+  <span class="big">模</span>擬器</a></li>
+  <li><a href="umpc.htm">
+  <span class="big">微</span>電腦</a></li>
+  <li><a href="mcu.htm" class="here">
+  <span class="big">微</span>處理器</a></li>
+  <li><a href="program.htm">
+  <span class="big">程</span>式設計</a></li>
+  <li><a href="driver.htm">
+  <span class="big">驅</span>動程式</a></li>
+  <li><a href="picture.htm">
+  <span class="big">繪</span>圖相關</a></li>
+  <li><a href="reverse.htm">
+  <span class="big">逆</span>向工程</a></li>
+  <li><a href="index.htm">
+  <span class="big">關</span>於網站</a></li>
+</ul>
+
+<div id="page">
+<br><br>
+<p>
+<h3><img src="img/photos/r65c02.jpg" class="floatLeft"/>R65C02</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/r65c02/tiny_pcb.htm">開發板</a><br>
+&lowast;
+<a href="mcu/r65c02/opcode.htm">Opcode</a><br>
+&oplus; STC15F204EA<br>
+&emsp;&emsp;
+<a href="mcu/r65c02/stc_setup.htm">開發環境</a><br>
+&emsp;&emsp;
+<a href="mcu/r65c02/stc_7seg.htm">七段顯示器測試</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/lh0080a.jpg" class="floatLeft"/>LH0080A</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/lh0080a/tiny_pcb.htm">開發板</a><br>
+&oplus; STC15F204EA<br>
+&emsp;&emsp;
+<a href="mcu/r65c02/stc_setup.htm">開發環境</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/at89s51.jpg" class="floatLeft"/>AT89S51</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/at89s51/pcb.htm">開發板</a><br>
+&lowast;
+<a href="mcu/at89s51/setup.htm">開發環境</a><br>
+&lowast;
+<a href="mcu/at89s51/led.htm">LED測試程式</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/mcu8051ide.jpg" class="floatLeft"/>MCU 8051 IDE</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/mcu8051ide/setup.htm">開發環境</a><br>
+&oplus; Assembly<br>
+&emsp;&emsp;&lowast;
+<a href="mcu/mcu8051ide/asm/inst.htm">指令集</a><br>
+&emsp;&emsp;&oplus; GPIO<br>
+&emsp;&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/mcu8051ide/asm/gpio_output.htm">Output</a><br>
+&emsp;&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/mcu8051ide/asm/gpio_input.htm">Input</a><br>
+&emsp;&emsp;&oplus; Timer0<br>
+&emsp;&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/mcu8051ide/asm/timer0_timer_mode0_poll.htm">Mode0(Polling)</a><br>
+&emsp;&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/mcu8051ide/asm/timer0_timer_mode1_poll.htm">Mode1(Polling)</a><br>
+&lowast;
+<a href="mcu/mcu8051ide/fix_dptr.htm">解決"Invalid set of operands: movc 224,@a + dptr"問題</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/bbp.jpg" class="floatLeft"/>PocketBeagle</h3>
+<hr size="1"><br><br><br><br><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/nuc972.jpg" class="floatLeft"/>NUC972</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/nuc972/flash_spi.htm">Flash SPI</a><br>
+&lowast;
+<a href="mcu/nuc972/flash_nand.htm">Flash NAND</a><br>
+&lowast;
+<a href="mcu/nuc972/build_uboot.htm">Build UBoot</a><br>
+&lowast;
+<a href="mcu/nuc972/build_kernel.htm">Build Kernel</a><br>
+&lowast;
+<a href="mcu/nuc972/build_nuwriter.htm">Build NuWriter</a><br>
+&lowast;
+<a href="mcu/nuc972/boot_from_sdcard.htm">Boot from SDCard</a><br>
+&lowast;
+<a href="mcu/nuc972/framebuffer_console.htm">Framebuffer Console</a><br>
+&lowast;
+<a href="mcu/nuc972/ips_s6d04m0x21.htm">更換螢幕(2.8吋 IPS S6D04M0X21)</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/attiny85.jpg" class="floatLeft"/>ATtiny85</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/attiny85/setup.htm">開發環境</a><br>
+&lowast;
+<a href="mcu/attiny85/sch.htm">開發板電路圖</a><br>
+&lowast; C/C++<br>
+&emsp;&emsp;&oplus; Basic<br>
+&emsp;&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/attiny85/cpp/basic/gpio_output.htm">GPIO Output</a><br>
+&emsp;&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/attiny85/cpp/basic/gpio_input.htm">GPIO Input</a><br>
+&lowast; Assembly<br>
+&emsp;&emsp;&oplus; Basic<br>
+&emsp;&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/attiny85/asm/basic/instruction.htm">Instruction Set</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/lichee-nano.jpg" class="floatLeft"/>Lichee Pi Nano</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/lichee-nano/flash_image.htm">Flash Image(SDCard)</a><br>
+&lowast;
+<a href="mcu/lichee-nano/build_uboot.htm">Build UBoot</a><br>
+&lowast;
+<a href="mcu/lichee-nano/build_sunxi-tools.htm">Build sunxi-tools</a><br>
+&lowast;
+<a href="mcu/lichee-nano/build_kernel-4.14.0.htm">Build Kernel 4.14.0</a><br>
+&lowast;
+<a href="mcu/lichee-nano/led_gpio.htm">簡單的LED驅動程式(GPIO)</a><br>
+&lowast;
+<a href="mcu/lichee-nano/uboot_uart1.htm">如何將UBoot的輸出訊息轉到UART1</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/lichee-zero.jpg" class="floatLeft"/>Lichee Pi Zero</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/lichee-zero/sd_mtd.htm">SDCard分區</a><br>
+&lowast;
+<a href="mcu/lichee-zero/spi_mtd.htm">SPI Flash分區</a><br>
+&lowast;
+<a href="mcu/lichee-zero/flash_image_spi.htm">Flash Image(SPI)</a><br>
+&lowast;
+<a href="mcu/lichee-zero/flash_image_sd.htm">Flash Image(SDCard)</a><br>
+&lowast;
+<a href="mcu/lichee-zero/build_uboot.htm">Build UBoot</a><br>
+&lowast;
+<a href="mcu/lichee-zero/build_sunxi-tools.htm">Build sunxi-tools</a><br>
+&lowast;
+<a href="mcu/lichee-zero/build_kernel-4.10.15.htm">Build Kernel 4.10.15</a><br>
+&lowast;
+<a href="mcu/lichee-zero/led_gpio.htm">簡單的LED驅動程式(GPIO)</a><br>
+&lowast;
+<a href="mcu/lichee-zero/uboot_uart1.htm">如何將UBoot的輸出訊息轉到UART1</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/cm3354.jpg" class="floatLeft"/>CM3354</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/cm3354/development.htm">開發板</a><br>
+&lowast;
+<a href="mcu/cm3354/format_sd.htm">製作SDCard開機片</a><br>
+&lowast;
+<a href="mcu/cm3354/flash_nand_from_sdcard_via_uboot.htm">從SDCard燒錄到Nand(經由UBoot)</a><br>
+&lowast;
+<a href="mcu/cm3354/build_uboot.htm">Build UBoot</a><br>
+&lowast;
+<a href="mcu/cm3354/build_kernel-4.1.18.htm">Build Kernel 4.1.18</a><br>
+&lowast;
+<a href="mcu/cm3354/st7789v_raster.htm">驅動2.4吋IPS 320x240顯示屏(ST7789V)(Raster)</a><br>
+&lowast;
+<a href="mcu/cm3354/fix_buildroot_login.htm">解決buildroot無法登入的問題</a><br>
+&lowast;
+<a href="mcu/cm3354/fix_lcd_invert_clock.htm">解決顯示在LCD上面的圖形會緩慢移動的問題</a><br>
+&lowast;
+<a href="mcu/cm3354/fix_lcd_sync.htm">解決"Frame Synchronization Lost Enabled Interrupt"問題</a><br>
+&lowast;
+<a href="mcu/cm3354/fix_vfs.htm">解決"VFS: Cannot open root device "mmcblk0p2" or unknown-block"</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/bbgw.jpg" class="floatLeft"/>BeagleBone Green Wireless</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/bbgw/pinout.htm">Pinout</a><br>
+&lowast;
+<a href="mcu/bbgw/pinmux.htm">PinMux表</a><br>
+&lowast;
+<a href="mcu/bbgw/build_all.htm">Build All</a><br>
+&lowast;
+<a href="mcu/bbgw/build_gdb.htm">Build GDB</a><br>
+&lowast;
+<a href="mcu/bbgw/build_pcsx_rearmed.htm">Build PCSX ReARMed</a><br>
+&lowast;
+<a href="mcu/bbgw/flash_image.htm">Flash Image</a><br>
+&lowast;
+<a href="mcu/bbgw/build_buildroot.htm">製作出最精簡的系統</a><br>
+&lowast;
+<a href="mcu/bbgw/led_gpio.htm">簡單的LED驅動程式(GPIO)</a><br>
+&lowast;
+<a href="mcu/bbgw/led_reg.htm">簡單的LED驅動程式(Register)</a><br>
+&lowast;
+<a href="mcu/bbgw/keyboard_polling.htm">簡單的Keyboard驅動程式(Polling)</a><br>
+&lowast;
+<a href="mcu/bbgw/ili9335_gpio.htm">驅動2.0吋IPS 320x240顯示屏(ILI9335)(GPIO)</a><br>
+&lowast;
+<a href="mcu/bbgw/ili9335_reg.htm">驅動2.0吋IPS 320x240顯示屏(ILI9335)(Register)</a><br>
+&lowast;
+<a href="mcu/bbgw/port_fceu-0.98.13.htm">移植FCEU 0.98.13</a><br>
+&lowast;
+<a href="mcu/bbgw/pcm5102a.htm">移植PCM5102A音效驅動程式</a><br>
+&lowast;
+<a href="mcu/bbgw/framebuffer_dma.htm">移植Framebuffer顯示驅動程式(DMA)</a><br>
+&lowast;
+<a href="mcu/bbgw/framebuffer_polling.htm">移植Framebuffer顯示驅動程式(Polling)</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_pingpong_flick.htm">為何LCD Ping-Pongs Buffer顯示會閃爍</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_lidd_dma.htm">解決LIDD DMA在中斷後無法啟動的問題</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_clk_get.htm">解決"ERROR: "__clk_get_name" ... undefined!"</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_sdl_pollevent.htm">解決SDL_PollEvent()無法取得Keyboard Event的問題</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_0x1028.htm">解決"Unhandled fault: ... non-linefetch (0x1028)"</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_pcsx_rearmed_generic.htm">解決PCSX ReARMed(--platform=generic)無法執行遊戲的問題</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_clk_min.htm">解決"ERROR: "clk_register_min_divider" ... undefined!"</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_gzfile.htm">解決"gzgetc error: request for member 'next' ... union"</a><br>
+&lowast;
+<a href="mcu/bbgw/fix_syswminfo.htm">解決"error: SDL_SysWMinfo ... has no member named info"</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/smart_mt7688.jpg" class="floatLeft"/>LinkIt Smart MT7688</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/smart_mt7688/fix_reboot.htm">為何系統一直重啟</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/led.htm">簡單的LED驅動程式</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/input_isr.htm">簡單的GPIO Input驅動程式(ISR)</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/keyboard_polling.htm">簡單的Keyboard驅動程式(Polling)</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/ili9335_gpio.htm">驅動2.0吋IPS 320x240顯示屏(ILI9335)(GPIO)</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/ili9335_reg.htm">驅動2.0吋IPS 320x240顯示屏(ILI9335)(Register)</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/uc1698u_reg.htm">驅動3.0吋LCM 160x160顯示屏(UC1698U)(Register)</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/sdl-1.2.15.htm">移植SDL 1.2.15</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/framebuffer.htm">移植Framebuffer顯示驅動程式</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/build_uboot.htm">Build UBoot</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/gnuboy.htm">Build gnuboy</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/fceu320.htm">Build fceu320</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/build_openwrt.htm">Build OpenWRT</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/zlib-1.2.8.htm">Build zlib 1.2.8</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/build_kernel-3.18.44.htm">Build Kernel 3.18.44</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/sysupgrade_format.htm">如何產生LinkIt7688-squashfs-sysupgrade.bin</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/fix_mt_wifi.ko_3.18.45.htm">Fix "mt_wifi.ko_3.18.45 No such file or directory"</a><br>
+&lowast;
+<a href="mcu/smart_mt7688/fix_libmraa.htm">Fix "node_modules/mraa/* No such file or directory"</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/pi3.jpg" class="floatLeft"/>Raspberry Pi3</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/pi3/n900_build_kernel.htm">Build Kernel(On N900)</a><br>
+&lowast;
+<a href="mcu/pi3/x64_build_kernel.htm">Build Kernel(On x64 Debian)</a><br>
+&lowast;
+<a href="mcu/pi3/ips_ili9335.htm">驅動2.0吋IPS 320x240顯示屏(ILI9335)</a><br>
+
+&oplus; Debian<br>
+&emsp;&emsp;&lowast;
+<a href="mcu/pi3/debian/wheezy_3.5inch_keyboard.htm">3.5吋320x480電阻觸控、無線鍵盤</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/newton.jpg" class="floatLeft"/>Newton</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/newton/pcb.htm">開發板</a><br>
+&lowast;
+<a href="mcu/newton/uart.htm">UART輸出</a><br>
+&lowast;
+<a href="mcu/newton/flash_image.htm">Flash Image</a><br>
+&lowast;
+<a href="mcu/newton/build_uboot.htm">Build UBoot</a><br>
+&lowast;
+<a href="mcu/newton/build_kernel.htm">Build Kernel</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/a33_vstar.jpg" class="floatLeft"/>A33 Vstar</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/a33_vstar/build_all.htm">Build All</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/ubw32.jpg" class="floatLeft"/>UBW32 PIC32MX795F512L</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/ubw32/setup_xc32.htm">安裝XC32</a><br>
+&lowast;
+<a href="mcu/ubw32/setup_mplabx.htm">安裝MPLAB X</a><br>
+&lowast;
+<a href="mcu/ubw32/led.htm">LED測試程式</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/tms320dm3730.jpg" class="floatLeft"/>TMS320DM3730</h3>
+<hr size="1"><br><br><br><br><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/nanopi-neo4.jpg" class="floatLeft"/>NanoPi NEO4</h3>
+<hr size="1"><br><br><br><br><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/nanopi-neo.jpg" class="floatLeft"/>NanoPi NEO</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/nanopi-neo/build_all.htm">Build All</a><br>
+&lowast;
+<a href="mcu/nanopi-neo/build_sunxi-tools.htm">Build sunxi-tools</a><br>
+&lowast;
+<a href="mcu/nanopi-neo/patch_gen_check_code.htm">解決無法在x86編譯的問題</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/nanopi-m1.jpg" class="floatLeft"/>NanoPi M1</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/nanopi-m1/flash_image.htm">Flash Image(SDCard)</a><br>
+&lowast;
+<a href="mcu/nanopi-neo/build_all.htm">Build All</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/nanopi-m3.jpg" class="floatLeft"/>NanoPi M3</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/nanopi-m3/flash_image.htm">Flash Image(SDCard)</a><br>
+&lowast;
+<a href="mcu/nanopi-m3/build_uboot.htm">Build UBoot</a><br>
+&lowast;
+<a href="mcu/nanopi-m3/build_kernel.htm">Build Kernel</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/d2000.jpg" class="floatLeft"/>Intel Quark D2000</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/d2000/setup_linux.htm">安裝Linux開發環境</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/stm8s103.jpg" class="floatLeft"/>STM8S103</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/stm8s103/setup.htm">安裝開發環境</a><br>
+&lowast;
+<a href="mcu/stm8s103/led.htm">LED測試程式</a><br>
+&lowast;
+<a href="mcu/stm8s103/adc.htm">ADC測試程式</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/stm32f429_discovery.jpg" class="floatLeft"/>STM32F429 Discovery</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/stm32f429_disco/label.htm">接腳說明</a><br>
+&lowast;
+<a href="mcu/stm32f429_disco/build_all.htm">Build All</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/stm32f103.jpg" class="floatLeft"/>STM32F103</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/stm32f103/ov_128mhz.htm">Overclock 128MHz</a><br>
+&lowast;
+<a href="mcu/stm32f103/pull-up_pull-down.htm">Pull-up/Pull-Down</a><br>
+&lowast;
+<a href="mcu/stm32f103/gdb_arm.htm">Debug STM32 on Debian x64</a><br>
+&lowast;
+<a href="mcu/stm32f103/uart_external_osc.htm">(Keil) 修改UART Baudrate(外部震盪器)</a><br>
+&lowast;
+<a href="mcu/stm32f103/s6d04m0x21.htm">驅動2.8吋IPS 320x240顯示屏(S6D04M0X21)</a><br>
+&lowast;
+<a href="mcu/stm32f103/n900_stlink-v2_flash.htm">如何使用N900透過ST-LINK V2燒錄程式(OpenOCD)</a><br>
+&lowast;
+<a href="mcu/stm32f103/n900_stlink-v2_debug.htm">如何使用N900透過ST-LINK V2除錯程式(OpenOCD + GDB)</a><br>
+&lowast;
+<a href="mcu/stm32f103/fix_ld.htm">解決"Cannot insert breakpoint 1. Cannot access memory at address xxx"問題</a><br>
+&lowast;
+<a href="mcu/stm32f103/fix_jtag.htm">解決"Error: jtag status contains invalid mode value - communication failure"問題</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/arduino-uno.jpg" class="floatLeft"/>Arduino UNO</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/arduino-uno/uart-921600.htm">UART 921600bps</a><br>
+&lowast;
+<a href="mcu/arduino-uno/add_attiny85.htm">Arduino IDE添加Attiny85</a><br>
+&lowast;
+<a href="mcu/arduino-uno/add_atmega88.htm">Arduino IDE添加Atmega88</a><br>
+&lowast;
+<a href="mcu/arduino-uno/micro_bootloader.htm">更新Arduino Micro Bootloader</a><br>
+&lowast;
+<a href="mcu/arduino-uno/nano_bootloader.htm">更新KTduino Nano(CH340G) Bootloader</a><br>
+&lowast;
+<a href="mcu/arduino-uno/fix_usbisp.htm">修復USB ISP(zhifengsoft)無法使用avrdude的問題</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/arduino-mega.jpg" class="floatLeft"/>Arduino MEGA</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/arduino-uno/uart-921600.htm">UART 921600bps</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/stc15w204s.jpg" class="floatLeft"/>STC15W204S</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/stc15w204s/reverse_stc-isp-v6.85i.htm">逆向STC-ISP V6.85I(IDA Pro)</a><br>
+&lowast;
+<a href="mcu/stc15w204s/bus_hound_stc-isp-v6.85i.htm">逆向STC-ISP V6.85I(Bus Hound)</a><br>
+&lowast;
+<a href="mcu/stc15w204s/flash_hex_n900.htm">如何透過N900使用UART燒録程式</a><br>
+&lowast;
+<a href="mcu/stc15w204s/flash_hex_pandora.htm">如何透過Pandora使用UART燒録程式</a><br>
+&lowast;
+<a href="mcu/stc15w204s/flash_hex_windows.htm">如何透過Windows使用UART燒録程式</a><br>
+
+&oplus; 基本I/O<br>
+&emsp;&emsp;&lowast;
+<a href="mcu/stc15w204s/gpio/pcb.htm">PCB設計</a><br>
+&emsp;&emsp;&lowast;
+<a href="mcu/stc15w204s/gpio/firmware.htm">程式設計</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/stc15w4k56s4.jpg" class="floatLeft"/>STC15W4K56S4</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/stc15w4k56s4/st7789v.htm">驅動1.45吋TFT 240x240顯示屏(ST7789V)</a><br>
+&lowast;
+<a href="mcu/stc15w4k56s4/rm67160.htm">驅動1.45吋OLED 340x272顯示屏(RM67160)</a><br>
+&lowast;
+<a href="mcu/stc15w4k56s4/ssd1351.htm">驅動1.5吋OLED 128x128顯示屏(SSD1351)</a><br>
+&lowast;
+<a href="mcu/stc15w4k56s4/s6d04m0x21.htm">驅動2.8吋IPS 320x240顯示屏(S6D04M0X21)</a><br>
+&lowast;
+<a href="mcu/stc15w4k56s4/ili9488.htm">驅動3.5吋IPS 320x480顯示屏(ILI9488)</a><br>
+&lowast;
+<a href="mcu/stc15w4k56s4/ssd1306.htm">驅動0.96吋單色OLED 128x64顯示屏(SSD1306)</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/usb.jpg" class="floatLeft"/>USB</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/usb/hid_endpoint.htm">HID EndPoint</a><br>
+&lowast;
+<a href="mcu/usb/keyboard_scancode.htm">Keyboard scancode</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/hw.jpg" class="floatLeft"/>Hardware</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/hw/lcd_4bit.htm">LCD 4Bit</a><br>
+&lowast;
+<a href="mcu/hw/pam8403_input_issue.htm">為何PAM8403輸出沒有聲音且喇叭會發燙</a><br>
+&lowast;
+<a href="mcu/hw/lcd_timing.htm">LCD Timing(VBPD、VFBD、VSPW、HBPD、HFPD、HSPW)</a><br>
+&lowast;
+<a href="mcu/hw/simple_power_supply.htm">製作一個簡易的測試用麵包板(0.5V ~ 25V)</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/ti-254x.jpg" class="floatLeft"/>CC254x</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/cc254x/build_cc-tool.htm">Build CC-Tool</a><br>
+&lowast;
+<a href="mcu/cc254x/flash_hex_n900.htm">如何透過N900使用CC-Debugger燒錄程式(CC-Tool)</a><br>
+&lowast;
+<a href="mcu/cc254x/flash_hex_pandora.htm">如何透過Pandora使用CC-Debugger燒錄程式(CC-Tool)</a><br>
+
+&oplus; Smart-RF<br>
+&emsp;&emsp;&oplus; C/C++<br>
+&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/cc254x/smart-rf/cpp_led.htm">LED</a><br>
+&emsp;&emsp;&emsp;&lowast;
+<a href="mcu/cc254x/smart-rf/cpp_button.htm">Button</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/esp8266mod.jpg" class="floatLeft"/>ESP8266MOD</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/esp8266mod/flash_image.htm">Flash Image</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/esp-wroom-32.jpg" class="floatLeft"/>ESP-WROOM-32</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/esp8266mod/flash_image.htm">Flash Image</a><br>
+<br><br><br><br>
+
+<h3><img src="img/photos/hc-05.jpg" class="floatLeft"/>HC-05</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/hc-05/update_firmware.htm">更新韌體程式</a><br>
+&lowast;
+<a href="mcu/hc-05/n900_comport.htm">如何在N900設定成COM Port</a>
+<br><br><br><br>
+
+<h3><img src="img/photos/spp-ca.jpg" class="floatLeft"/>SPP-CA</h3>
+<hr size="1"><br><br><br><br><br>
+&lowast;
+<a href="mcu/spp-ca/n900_comport.htm">如何在N900設定成COM Port</a>
+<br><br><br><br>
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>

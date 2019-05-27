@@ -1,0 +1,119 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../../header.js"></script>
+<div id="page">
+<h3>SDL 1.2 &gt;&gt; C/C++ &gt;&gt; Basic</h3>
+<p><b>Hello, world!</b></p>
+<hr size="1">
+<p>
+Github <a href="https://github.com/steward-fu/program">https://github.com/steward-fu/program</a><br>
+Ref. <a href="http://lazyfoo.net/tutorials/SDL/index.php">http://lazyfoo.net/tutorials/SDL/index.php</a><br><br>
+
+司徒今天就教教大家如何寫出一個簡易的<b>Hello, world!</b>程式，讓使用者可以快速掌握SDL的程式架構，程式相當簡單，僅是載入一張解析度為320x240x32的BMP圖片。<br><br>
+
+main.c
+</p>
+<pre class="brush:cpp">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;SDL.h&gt;
+ 
+int main(int argc, char* args[])
+{
+  if(SDL_Init(SDL_INIT_VIDEO) != 0){
+    printf("%s, failed to SDL_Init\n", __func__);
+    return -1;
+  }
+ 
+  SDL_Surface* screen;
+  screen = SDL_SetVideoMode(320, 240, 32, SDL_HWSURFACE);
+  if(screen == NULL){
+    printf("%s, failed to SDL_SetVideMode\n", __func__);
+    return -1;
+  }
+ 
+  SDL_Surface* bmp = SDL_LoadBMP("hello.bmp");
+  if(bmp == NULL){
+    printf("%s, failed to SDL_LoadBMP\n", __func__);
+    return -1;
+  }
+ 
+  SDL_ShowCursor(0);
+  SDL_BlitSurface(bmp, NULL, screen, NULL);
+  SDL_Flip(screen);
+  SDL_Delay(10000);
+  SDL_FreeSurface(bmp);
+  SDL_Quit();
+  return 0;    
+}
+</pre>
+<p>
+<b>Line 7</b> 初始化需要的元件，如：顯示、聲音等。<br>
+<b>Line 13</b> 設定螢幕解析度為320x240且顏色為32Bit，使用的Buffer優先從Video硬體配置。<br>
+<b>Line 19</b> 載入BMP圖片。<br>
+<b>Line 26</b> 複製BMP到SDL Video Buffer。<br>
+<b>Line 27</b> 更新Video Buffer(傳遞給底層顯示驅動程式)。<br>
+<b>Line 28</b> 延遲10秒。<br>
+<b>Line 29~30</b> 釋放資源，假如沒有設定SDL_INIT_NOPARACHUTE，則SDL會自動做資源回收動作。<br><br>
+
+編譯、執行
+</p>
+<pre>
+$ gcc -o main main.c -lSDL -I/usr/include/SDL
+$ ./main
+</pre>
+<p>
+<img src="cpp_hello/1.jpg" class="maxSize">
+</p>
+
+<p>
+<br><a href="../../../program.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../../header.js"></script>
+<div id="page">
+<h3>Windows Driver Model >> WDK 7.1 >> MASM32 >> Advanced</h3>
+<p><b>Hello, world!</b></p>
+<hr size="1">
+<p>
+[Github] <a href="https://github.com/steward-fu/gh_driver.git">https://github.com/steward-fu/gh_driver.git</a><br>
+
+</p>
+
+<p>
+使用Assembly語言寫驅動程式是一件相當挑戰的事情，畢竟討論資源相對稀少，加上Assembly語言的可讀性比C/C++差，以及Microsoft提供的Include及範常式式都是以C/C++語言為主，因此，比較少聽過有人使用Assembly語言開發WDM驅動程式。雖然困難重重，不過若能排除這些困難，自己重頭慢慢建立一支WDM驅動程式，細心品味Assembly語言的優雅，那將是一件意義非凡的事情。Microsoft Assembly語言經過多次改進，目前已經可以支援高階語法，如：If、While、Struct等語法，已經越來越高階，所以不該再把Assembly語言，想像是落後的語言，想對每個細節的瞭解，Assembly語言還是最佳的選擇。
+</p>
+
+<p>
+今天司徒就介紹如何使用Assembly語言寫一支<b>Hello, world!</b>的WDM驅動程式，畢竟<b>Hello, world!</b>還是最經典以及簡單的入門首選。
+</p>
+
+<p>
+首先開啟RadASM編輯器<br>
+<img src="asm_hello/1.jpg" class="maxSize">
+</p>
+
+<p>
+New Project<br>
+<img src="asm_hello/2.jpg" class="maxSize">
+</p>
+
+<p>
+不需要Bak和Code File<br>
+<img src="asm_hello/3.jpg" class="maxSize">
+</p>
+
+<p>
+自己新增檔案<br>
+<img src="asm_hello/4.jpg" class="maxSize">
+</p>
+
+<p>
+main.asm<br>
+<img src="asm_hello/5.jpg" class="maxSize">
+</p>
+
+<p>
+main.asm
+</p>
+
+<pre class="brush:cpp">
+;//========================================================================================================
+;//  Basically, all of files downloaded from my website can be modified or redistributed for any purpose.
+;//  It is my honor to share my interesting to everybody.
+;//  If you find any illeage content out from my website, please contact me firstly.
+;//  I will remove all of the illeage parts.
+;//  Thanks :)
+;//  
+;//  Steward Fu
+;//  steward.fu@gmail.com
+;//  https://steward-fu.github.io/website/index.htm
+;//========================================================================================================*/
+.386p
+.model flat, stdcall
+option casemap:none
+
+include c:\masm32\include\w2k\ntstatus.inc
+include c:\masm32\include\w2k\ntddk.inc
+include c:\masm32\include\w2k\ntoskrnl.inc
+include c:\masm32\include\w2k\ntddkbd.inc
+include c:\masm32\Macros\Strings.mac
+includelib c:\masm32\lib\wxp\i386\ntoskrnl.lib
+
+.const
+DEV_NAME word "\","D","e","v","i","c","e","\","f","i","r","s","t","W","D","M",0
+SYM_NAME word "\","D","o","s","D","e","v","i","c","e","s","\","f","i","r","s","t","W","D","M",0    
+
+.data
+g_pNextDevice PDEVICE_OBJECT 0
+ 
+.code
+;//*** system will vist this routine when it needs to add new device
+AddDevice proc pOurDriver:PDRIVER_OBJECT, pPhyDevice:PDEVICE_OBJECT
+  local pOurDevice:PDEVICE_OBJECT
+  local suDevName:UNICODE_STRING
+  local szSymName:UNICODE_STRING
+  
+  invoke DbgPrint, $CTA0("MASM32 WDM driver tutorial for Hello, world")
+  invoke RtlInitUnicodeString, addr suDevName, offset DEV_NAME
+  invoke RtlInitUnicodeString, addr szSymName, offset SYM_NAME
+  invoke IoCreateDevice, pOurDriver, 0, addr suDevName, FILE_DEVICE_UNKNOWN, 0, FALSE, addr pOurDevice
+  invoke IoAttachDeviceToDeviceStack, pOurDevice, pPhyDevice
+  push eax
+  pop g_pNextDevice
+  mov eax, pOurDevice
+  or (DEVICE_OBJECT PTR [eax]).Flags, DO_BUFFERED_IO
+  and (DEVICE_OBJECT PTR [eax]).Flags, not DO_DEVICE_INITIALIZING
+  mov eax, STATUS_SUCCESS
+  invoke IoCreateSymbolicLink, addr szSymName, addr suDevName
+  ret
+AddDevice endp
+
+;//*** it is time to unload our driver
+Unload proc pOurDriver:PDRIVER_OBJECT
+  xor eax, eax
+  ret
+Unload endp
+
+;//*** process pnp irp
+IrpPnp proc uses ebx pOurDevice:PDEVICE_OBJECT, pIrp:PIRP
+  local szSymName:UNICODE_STRING
+  
+  IoGetCurrentIrpStackLocation pIrp
+  movzx ebx, (IO_STACK_LOCATION PTR [eax]).MinorFunction
+  .if ebx == IRP_MN_START_DEVICE
+    mov eax, pIrp
+    mov (_IRP PTR [eax]).IoStatus.Status, STATUS_SUCCESS
+  .elseif ebx == IRP_MN_REMOVE_DEVICE
+    invoke RtlInitUnicodeString, addr szSymName, offset SYM_NAME
+    invoke IoDeleteSymbolicLink, addr szSymName     
+    mov eax, pIrp
+    mov (_IRP PTR [eax]).IoStatus.Status, STATUS_SUCCESS
+    invoke IoDetachDevice, g_pNextDevice
+    invoke IoDeleteDevice, pOurDevice
+  .endif
+  IoSkipCurrentIrpStackLocation pIrp
+  invoke IoCallDriver, g_pNextDevice, pIrp
+  ret
+IrpPnp endp
+
+;//*** driver entry
+DriverEntry proc pOurDriver:PDRIVER_OBJECT, pOurRegistry:PUNICODE_STRING
+  mov eax, pOurDriver
+  mov (DRIVER_OBJECT PTR [eax]).MajorFunction[IRP_MJ_PNP * (sizeof PVOID)], offset IrpPnp
+  mov (DRIVER_OBJECT PTR [eax]).DriverUnload, offset Unload
+  mov eax, (DRIVER_OBJECT PTR [eax]).DriverExtension
+  mov (DRIVER_EXTENSION PTR [eax]).AddDevice, AddDevice
+  mov eax, STATUS_SUCCESS
+  ret
+DriverEntry endp
+end DriverEntry
+.end
+</pre>
+
+<p>
+因為需要更改編譯選項成Windows Driver，因此開啟Project Options<br>
+<img src="asm_hello/6.jpg" class="maxSize">
+</p>
+
+<p>
+選擇Windows Driver x86 Debug<br>
+<img src="asm_hello/7.jpg" class="maxSize">
+</p>
+
+<p>
+完成<br>
+<img src="asm_hello/8.jpg" class="maxSize">
+</p>
+
+<p>
+接著Double Click main.asm<br>
+<img src="asm_hello/9.jpg" class="maxSize">
+</p>
+
+<p>
+設定成Main File(否則無法Build Project)<br>
+<img src="asm_hello/10.jpg" class="maxSize">
+</p>
+
+<p>
+Build<br>
+<img src="asm_hello/11.jpg" class="maxSize">
+</p>
+
+<p>
+完成<br>
+<img src="asm_hello/12.jpg" class="maxSize">
+</p>
+
+<p>
+hello.inf
+</p>
+
+<pre class="brush:cpp">
+;//========================================================================================================
+;//  Basically, all of files downloaded from my website can be modified or redistributed for any purpose.
+;//  It is my honor to share my interesting to everybody.
+;//  If you find any illeage content out from my website, please contact me firstly.
+;//  I will remove all of the illeage parts.
+;//  Thanks :)
+;//  
+;//  Steward Fu
+;//  steward.fu@gmail.com
+;//  https://steward-fu.github.io/website/index.htm
+;//========================================================================================================*/
+[Version]
+Signature=$CHICAGO$
+Class=Unknown
+Provider=%MFGNAME%
+DriverVer=12/23/2016,1.0.0.0
+  
+[Manufacturer]
+%MFGNAME%=DeviceList
+  
+[DeviceList]
+%DESCRIPTION%=DriverInstall, *firstWDM
+  
+[DestinationDirs]
+DefaultDestDir=10,System32\Drivers
+  
+[SourceDisksFiles]
+main.sys=1,,,
+  
+[SourceDisksNames]
+1=%INSTDISK%,,,
+  
+[DriverInstall.NT]
+CopyFiles=DriverCopyFiles
+  
+[DriverCopyFiles]
+main.sys,,,2
+  
+[DriverInstall.NT.Services]
+AddService=FILEIO,2,DriverService
+  
+[DriverService]
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%10%\system32\drivers\main.sys
+  
+[DriverInstall.NT.HW]
+AddReg=DriverHwAddReg
+  
+[DriverHwAddReg]
+HKR,,SampleInfo,,""
+  
+[DriverInstall]
+AddReg=DriverAddReg
+CopyFiles=DriverCopyFiles
+  
+[DriverAddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,main.sys
+  
+[DriverInstall.HW]
+AddReg=DriverHwAddReg
+  
+[Strings]
+MFGNAME="firstWDM"
+INSTDISK="firstWDM Disc"
+DESCRIPTION="firstWDM(Assembly)"
+</pre>
+
+<p>
+DbgView需要開啟Enable Verbose Kernel Output(有更改到DbgView的選項時都需要重啟DbgView才能生效)<br>
+<img src="cpp_hello/1.jpg" class="maxSize">
+</p>
+
+<p>
+開啟hello.inf並Add New Device<br>
+<img src="asm_hello/13.jpg" class="maxSize">
+</p>
+
+<p>
+輸出的Debug Log<br>
+<img src="asm_hello/14.jpg" class="maxSize">
+</p>
+
+<p>
+Device Manager<br>
+<img src="asm_hello/15.jpg" class="maxSize">
+</p>
+
+<p>
+Device Name<br>
+<img src="asm_hello/16.jpg" class="maxSize">
+</p>
+
+<p>
+Symbolic Link<br>
+<img src="asm_hello/17.jpg" class="maxSize">
+</p>
+
+<p>
+<br><a href="../../../driver.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

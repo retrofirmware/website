@@ -1,0 +1,269 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>GP2X Wiz</h3>
+<p><b>製作UART傳輸線</b></p>
+<hr size="1">
+<p>
+由於司徒真的相當喜愛GP2X Wiz掌機，而剛好有那樣的機緣，讓司徒再度入手第二台Wiz掌機，之前由於只有一台Wiz掌機，司徒不敢製作相關開發工具、軟體，因為司徒也怕弄壞而面臨無法修理的狀況，而在入手第二台Wiz掌機之後，司徒就比較大膽嘗試，希望可以自己動手開發Wiz掌機的相關軟體，因此，開發的第一個步驟就是需要製作一條UART接頭，這樣才可以開始從Bootloader開發程式，但是，由於Wiz掌機預設配送的傳輸線只有USB功能，加上相關Pinout的排針都沒有上，因此要製作UART接頭勢必相當辛苦。
+</p>
+
+<p>
+從下圖可以看到相關Pinout的排針都沒有上，因此司徒只好自己調換<br>
+<img src="uart/1.jpg" class="maxSize">
+</p>
+
+<p>
+腳位定義如下(有一些腳位尚未知道用途)<br>
+<img src="uart/3.jpg" class="maxSize">
+</p>
+
+<table>
+  <tr>
+    <th>腳位</th>
+    <th>說明</th>
+  </tr>
+  <tr>
+    <td>04</td>
+    <td>Power Out +3.7V</td>
+  </tr>
+  <tr>
+    <td>05</td>
+    <td>Power Out +3.7V</td>
+  </tr>
+  <tr>
+    <td>06</td>
+    <td>Power EN</td>
+  </tr>
+  <tr>
+    <td>07</td>
+    <td>CFG Shadow</td>
+  </tr>
+  <tr>
+    <td>08</td>
+    <td>CFG Bootmode 1</td>
+  </tr>
+  <tr>
+    <td>09</td>
+    <td>CFG Bootmode 0</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>USB D-(Slave)</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>GND</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>UART In(3.3V)</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>UART Out(3.3V)</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>USB D+(Slave)</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>USB VCC(Slave)</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>USB D+(Host)</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>USB D-(Host)</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>Reset</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>Video Out(Composite/FBAS)</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>Power In +5V</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>Power In +5V</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>Audio Left</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>Audio Right</td>
+  </tr>
+</table><br>
+
+<p>
+司徒將8(CFG Bootmode 1)、9(CFG Bootmode 0)、12(GND)、13(UART In)、14(UART Out)腳位連接出來，如下圖<br>
+<img src="uart/2.jpg" class="maxSize">
+</p>
+
+<p>
+第8腳位和第9腳位如果各自透過1K歐姆電阻連接到GND時，則Wiz掌機Power On就會進入Pollux UART Bootloader模式，這代表Wiz掌機是燒不壞的，因為就算是使用SDCard更新Flash Memory而燒壞掉時，還是可以使用Pollux UART Bootloader模式救活，算是相當好的設計，現在的ARM CPU幾乎都是這樣的設計方式。
+</p>
+
+<p>
+下面是Firmware v1.2.6的開機訊息(Baudrate: 115200bps)
+</p>
+
+<pre>
+ U-Boot 1.1.6 (Aug 31 2010 - 13:24:26)
+
+ U-Boot code: 03680000 -> 036B0AF0  BSS: -> 036E4148
+ RAM Configuration:
+ Bank #0: 00000000 64 MB
+ manufacture ID = 191lx
+ device ID = 9051lx
+ flash_protect ON: from 0x80000000 to 0x80030AEF
+ protect on 0
+ protect on 1
+ protect on 2
+ protect on 3
+ flash_protect ON: from 0x80050000 to 0x8005FFFF
+ protect on 5
+ Flash:  4 MB
+ *** Warning - bad CRC, using default environment
+
+ In:    serial
+ Out:   serial
+ Err:   serial
+ ### main_loop entered: bootdelay=0
+
+ ### main_loop: bootcmd="cp.b 0x80060000 0x2000000 0x300000; bootm 0x02000000"
+ Hit any key to stop autoboot:  0 
+ No initrd
+
+ Starting kernel ...
+
+ [Device Version]>> 0  
+ [JB]>> 2048 : mtd->writesizetype 
+ [JB]>> 64 : mtd->oobsize 
+ [JB]>> 262144 : mtd->erasesize 
+ VFS: Mounted root (ubifs filesystem).
+ Freeing init memory: 152K
+ UBIFS: background thread "ubifs_bgt0_0" started, PID 241
+
+ INIT: version 2.84 booting
+
+ rc.udev start
+ Initializing udev dynamic device directory.
+ Starting udevd:  /sbin/udevd --daemon
+ mount: cannot read /etc/mtab: No such file or directory
+ mount: mounting /dev/root on / failed: No such device
+
+ INIT: Entering runlevel: 3
+
+
+ login[581]: root login on 'tts/0'
+
+ sd_in=1
+ UBI device number 1, total 3568 LEBs (920715264 bytes, 878.1 MiB), available 0 LEBs (0 bytes), LEB size 258048 bytes (252.0 KiB)
+ UBIFS: background thread "ubifs_bgt1_0" started, PID 659
+ FAT: utf8 is not a recommended IO charset for FAT filesystems, filesystem will be case sensitive!
+ view created...
+ GP2X wiz Mode...
+ 1
+ gFWver[0] = 1
+ 2
+ gFWver[1] = 2
+ 6
+ gFWver[2] = 6
+ fread(gNEDBuf, 1, NED_HEADER, handle) == 264
+ After NED_CheckDrm(&gNEDLicense, &NEDCont, gNEDBuf)
+ NEDCont.DrmFlag = 0
+ gNEDLicense.nErrCode = 0
+ Function is finish
+ Mount device...
+ fread(gNEDBuf, 1, NED_HEADER, handle) == 264
+ After NED_CheckDrm(&gNEDLicense, &NEDCont, gNEDBuf)
+ NEDCont.DrmFlag = 0
+ gNEDLicense.nErrCode = 0
+ Function is finish
+ FB_OpenMouse()
+ Using tslib touchscreen
+ Check joystick...MES_MLC_SetLayerPriority.829: MES_ASSERT error
+
+ mmc_rescan... 
+  mmc_rescan 1===> no card 
+ [20],  [13],  [7],  [27],  [9],  [47],  [6],  
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ SERIAL NUM:  [9] [C] [F] [2] [6] [2] [B] [E] [D] [7] [E] [2] [8] [0] [2] [0] [3] [B] [1] [9] [D] [A] [C] [D] [F] [0] [C] [E] [2] [7] [E] [5] 
+ NED_FILE_READ [/var/tmp/NED_LIC.SYS]
+ FOPEN Error in NED_FILE_READ [/var/tmp/NED_LIC.SYS]
+ NED_FILE_READ [/var/tmp/NED_SID.SYS]
+ FOPEN Error in NED_FILE_READ [/var/tmp/NED_SID.SYS]
+ NED_Initialize END 
+ mount: can't find / in /etc/mtab
+ fread(gNEDBuf, 1, NED_HEADER, handle) == 95
+ After NED_CheckDrm(&gNEDLicense, &NEDCont, gNEDBuf)
+ NEDCont.DrmFlag = 0
+ gNEDLicense.nErrCode = 0
+ Function is finish
+</pre>
+
+<p>
+P.S. Ctrl + C可以停止目前gp2xmenu，這樣就可以使用Terminal操作。<br><br>
+
+<br><a href="../../handheld.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

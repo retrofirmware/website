@@ -1,0 +1,334 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>RetroGame</h3>
+<p><b>移植ReGBA</b></p>
+<hr size="1">
+<p>
+ReGBA是一款比較新且針對MIPS處理器優化的GBA模擬器，運行速度還算是不錯，從GCW0掌機身上就可以印證這點，而針對Pixel操作的部分，感謝TonyJih的協助，目前運算的方式還算是不錯，詳細修改部分，如下所示：
+</p>
+<pre class="brush:cpp">
+diff -Nr old_regba/source/common.h new_regba/source/common.h
+33a34
+&gt; #include &lt;errno.h&gt;
+diff -Nr old_regba/source/dstwo/.gitignore new_regba/source/dstwo/.gitignore
+1,3d0
+&lt; TEMPGBA/system/ndsgba.cfg
+&lt; TEMPGBA/gba_bios.bin
+&lt; TEMPGBA/game_config.txt
+diff -Nr old_regba/source/opendingux/draw.c new_regba/source/opendingux/draw.c
+43c43
+&lt; video_scale_type ScaleMode = scaled_aspect;
+---
+&gt; video_scale_type ScaleMode = fullscreen;
+311a312
+&gt;       //*(uint32_t*) (to + dst_pitch) = *(uint32_t*) (to);
+317a319
+&gt;       //*(uint32_t*) (to + 2 + dst_pitch) = *(uint32_t*) (to + 2);
+323a326
+&gt;       //*(uint32_t*) (to + 4 + dst_pitch) = *(uint32_t*) (to + 4);
+329a333
+&gt;       //*(uint32_t*) (to + 6 + dst_pitch) = *(uint32_t*) (to + 6);
+340c344
+&lt; 				*(uint32_t*) ((uint8_t*) to + dst_pitch) = likely(Hi(bh_ag) == Lo(bh_ag))
+---
+&gt; 				*(uint32_t*) ((uint8_t*) to + (dst_pitch * 2)) = likely(Hi(bh_ag) == Lo(bh_ag))
+343a348
+&gt;         //*(uint32_t*) (to + (dst_pitch * 3)) = *(uint32_t*) (to + (dst_pitch * 2));
+349c354
+&lt; 				*(uint32_t*) ((uint8_t*) to + dst_pitch + 4) = likely(Hi(ci_bh) == Lo(ci_bh))
+---
+&gt; 				*(uint32_t*) ((uint8_t*) to + (dst_pitch * 2) + 4) = likely(Hi(ci_bh) == Lo(ci_bh))
+352a358
+&gt;         //*(uint32_t*) (to + (dst_pitch * 3) + 4) = *(uint32_t*) (to + (dst_pitch * 2) + 4);
+356c362
+&lt; 				*(uint32_t*) ((uint8_t*) to + dst_pitch + 12) = likely(Hi(fl_ek) == Lo(fl_ek))
+---
+&gt; 				*(uint32_t*) ((uint8_t*) to + (dst_pitch * 2) + 12) = likely(Hi(fl_ek) == Lo(fl_ek))
+359a366
+&gt;         //*(uint32_t*) (to + (dst_pitch * 3) + 12) = *(uint32_t*) (to + (dst_pitch * 2) + 12);
+365c372
+&lt; 				*(uint32_t*) ((uint8_t*) to + dst_pitch + 8) = likely(Hi(ek_dj) == Lo(ek_dj))
+---
+&gt; 				*(uint32_t*) ((uint8_t*) to + (dst_pitch * 2) + 8) = likely(Hi(ek_dj) == Lo(ek_dj))
+368a376
+&gt;         //*(uint32_t*) (to + (dst_pitch * 3) + 8) = *(uint32_t*) (to + (dst_pitch * 2) + 8);
+372c380
+&lt; 				*(uint32_t*) ((uint8_t*) to + dst_pitch * 2) = likely(Hi(h_g) == Lo(h_g))
+---
+&gt; 				*(uint32_t*) ((uint8_t*) to + (dst_pitch * 4)) = likely(Hi(h_g) == Lo(h_g))
+375a384
+&gt;         //*(uint32_t*) (to + (dst_pitch * 5)) = *(uint32_t*) (to + (dst_pitch * 4));
+378c387
+&lt; 				*(uint32_t*) ((uint8_t*) to + dst_pitch * 2 + 4) = likely(Hi(h_g) == Lo(j_i))
+---
+&gt; 				*(uint32_t*) ((uint8_t*) to + (dst_pitch * 4) + 4) = likely(Hi(h_g) == Lo(j_i))
+381a391
+&gt;         //*(uint32_t*) (to + (dst_pitch * 5)) = *(uint32_t*) (to + (dst_pitch * 4));
+384c394
+&lt; 				*(uint32_t*) ((uint8_t*) to + dst_pitch * 2 + 8) = likely(Hi(j_i) == Lo(l_k))
+---
+&gt; 				*(uint32_t*) ((uint8_t*) to + (dst_pitch * 4) + 8) = likely(Hi(j_i) == Lo(l_k))
+387a398
+&gt;         //*(uint32_t*) (to + (dst_pitch * 5)) = *(uint32_t*) (to + (dst_pitch * 4));
+390c401
+&lt; 				*(uint32_t*) ((uint8_t*) to + dst_pitch * 2 + 12) = likely(Hi(l_k) == Lo(l_k))
+---
+&gt; 				*(uint32_t*) ((uint8_t*) to + (dst_pitch * 4) + 12) = likely(Hi(l_k) == Lo(l_k))
+393a405
+&gt;         //*(uint32_t*) (to + (dst_pitch * 5)) = *(uint32_t*) (to + (dst_pitch * 4));
+403c415,416
+&lt; 		to   = (uint16_t*) ((uint8_t*) to   + dst_skip + 2 * dst_pitch);
+---
+&gt; 		//to   = (uint16_t*) ((uint8_t*) to   + dst_skip + 2 * dst_pitch);
+&gt; 		to   = (uint16_t*) ((uint8_t*) to   + dst_skip + (5 * dst_pitch));
+640a654
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch)) = *(uint16_t*) ((uint8_t*) to);
+645a660
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch) + 2) = *(uint16_t*) ((uint8_t*) to + 2);
+650a666
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch) + 4) = *(uint16_t*) ((uint8_t*) to + 4);
+655a672
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch) + 6) = *(uint16_t*) ((uint8_t*) to + 6);
+665c682
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch) = likely(a == e)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 2)) = likely(a == e)
+667a685
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 3)) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 2));
+676c694
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch + 2) = likely(a1b3 == e1f3)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 2) = likely(a1b3 == e1f3)
+678a697
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 3) + 2) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 2);
+687c706
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch + 4) = likely(bc == fg)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 4) = likely(bc == fg)
+689a709
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 3) + 4) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 4);
+698c718
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch + 6) = /* in Y */ likely(g3h1 == c3d1)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 6) = /* in Y */ likely(g3h1 == c3d1)
+700a721
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 3) + 6) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 6);
+705c726,727
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch * 2) = e;
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 4)) = e;
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 5)) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 4));
+708c730
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch * 2 + 2) = likely(e == f)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 2) = likely(e == f)
+710a733
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 5) + 2) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 2);
+713c736
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch * 2 + 4) = likely(f == g)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 4) = likely(f == g)
+715a739
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 5) + 4) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 4);
+718c742
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch * 2 + 6) = likely(g == h)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 6) = likely(g == h)
+720a745
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 5) + 6) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 6);
+729c754
+&lt; 		to   = (uint16_t*) ((uint8_t*) to   + dst_skip + 2 * dst_pitch);
+---
+&gt; 		to   = (uint16_t*) ((uint8_t*) to   + dst_skip + 5 * dst_pitch);
+1256a1282
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch)) = *(uint16_t*) ((uint8_t*) to);
+1261a1288
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch) + 2) = *(uint16_t*) ((uint8_t*) to + 2);
+1266a1294
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch) + 4) = *(uint16_t*) ((uint8_t*) to + 4);
+1271a1300
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch) + 6) = *(uint16_t*) ((uint8_t*) to + 6);
+1281c1310
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch) = likely(a == e)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 2)) = likely(a == e)
+1283a1313
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 3)) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 2));
+1292c1322
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch + 2) = likely(a1b3 == e1f3)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 2) = likely(a1b3 == e1f3)
+1294a1325
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 3) + 2) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 2);
+1303c1334
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch + 4) = likely(bc == fg)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 4) = likely(bc == fg)
+1305a1337
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 3) + 4) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 4);
+1314c1346
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch + 6) = /* in Y */ likely(g3h1 == c3d1)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 6) = /* in Y */ likely(g3h1 == c3d1)
+1316a1349
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 3) + 6) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 2) + 6);
+1321c1354,1355
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch * 2) = e;
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 4)) = e;
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 5)) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 4));
+1324c1358
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch * 2 + 2) = likely(e == f)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 2) = likely(e == f)
+1326a1361
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 5) + 2) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 2);
+1329c1364
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch * 2 + 4) = likely(f == g)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 4) = likely(f == g)
+1331a1367
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 5) + 4) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 4);
+1334c1370
+&lt; 			*(uint16_t*) ((uint8_t*) to + dst_pitch * 2 + 6) = likely(g == h)
+---
+&gt; 			*(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 6) = likely(g == h)
+1336a1373
+&gt; 			//*(uint16_t*) ((uint8_t*) to + (dst_pitch * 5) + 6) = *(uint16_t*) ((uint8_t*) to + (dst_pitch * 4) + 6);
+1345c1382
+&lt; 		to   = (uint16_t*) ((uint8_t*) to   + dst_skip + 2 * dst_pitch);
+---
+&gt; 		to   = (uint16_t*) ((uint8_t*) to   + dst_skip + 5 * dst_pitch);
+1353c1390
+&lt; 		+ ((GCW0_SCREEN_HEIGHT - GBA_SCREEN_HEIGHT) / 2 * DestPitch)
+---
+&gt; 		+ ((GCW0_SCREEN_HEIGHT - (GBA_SCREEN_HEIGHT * 2)) / 2 * DestPitch)
+1364a1402
+&gt; 			//*((uint32_t*) Dest + DestPitch) = bgr555_to_rgb565(*(uint32_t*) Src);
+1369c1407
+&lt; 		Dest = (uint16_t*) ((uint8_t*) Dest + DestSkip);
+---
+&gt; 		Dest = (uint16_t*) ((uint8_t*) Dest + DestSkip + DestPitch);
+1384a1423
+&gt; 			//*((uint32_t*) Dest + DestPitch) = bgr555_to_rgb565(*(uint32_t*) Src);
+1389c1428
+&lt; 		Dest = (uint16_t*) ((uint8_t*) Dest + DestSkip);
+---
+&gt; 		Dest = (uint16_t*) ((uint8_t*) Dest + DestSkip + DestPitch);
+1480a1520
+&gt; 			memset(OutputSurface-&gt;pixels, 0, OutputSurface-&gt;pitch * GCW0_SCREEN_HEIGHT);
+1504,1507d1543
+&lt; #ifndef GCW_ZERO
+&lt; 			case hardware: /* Hardware, when there's no hardware to scale
+&lt; 			                  images, acts as unscaled */
+&lt; #endif
+1547a1584
+&gt;         break;
+diff -Nr old_regba/source/opendingux/draw.h new_regba/source/opendingux/draw.h
+7c7
+&lt; #define GCW0_SCREEN_HEIGHT 240
+---
+&gt; #define GCW0_SCREEN_HEIGHT 480
+diff -Nr old_regba/source/opendingux/.gitignore new_regba/source/opendingux/.gitignore
+1,3d0
+&lt; .opk_data
+&lt; regba.opk
+&lt; regba
+diff -Nr old_regba/source/opendingux/gui.c new_regba/source/opendingux/gui.c
+1539c1539
+&lt; 		// Wait. (This is for platforms on which flips don't wait for vertical
+---
+&gt;     // Wait. (This is for platforms on which flips don't wait for vertical
+1543,1545c1543,1548
+&lt; 		// Get input.
+&lt; 		enum GUI_Action Action = GetGUIAction();
+&lt; 		
+---
+&gt;     // Get input.
+&gt;     enum GUI_Action Action = GetGUIAction();
+&gt;     if(Action == GUI_ACTION_NONE){
+&gt;       continue;
+&gt;     }
+&gt; 
+1602c1605
+&lt; 				if (IsGameLoaded &amp;&amp; ActiveMenu-&gt;AlternateVersion != NULL)
+---
+&gt; 				if (IsGameLoaded &amp;&amp; ActiveMenu-&gt;AlternateVersion != NULL) {
+1603a1607
+&gt;         }
+diff -Nr old_regba/source/opendingux/od-input.c new_regba/source/opendingux/od-input.c
+25c25
+&lt; uint32_t FastForwardTarget = 4; // 6x by default
+---
+&gt; uint32_t FastForwardTarget = 4; // 4; 6x by default
+diff -Nr old_regba/source/opendingux/od-sound.h new_regba/source/opendingux/od-sound.h
+11c11
+&lt; #define AUDIO_OUTPUT_BUFFER_SIZE 1476
+---
+&gt; #define AUDIO_OUTPUT_BUFFER_SIZE 2048
+diff -Nr old_regba/source/opendingux/port.c new_regba/source/opendingux/port.c
+117c117
+&lt; 		ScaleModeUnapplied();
+---
+&gt; 		//ScaleModeUnapplied();
+</pre><br>
+
+<p>
+完成<br>
+<img src="port_regba/1.jpg" class="maxSize">
+</p>
+
+<p>
+<br><a href="../../handheld.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

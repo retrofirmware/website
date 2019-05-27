@@ -1,0 +1,273 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>STC STC15W4K56S4</h3>
+<p><b>驅動3.5吋IPS 320x480顯示屏(ILI9488)</b></p>
+<hr size="1">
+<p>
+[Github] <a href="https://github.com/steward-fu/gh_ili9488_doc.git">https://github.com/steward-fu/gh_ili9488_doc.git</a>
+</p>
+
+<p>
+<img src="ili9488/1.jpg" class="maxSize">
+</p>
+
+<pre class="brush:cpp">
+/*========================================================================================================
+  Basically, all of files downloaded from my website can be modified or redistributed for any purpose.
+  It is my honor to share my interesting to everybody.
+  If you find any illeage content out from my website, please contact me firstly.
+  I will remove all of the illeage parts.
+  Thanks :)
+    
+  Steward Fu
+  steward.fu@gmail.com
+  https://steward-fu.github.io/website/index.htm
+========================================================================================================*/
+#include "../include/stc15w4k56s4.h"
+
+#define CS    P54
+#define RS    P43
+#define WR    P42
+#define RD    P41
+#define RST    P40
+
+void delayms(unsigned int ms)
+{
+  unsigned int cnt;
+  while(ms--){
+    for(cnt=0; cnt<1000; cnt++);
+  }
+}
+
+void cmd(unsigned char cmd)
+{
+  CS = 0;
+  RS = 0;
+  WR = 0;
+  P0 = cmd;
+  WR = 1;
+}
+
+void data(unsigned char dat)
+{
+  CS = 0;
+  RS = 1;
+  WR = 0;
+  P0 = dat;
+  WR = 1;
+}
+
+void reset(void)
+{
+  RST = 0;
+  delayms(100);
+  RST = 1;
+  delayms(100);
+}
+
+void init(void)
+{
+  cmd(0xE0); 
+  data(0x00); 
+  data(0x0E); 
+  data(0x15); 
+  data(0x06); 
+  data(0x13); 
+  data(0x09); 
+  data(0x3A); 
+  data(0xAC); 
+  data(0x4F); 
+  data(0x05); 
+  data(0x0D); 
+  data(0x0B); 
+  data(0x33); 
+  data(0x3B); 
+  data(0x0F);  
+   
+  cmd(0xE1); 
+  data(0x00); 
+  data(0x0E); 
+  data(0x16); 
+  data(0x05); 
+  data(0x13); 
+  data(0x08); 
+  data(0x3B); 
+  data(0x9A); 
+  data(0x50); 
+  data(0x0A); 
+  data(0x13); 
+  data(0x0F); 
+  data(0x31); 
+  data(0x36); 
+  data(0x0F); 
+
+  cmd(0xC0); 
+  data(0x10); 
+  data(0x10); 
+   
+  cmd(0xC1); 
+  data(0x44); 
+
+  cmd(0xC5); 
+  data(0x00); 
+  data(0x10); 
+  data(0x80); 
+
+  cmd(0x36); 
+  //data(0x08); 
+  data(0x68); 
+
+  cmd(0x3A);//Interface Mode Control
+  data(0x55);
+
+  cmd(0x21); 
+
+  cmd(0XB0);  //Interface Mode Control  
+  data(0x00); 
+  cmd(0xB1);   //Frame rate 70HZ  
+  data(0xB0); 
+
+  cmd(0xB4); 
+  data(0x02);   
+  cmd(0xB6); //RGB/MCU Interface Control
+  data(0x02); 
+  data(0x22); 
+
+  cmd(0xB7); 
+  data(0xC6); 
+
+  cmd(0XBE);
+  data(0x00);
+  data(0x04);
+
+  cmd(0xE9); 
+  data(0x00);
+   
+  cmd(0XF7);    
+  data(0xA9); 
+  data(0x51); 
+  data(0x2C); 
+  data(0x82);
+
+  cmd(0x11);
+
+  delayms(120);
+  cmd(0x21); 
+  cmd(0x29); 
+
+  cmd(0x03);
+  data(0x00);
+
+  cmd(0x2a);   
+  data(0);
+  data(0);
+  data(479 >> 8);
+  data(479 & 0xff);
+
+  cmd(0x2b);   
+  data(0);
+  data(0);
+  data(319 >> 8);
+  data(319 & 0xff);
+} 
+
+void color(void)
+{
+  int x, y;
+
+  cmd(0x2C);
+  for(y=0; y<320; y++){
+    for(x=0; x<480; x++){
+      data(0x00);
+      data(0x1f);
+    }
+  }  
+}
+
+void gpio_init(void)
+{
+  P0M0 = 0x00;
+  P0M1 = 0x00;
+  P1M0 = 0x00;
+  P1M1 = 0x00;
+  P2M0 = 0x00;
+  P2M1 = 0x00;
+  P3M0 = 0x00;
+  P3M1 = 0x00;
+  P4M0 = 0x00;
+  P4M1 = 0x00;
+  P5M0 = 0x00;
+  P5M1 = 0x00;
+}
+
+void main(void)
+{
+  gpio_init();
+  AUXR|= 0x80;
+
+  reset();
+  init();
+  color();
+  while(1){
+    P55 = 0;
+    delayms(1000);
+    P55 = 1;
+    delayms(1000);
+  }
+}
+
+</pre>
+
+<p>
+<br><a href="../../mcu.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

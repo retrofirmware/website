@@ -1,0 +1,324 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>STC STC15W4K56S4</h3>
+<p><b>驅動0.96吋單色OLED 128x64顯示屏(SSD1306)</b></p>
+<hr size="1">
+<p>
+[Github] <a href="https://github.com/steward-fu/gh_stc15w4k56s4_ssd1306.git">https://github.com/steward-fu/gh_stc15w4k56s4_ssd1306.git</a>
+</p>
+
+<p>
+<img src="ssd1306/1.jpg" class="maxSize">
+</p>
+
+<p><img src="ssd1306/2.jpg" class="maxSize">
+</p><br>
+
+<pre class="brush:cpp">
+//============================================================================
+// Copyright (c) 2016 by Steward Fu
+// All rights reserved
+// 2016/10/28
+//============================================================================
+#include "../include/stc15w4k56s4.h"
+
+#define I2C_SDA   P01
+#define I2C_SCL   P00
+
+#define SSD1306_ADDRESS             0x78
+#define SSD1306_LCDWIDTH            128
+#define SSD1306_LCDHEIGHT           64
+#define SSD1306_SETCONTRAST         0x81
+#define SSD1306_DISPLAYALLON_RESUME 0xA4
+#define SSD1306_DISPLAYALLON        0xA5
+#define SSD1306_NORMALDISPLAY       0xA6
+#define SSD1306_INVERTDISPLAY       0xA7
+#define SSD1306_DISPLAYOFF          0xAE
+#define SSD1306_DISPLAYON           0xAF
+#define SSD1306_SETDISPLAYOFFSET    0xD3
+#define SSD1306_SETCOMPINS          0xDA
+#define SSD1306_SETVCOMDETECT       0xDB
+#define SSD1306_SETDISPLAYCLOCKDIV  0xD5
+#define SSD1306_SETPRECHARGE        0xD9
+#define SSD1306_SETMULTIPLEX        0xA8
+#define SSD1306_SETLOWCOLUMN        0x00
+#define SSD1306_SETHIGHCOLUMN       0x10
+#define SSD1306_SETSTARTLINE        0x40
+#define SSD1306_MEMORYMODE          0x20
+#define SSD1306_COLUMNADDR          0x21
+#define SSD1306_PAGEADDR            0x22
+#define SSD1306_COMSCANINC          0xC0
+#define SSD1306_COMSCANDEC          0xC8
+#define SSD1306_SEGREMAP            0xA0
+#define SSD1306_CHARGEPUMP          0x8D
+#define SSD1306_EXTERNALVCC         0x01
+#define SSD1306_SWITCHCAPVCC        0x02
+
+void delay(unsigned cnt)
+{
+  while(cnt--){
+  }
+}
+
+void i2c_start(void)
+{
+  I2C_SDA = 1;
+  I2C_SCL = 1;
+  delay(10);
+  I2C_SDA = 0;
+  delay(10);
+  I2C_SCL = 0;
+}
+
+void i2c_stop(void)
+{
+  delay(10);
+  I2C_SDA = 0;
+  delay(10);
+  I2C_SCL = 1;
+  delay(10);
+  I2C_SDA = 1;
+}
+
+unsigned char i2c_write(unsigned char val)
+{
+  unsigned char i=9, ack=0;
+
+  while(--i){
+    delay(10);
+    I2C_SDA = (val &amp; 0x80) ? 1 : 0;
+    delay(10);
+    I2C_SCL = 1;
+    delay(10);
+    val&lt;&lt;= 1;
+    I2C_SCL = 0;
+  }
+  delay(10);
+  I2C_SDA = 1;
+  delay(10);
+  I2C_SCL = 1;
+  delay(10);
+  ack = I2C_SDA;
+  delay(10);
+  I2C_SCL = 0;
+  return ack;
+}
+
+unsigned char i2c_read(unsigned char ack)
+{
+  unsigned char i=9, val=0;
+
+  while(--i){
+    val&lt;&lt;= 1;
+    delay(10);
+    I2C_SCL = 1;
+    delay(10);
+    val|= I2C_SDA;
+    delay(10);
+    I2C_SCL = 0;
+  }
+  delay(10);
+  I2C_SDA = ack;
+  delay(10);
+  I2C_SCL = 1;
+  delay(10);
+  I2C_SCL = 0;
+  return val;
+}
+
+void i2c_write_byte(unsigned char saddr, unsigned char raddr, unsigned char val)
+{
+  unsigned char i=10;
+
+  while(--i){
+    i2c_start();
+    if(i2c_write(saddr)){
+      continue;
+    }
+    if(i2c_write(raddr)){
+      continue;
+    }
+    if(i2c_write(val)){
+      continue;
+    }
+    i2c_stop();
+    break;
+  }
+}
+
+unsigned char i2c_read_byte(unsigned char saddr, unsigned char raddr)
+{
+  unsigned char i=10, value=0;
+
+  while (--i){
+    i2c_start();
+    if(i2c_write(saddr &amp; 0xfe)){
+      continue;
+    }
+    if(i2c_write(raddr)){
+      continue;
+    }
+    i2c_start();
+    if(i2c_write(saddr | 1)){
+      continue;
+    }
+    value = i2c_read(1);
+    i2c_stop();
+    break;
+  }
+  return value;
+}
+
+void gpio_init(void)
+{
+  P0M0 = 0x00;
+  P0M1 = 0x00;
+  P1M0 = 0x00;
+  P1M1 = 0x00;
+  P2M0 = 0x00;
+  P2M1 = 0x00;
+  P3M0 = 0x00;
+  P3M1 = 0x00;
+  P4M0 = 0x00;
+  P4M1 = 0x00;
+}
+
+void ssd1306_cmd(unsigned char c)
+{
+  unsigned char control = 0x00;
+  i2c_start();
+  i2c_write(SSD1306_ADDRESS);
+  i2c_write(control);
+  i2c_write(c);
+  i2c_stop();
+}
+
+void ssd1306_data(unsigned char c)
+{
+  i2c_start();
+  i2c_write(SSD1306_ADDRESS);
+  i2c_write(0x40);
+  i2c_write(c);
+  i2c_stop();
+}
+
+void ssd1306_init(void)
+{
+  ssd1306_cmd(SSD1306_DISPLAYOFF);             // 0xAE
+  ssd1306_cmd(SSD1306_SETDISPLAYCLOCKDIV);     // 0xD5
+  ssd1306_cmd(0x80);                           // ratio 0x80
+  ssd1306_cmd(SSD1306_SETMULTIPLEX);           // 0xA8
+  ssd1306_cmd(0x3F);
+  ssd1306_cmd(SSD1306_SETDISPLAYOFFSET);       // 0xD3
+  ssd1306_cmd(0x0);                            // no offset
+  ssd1306_cmd(SSD1306_SETSTARTLINE);// | 0x0); // line #0
+  ssd1306_cmd(SSD1306_CHARGEPUMP);             // 0x8D
+  ssd1306_cmd(0x14);                           // using internal VCC
+  ssd1306_cmd(SSD1306_MEMORYMODE);             // 0x20
+  ssd1306_cmd(0x00);                           // horizontal addressing
+  ssd1306_cmd(SSD1306_SEGREMAP | 0x1);         // rotate screen 180
+  ssd1306_cmd(SSD1306_COMSCANDEC);             // rotate screen 180
+  ssd1306_cmd(SSD1306_SETCOMPINS);             // 0xDA
+  ssd1306_cmd(0x12);
+  ssd1306_cmd(SSD1306_SETCONTRAST);            // 0x81
+  ssd1306_cmd(0xCF);
+  ssd1306_cmd(SSD1306_SETPRECHARGE);           // 0xd9
+  ssd1306_cmd(0xF1);
+  ssd1306_cmd(SSD1306_SETVCOMDETECT);          // 0xDB
+  ssd1306_cmd(0x40);
+  ssd1306_cmd(SSD1306_DISPLAYALLON_RESUME);    // 0xA4
+  ssd1306_cmd(SSD1306_NORMALDISPLAY);          // 0xA6 
+  ssd1306_cmd(SSD1306_DISPLAYON);              //switch on OLED
+}
+
+void ssd1306_set_col_addr(void)
+{
+  ssd1306_cmd(SSD1306_COLUMNADDR); // 0x21 COMMAND
+  ssd1306_cmd(0);                  // Column start address
+  ssd1306_cmd(SSD1306_LCDWIDTH-1); // Column end address
+}
+
+void ssd1306_set_page_addr(void)
+{
+  ssd1306_cmd(SSD1306_PAGEADDR);        // 0x22 COMMAND
+  ssd1306_cmd(0);                       // Start Page address
+  ssd1306_cmd((SSD1306_LCDHEIGHT/8)-1); // End Page address
+}
+
+void main(void)
+{
+  unsigned int i, col=0;
+
+  gpio_init();
+  AUXR|= 0x80;
+
+  ssd1306_init();
+
+  while(1){
+    ssd1306_set_col_addr();
+    ssd1306_set_page_addr();
+         
+    i2c_start();
+    i2c_write(SSD1306_ADDRESS);
+    i2c_write(0x40);
+    for(i=0; i&lt;1024; i++){
+      i2c_write(0xff);
+    }
+    i2c_stop();
+  }
+}
+</pre>
+
+<p>
+<br><a href="../../mcu.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

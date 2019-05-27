@@ -1,0 +1,136 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>Miyoo</h3>
+<p><b>移植ASCIIpOrtal</b></p>
+<hr size="1">
+<pre>
+</pre><br>
+
+<pre class="brush:cpp">
+diff -Naur old/Makefile.linux new/Makefile.linux
+--- old/Makefile.linux	2019-05-14 20:04:38.215602347 +0800
++++ new/Makefile.linux	2019-05-14 19:33:38.363490822 +0800
+@@ -18,11 +18,11 @@
+ 
+ # Custom C flags: you may define ('-D') or unset ('-U') macros to get your specific
+ # code to work.
+-CXXFLAGS := $(CXXFLAGS) -I/usr/include/xcurses `sdl-config --cflags` -U__NOSDL__ -U__NOSOUND__ -U__DINGOO__ -U__GP2X__
++CXXFLAGS := $(CXXFLAGS) -U__NOSDL__ -U__NOSOUND__ -D__DINGOO__ -U__GP2X__ -I./PDCurses/sdl1/ -I./PDCurses
+ 
+ # Custom link flags: either dynamic (default) or static linking (see the last form,
+ # 'man ld' for details).
+-LINKFLAGS := $(LINKFLAGS) `sdl-config --libs` -L/usr/lib -l SDL_mixer -l pdcurses
++LINKFLAGS := $(LINKFLAGS) -lSDL PDCurses/sdl1/libpdcurses.a -lSDL_mixer
+ 
+ # Additional files to be included in release tarball.
+ #FILES_INCLUDE_DIST := $(FILES_INCLUDE_DIST) custom_readme.txt example.dll foo/bar.xml
+@@ -31,7 +31,7 @@
+ ### Required variables ###
+ 
+ # C++ compiler. You might want to change this for cross-compilation.
+-CXX = g++
++CXX = arm-linux-g++
+ 
+ # Tarball name for release. You should not edit anything excepted the extension,
+ # see DISTNAME above.
+diff -Naur old/src/ap_draw.cpp new/src/ap_draw.cpp
+--- old/src/ap_draw.cpp	2019-05-14 20:04:38.363601750 +0800
++++ new/src/ap_draw.cpp	2019-05-14 19:36:46.142793411 +0800
+@@ -573,17 +573,17 @@
+ {
+   pureAscii = usePureAscii;
+ #ifndef __NOSDL__
+-#ifdef __GP2X__
+-  pdc_screen = SDL_SetVideoMode(320, 200, 16, SDL_SWSURFACE | (SDL_FULLSCREEN * fullscreen));
+-#else
+-#ifdef __DINGOO__
+-  pdc_screen = SDL_SetVideoMode(320, 200, 16, SDL_SWSURFACE | (SDL_FULLSCREEN * fullscreen));
+-#else
+-  SDL_Init( SDL_INIT_EVERYTHING );
+-  if (fullscreen) width = height = 0; // use current resolution
+-  pdc_screen = SDL_SetVideoMode(width, height, 32, SDL_SWSURFACE | (SDL_FULLSCREEN * fullscreen));
+-#endif
+-#endif
++  #ifdef __GP2X__
++    pdc_screen = SDL_SetVideoMode(320, 200, 16, SDL_SWSURFACE | (SDL_FULLSCREEN * fullscreen));
++  #else
++    #ifdef __DINGOO__
++      pdc_screen = SDL_SetVideoMode(320, 240, 16, SDL_SWSURFACE | (SDL_FULLSCREEN * fullscreen));
++    #else
++      SDL_Init( SDL_INIT_EVERYTHING );
++      if (fullscreen) width = height = 0; // use current resolution
++      pdc_screen = SDL_SetVideoMode(width, height, 32, SDL_SWSURFACE | (SDL_FULLSCREEN * fullscreen));
++    #endif
++  #endif
+   SDL_JoystickOpen( 0 );
+ #endif
+ 
+@@ -607,6 +607,6 @@
+ void graphics_deinit () {
+   endwin ();
+ #ifndef __NOSDL__
+-//  SDL_Quit();
++  SDL_Quit();
+ #endif
+ }
+</pre><br>
+
+<p>
+完成<br>
+<img src="port_asciiportal/1.jpg" class="maxSize">
+</p>
+
+<p>
+<br><a href="../../handheld.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

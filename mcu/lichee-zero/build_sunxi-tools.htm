@@ -1,0 +1,114 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>Lichee Pi Zero</h3>
+<p><b>Build sunxi-tools</b></p>
+<hr size="1">
+<pre>
+$ cd
+$ git clone https://github.com/steward-fu/v3s_sunxi-tools
+$ cd v3s_sunxi-tools
+$ make clean
+$ make
+$ sudo make install
+$ sunxi-fel
+sunxi-fel 5423c99
+
+Usage: sunxi-fel [options] command arguments... [command...]
+	-h, --help			Print this usage summary and exit
+	-v, --verbose			Verbose logging
+	-p, --progress			"write" transfers show a progress bar
+	-l, --list			Enumerate all (USB) FEL devices and exit
+	-d, --dev bus:devnum		Use specific USB bus and device number
+	    --sid SID			Select device by SID key (exact match)
+
+	spl file			Load and execute U-Boot SPL
+		If file additionally contains a main U-Boot binary
+		(u-boot-sunxi-with-spl.bin), this command also transfers that
+		to memory (default address from image), but won't execute it.
+
+	uboot file-with-spl		like "spl", but actually starts U-Boot
+		U-Boot execution will take place when the fel utility exits.
+		This allows combining "uboot" with further "write" commands
+		(to transfer other files needed for the boot).
+
+	hex[dump] address length	Dumps memory region in hex
+	dump address length		Binary memory dump
+	exe[cute] address		Call function address
+	reset64 address			RMR request for AArch64 warm boot
+	memmove dest source size	Copy <size> bytes within device memory
+	readl address			Read 32-bit value from device memory
+	writel address value		Write 32-bit value to device memory
+	read address length file	Write memory contents into file
+	write address file		Store file contents into memory
+	write-with-progress addr file	"write" with progress bar
+	write-with-gauge addr file	Output progress for "dialog --gauge"
+	write-with-xgauge addr file	Extended gauge output (updates prompt)
+	multi[write] # addr file ...	"write-with-progress" multiple files,
+					sharing a common progress status
+	multi[write]-with-gauge ...	like their "write-with-*" counterpart,
+	multi[write]-with-xgauge ...	  but following the 'multi' syntax:
+					  <#> addr file [addr file [...]]
+	echo-gauge "some text"		Update prompt/caption for gauge output
+	ver[sion]			Show BROM version
+	sid				Retrieve and output 128-bit SID key
+	clear address length		Clear memory
+	fill address length value	Fill memory
+	spiflash-info			Retrieves basic information
+	spiflash-hex[dump] addr length	Dumps SPI flash region in hex
+	spiflash-read addr length file	Write SPI flash contents into file
+	spiflash-write addr file	Store file contents into SPI flash
+</pre>
+
+<p>
+<br><a href="../../mcu.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

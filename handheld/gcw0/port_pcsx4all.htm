@@ -1,0 +1,226 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../header.js"></script>
+<div id="page">
+<h3>GCW-Zero</h3>
+<p><b>移植PCSX4ALL</b></p>
+<hr size="1">
+<p>
+[Github] <a href="https://github.com/steward-fu/gh_gcw0_pcsx4all.git">https://github.com/steward-fu/gh_gcw0_pcsx4all.git</a><br>
+[Github] <a href="https://github.com/steward-fu/gh_gcw0_toolchain.git">https://github.com/steward-fu/gh_gcw0_toolchain.git</a>
+</p><br>
+
+<pre>
+$ git clone https://github.com/steward-fu/gh_gcw0_toolchain.git
+$ sudo cp -ap gh_gcw0_toolchain/mipsel-linux-gcc /opt/
+$ export PATH=$PATH:/opt/mipsel-linux-gcc/usr/bin/
+$ git clone https://github.com/steward-fu/gh_gcw0_pcsx4all.git
+$ cd gh_gcw0_emulator/gh_gcw0_pcsx4all
+$ cp Makefile.gcw0 Makefile
+</pre><br>
+
+<pre>
+$ vim make_opk.sh
+ [Desktop Entry]
+  Name=Pcsx4all
+  Comment=Sony PSX emulator
+  Exec=pcsx4all -iso %f
+  Terminal=false
+  Type=Application
+  StartupNotify=true
+  Icon=pcsxr-icon-small
+  Categories=emulators;
+  MimeType=application/x-pcsx4all-rom;application/x-pcsx4all-rom;application/bin;application/iso;
+</pre><br>
+
+<pre>
+$ vim src/gpu/gpulib/vout_port.cpp
+$ diff org.cpp new.cpp
+</pre>
+<pre class="brush:cpp">
+37a38,84
+> static inline u16 middle(u16 s1, u16 s2, u16 s3, u16 s4)
+> {
+>   u16 x, y, temp;
+>   u16 a[] = {s1, s2, s3, s4};
+> 
+>   for(y=0; y<4; y++){
+>     for(x=1; x<3; x++){
+>       if(a[x] > a[y]){
+>         temp = a[x];
+>         a[x] = a[y];
+>         a[y] = temp;
+>       }
+>     }
+>   }
+>   return a[1];
+> }
+> 
+> static inline u16 mask_filter(u16 *s)
+> {
+>   // #define RGB16(C)     ((((C)&(0x1f<<10))>>10) | (((C)&(0x1f<<5))<<1) | (((C)&(0x1f))<<11))
+>   u16 r1 = (s[0] & 0x7c00) >> 10;
+>   u16 r2 = (s[1] & 0x7c00) >> 10;
+>   
+>   u16 r3 = (s[0+1024] & 0x7c00) >> 10;
+>   u16 r4 = (s[1+1024] & 0x7c00) >> 10;
+> 
+>   u16 g1 = (s[0] & 0x03e0) >> 5;
+>   u16 g2 = (s[1] & 0x03e0) >> 5;
+> 
+>   u16 g3 = (s[0+1024] & 0x03e0) >> 5;
+>   u16 g4 = (s[1+1024] & 0x03e0) >> 5;
+>   
+>   u16 b1 = s[0] & 0x1f;
+>   u16 b2 = s[1] & 0x1f;
+> 
+>   u16 b3 = s[0+1024] & 0x1f;
+>   u16 b4 = s[1+1024] & 0x1f;
+> 
+>   u16 r = (r1 + r2 + r3 + r4) / 4;
+>   u16 g = (g1 + g2 + g3 + g4) / 4;
+>   u16 b = (b1 + b2 + b3 + b4) / 4;
+>   //u16 r = middle(r1, r2, r3, r4);
+>   //u16 g = middle(g1, g2, g3, g4);
+>   //u16 b = middle(b1, b2, b3, b4);
+>   return (b<<11) | (g<<6) | r;
+> }
+> 
+68c115
+<     const u8* src8 = (const u8*)src;
+---
+>     u8* src8 = (u8*)src;
+100c147
+<     const u16* src16 = (const u16*) src;
+---
+>     u16* src16 = (u16*)src;
+101a149
+>     #if 0
+111a160,171
+>     #else
+>       dst16[ 0] = mask_filter(&src16[0]);
+>       dst16[ 1] = mask_filter(&src16[1]);
+>       dst16[ 2] = mask_filter(&src16[3]);
+>       dst16[ 3] = mask_filter(&src16[4]);
+>       dst16[ 4] = mask_filter(&src16[6]);
+>       dst16[ 5] = mask_filter(&src16[8]);
+>       dst16[ 6] = mask_filter(&src16[9]);
+>       dst16[ 7] = mask_filter(&src16[11]);
+>       dst16[ 8] = mask_filter(&src16[12]);
+>       dst16[ 9] = mask_filter(&src16[14]);
+>     #endif
+334d393
+< 
+341c400
+<     const u16* src16 = (const u16*) src;
+---
+>     u16* src16 = (u16*)src;
+342a402
+>     #if 0
+361a422,442
+>     #else
+>       dst16[ 0] = mask_filter(&src16[0]);
+>       dst16[ 1] = mask_filter(&src16[2]);
+>       dst16[ 2] = mask_filter(&src16[4]);
+>       dst16[ 3] = mask_filter(&src16[6]);
+> 
+>       dst16[ 4] = mask_filter(&src16[8]);
+>       dst16[ 5] = mask_filter(&src16[10]);
+>       dst16[ 6] = mask_filter(&src16[12]);
+>       dst16[ 7] = mask_filter(&src16[14]);
+> 
+>       dst16[ 8] = mask_filter(&src16[16]);
+>       dst16[ 9] = mask_filter(&src16[18]);
+>       dst16[10] = mask_filter(&src16[20]);
+>       dst16[11] = mask_filter(&src16[22]);
+> 
+>       dst16[12] = mask_filter(&src16[24]);
+>       dst16[13] = mask_filter(&src16[26]);
+>       dst16[14] = mask_filter(&src16[28]);
+>       dst16[15] = mask_filter(&src16[30]);  
+>     #endif
+455a537
+>   //printf("steward, %s, x:%d y:%d w:%d h0:%d h1:%d\n", __func__, x0, y0, w0, h0, h1);
+</pre>
+<pre>
+$ make clean
+$ make
+</pre><br>
+
+<p>
+選單使用GMenu2X選單<br>
+<img src="port_pcsx4all/6.jpg" class="maxSize"><br><br>
+
+使用移植後的模擬器時，請先關閉Pixel skip選項<br>
+<img src="port_pcsx4all/2.jpg" class="maxSize"><br><br>
+
+原本圖形<br>
+<img src="port_pcsx4all/1.jpg" class="maxSize"><br>
+移植後<br>
+<img src="port_pcsx4all/3.jpg" class="maxSize"><br><br>
+
+原本圖形<br>
+<img src="port_pcsx4all/4.jpg" class="maxSize"><br>
+移植後<br>
+<img src="port_pcsx4all/5.jpg" class="maxSize"><br><br>
+
+原本圖形<br>
+<img src="port_pcsx4all/7.jpg" class="maxSize"><br>
+移植後<br>
+<img src="port_pcsx4all/8.jpg" class="maxSize"><br><br>
+
+原本圖形<br>
+<img src="port_pcsx4all/9.jpg" class="maxSize"><br>
+移植後<br>
+<img src="port_pcsx4all/10.jpg" class="maxSize"><br><br>
+
+<br><a href="../../handheld.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

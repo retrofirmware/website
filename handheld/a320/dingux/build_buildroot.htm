@@ -1,0 +1,104 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../../header.js"></script>
+<div id="page">
+<h3>Dingoo A320 &rArr; Dingux</h3>
+<p><b>Build Buildroot</b></p>
+<hr size="1">
+<p>
+移植嵌入式系統最基本的工具就是Toolchain，那Toolchain工具如何產生呢？答案就是使用Buildroot工具，Buildroot是一套用來產生Toolchain、RootFS系統的工具，兩者必須互相搭配使用，否則各自的Library將會不同，導致無法執行。為了編譯出適合Dingoo A320掌機使用的Bootloader、Kernel程式，我們需要先產生Dingoo A320掌機使用的Toolchain，不過使用者的電腦請記得先連上網路再做Buildroot編譯動作，因為編譯過程不僅相當耗時且會下載許多需要的工具套件。<br><br>
+
+1. 註解掉本機系統的<b>/usr/include/stdio.h</b>(671行) <b>getline</b>副程式，因為宣告會跟Buildroot副程式衝突
+</p>
+
+<pre class="brush:cpp">
+// extern _IO_ssize_t getline (char **__restrict __lineptr,
+// size_t *__restrict __n,
+// FILE *__restrict __stream) __wur;
+</pre><br>
+
+<p>
+2. 編譯時，需要連接網路下載相關套件(Debian x86)
+</p>
+
+<pre>
+$ git clone https://github.com/steward-fu/a320_dingux.git
+$ cd a320_dingux/buildroot-200905
+$ mkdir dl
+$ cd dl
+$ wget http://stats.allstarlink.org/limeylinux/downloads/source_tarballs/fakeroot_1.9.5.tar.gz
+$ cd ..
+$ make menuconfig
+ Target Architecture &rArr; mipsel
+ Save an Alternate Configuration File &rArr; .config
+
+$ make
+</pre>
+
+<p>
+如果遇到找不到<b>fakeroot-1.9.5.tar.gz</b>檔案時，請再次執行如下命令：
+</p>
+
+<pre>
+$ cd dl
+$ wget http://stats.allstarlink.org/limeylinux/downloads/source_tarballs/fakeroot_1.9.5.tar.gz
+$ cd ..
+$ make
+</pre>
+
+<p>
+編譯完的Toolchain位於：<b>build_mipsel/root</b><br>
+編譯完的RootFS位於：<b>toolchain_build_mipsel</b>
+</p>
+
+<p>
+<br><a href="../../../handheld.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>

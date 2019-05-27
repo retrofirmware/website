@@ -1,0 +1,238 @@
+﻿<!--
+ ____________________________________________________________
+|                                                            |
+|    DESIGN + Pat Heard { http://fullahead.org }             |
+|      DATE + 2006.09.12                                     |
+| COPYRIGHT + Free use if this notice is kept in place.      |
+|____________________________________________________________|
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>司徒的教學網站</title>
+  <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="fullahead.org" />
+  <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
+  <meta name="description" content="A valid, XHTML 1.0 template" />
+  <meta name="robots" content="index, follow, noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
+
+  <link rel="shortcut icon" href="../../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../../css/print.css" media="print" />
+  
+  <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
+
+  <!-- Conditional comment to apply opacity fix for IE #content background.
+       Invalid CSS, but can be removed without harming design -->
+  <!--[if gt IE 5]>
+  <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen, projection, tv " />
+  <![endif]-->
+</head>
+
+<body>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<div id="wrapper">
+<div id="content">
+<script type="text/javascript" src="../../../header.js"></script>
+<div id="page">
+<h3>Windows Driver Model &gt;&gt; WDK 7.1 (C/C++) &gt;&gt; Advanced &gt;&gt; IOCTL Operation</h3>
+<p><b>IRP用法</b></p>
+<hr size="1">
+<p>
+Github <a href="https://github.com/steward-fu/driver">https://github.com/steward-fu/driver</a><br><br>
+
+Input Output Control(IOCTL)是另一種可以跟驅動程式溝通的管道，有别於IRP_MJ_READ和IRP_MJ_WRITE的操作方式；IOCTL帶有命令參數並且將Buffer分成Input和Ouput兩個獨立的參數，因此，當驅動程式收到App傳送過來的IOCTL後，就可以依據命令對Input或Output Buffer做處理，相較於IRP_MJ_READ和IRP_MJ_WRITE，IOCTL相當適合在設定或者控制方面的應用；而IRP_MJ_READ和IRP_MJ_WRITE則是比較適合資料傳輸的應用。IOCTL Input和Output Buffer的屬性也是需要做設定，分為Buffered、Direct和Neither這三種設定方式，感覺是不是跟File Operation的Buffer設定方式很相似呢？沒錯，運作原理基本上是一樣的，雖然表面看起來有點複雜，其實只要把Buffer的設定方式搞懂後，使用者就可以發現，整個運作原理是相當容易理解的。<br><br>
+
+至於IOCTL到底是什麼東西呢？其實它只是一個32Bit的數值，欄位如下所示，透過Microsoft的Macro(CTL_CODE)定義該數值，說穿了，只要App跟驅動程式都可以互相知道對方的意思(IOCTL數值)就可以，當然有一些是Microsoft定義保留的Global IOCTL，在使用上，需要特別注意一下。<br>
+<img src="cpp_ioctl/3.jpg" class="maxSize"><br>
+Ref. <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/defining-i-o-control-codes">https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/defining-i-o-control-codes</a><br><br>
+
+IOCTL相關的IRP：
+</p>
+
+<table>
+<tr>
+  <th>Win32 API</th>
+  <th>Kernel IRP</th>
+</tr>
+<tr>
+  <td>CreateFile()</td>
+  <td>IRP_MJ_CREATE</td>
+</tr>
+<tr>
+  <td>DeviceIoControl()</td>
+  <td>IRP_MJ_DEVICE_CONTROL</td>
+</tr>
+<tr>
+  <td>CloseFile()</td>
+  <td>IRP_MJ_CLOSE</td>
+</tr>
+</table><br>
+
+<p>
+IOCTL命令：
+</p>
+<table>
+<tr>
+  <th>
+  IOCTL Code
+  </th>
+</tr>
+<tr>
+  <td>
+  (IrpStack)<br>
+  Parameters.DeviceIoControl.IoControlCode
+  </td>
+</tr>
+</table><br>
+
+<p>
+main.c
+</p>
+<pre class="brush:cpp">
+#include &lt;wdm.h&gt;
+
+#define IOCTL_TEST  CTL_CODE(FILE_DEVICE_UNKNOWN, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS) 
+#define DEV_NAME    L"\\Device\\firstIOCTL"
+#define SYM_NAME    L"\\DosDevices\\firstIOCTL"
+#define MSG         "Input Output Control(IOCTL)"
+
+PDEVICE_OBJECT gNextDevice=NULL;
+
+NTSTATUS AddDevice(PDRIVER_OBJECT pOurDriver, PDEVICE_OBJECT pPhyDevice)
+{
+  UNICODE_STRING usSymboName;
+  UNICODE_STRING usDeviceName;
+  PDEVICE_OBJECT pOurDevice=NULL;
+
+  DbgPrint(MSG);
+  RtlInitUnicodeString(&amp;usDeviceName, DEV_NAME);
+  IoCreateDevice(pOurDriver, 0, &amp;usDeviceName, FILE_DEVICE_UNKNOWN, 0, FALSE, &amp;pOurDevice);
+  RtlInitUnicodeString(&amp;usSymboName, SYM_NAME);
+  IoCreateSymbolicLink(&amp;usSymboName, &amp;usDeviceName);
+  gNextDevice = IoAttachDeviceToDeviceStack(pOurDevice, pPhyDevice);
+  pOurDevice-&gt;Flags&amp;= ~DO_DEVICE_INITIALIZING;
+  pOurDevice-&gt;Flags|= DO_BUFFERED_IO;
+  return STATUS_SUCCESS;
+}
+  
+void Unload(PDRIVER_OBJECT pOurDriver)
+{
+}
+
+NTSTATUS IrpPnp(PDEVICE_OBJECT pOurDevice, PIRP pIrp)
+{
+  PIO_STACK_LOCATION psk = IoGetCurrentIrpStackLocation(pIrp);
+  UNICODE_STRING usSymboName;
+
+  if(psk-&gt;MinorFunction == IRP_MN_REMOVE_DEVICE){
+    RtlInitUnicodeString(&amp;usSymboName, SYM_NAME);
+    IoDeleteSymbolicLink(&amp;usSymboName);
+    IoDetachDevice(gNextDevice);
+    IoDeleteDevice(pOurDevice);
+  }
+  IoSkipCurrentIrpStackLocation(pIrp);
+  return IoCallDriver(gNextDevice, pIrp);
+}
+
+NTSTATUS IrpIOCTL(PDEVICE_OBJECT pOurDevice, PIRP pIrp)
+{
+  PIO_STACK_LOCATION psk = IoGetCurrentIrpStackLocation(pIrp);
+
+  switch(psk-&gt;Parameters.DeviceIoControl.IoControlCode){
+  case IOCTL_TEST:
+    DbgPrint("IOCTL_TEST\n");
+    break;
+  }
+  IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+  return STATUS_SUCCESS;
+}
+
+NTSTATUS IrpFile(PDEVICE_OBJECT pOurDevice, PIRP pIrp)
+{
+  PIO_STACK_LOCATION psk = IoGetCurrentIrpStackLocation(pIrp);
+
+  switch(psk-&gt;MajorFunction){
+  case IRP_MJ_CREATE:
+    DbgPrint("IRP_MJ_CREATE\n");
+    break;
+  case IRP_MJ_CLOSE:
+    DbgPrint("IRP_MJ_CLOSE\n");
+    break;
+  }
+  IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+  return STATUS_SUCCESS;
+}
+  
+NTSTATUS DriverEntry(PDRIVER_OBJECT pOurDriver, PUNICODE_STRING pOurRegistry)
+{
+  pOurDriver-&gt;MajorFunction[IRP_MJ_PNP] = IrpPnp;
+  pOurDriver-&gt;MajorFunction[IRP_MJ_CREATE] =
+  pOurDriver-&gt;MajorFunction[IRP_MJ_CLOSE] = IrpFile;
+  pOurDriver-&gt;MajorFunction[IRP_MJ_DEVICE_CONTROL] = IrpIOCTL;
+  pOurDriver-&gt;DriverExtension-&gt;AddDevice = AddDevice;
+  pOurDriver-&gt;DriverUnload = Unload;
+  return STATUS_SUCCESS;
+}
+</pre>
+<p>
+<b>DriverEntry()</b>：設定相關Callback副程式。<br>
+<b>AddDevice()</b>：Create Device、Symbolic Link。<br>
+<b>IrpPnp()</b>：只處理移除事件。<br>
+<b>Unload()</b>：目前不作任何處理。<br>
+<b>IrpFile()</b>：只有列印訊息。<br>
+<b>IrpIOCTL()</b>：只關心IOCTL_TEST命令。<br><br>
+
+app.cpp
+</p>
+<pre class="brush:cpp">
+#define INITGUID
+#include &lt;windows.h&gt;
+#include &lt;winioctl.h&gt;
+#include &lt;strsafe.h&gt;
+#include &lt;setupapi.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define IOCTL_TEST CTL_CODE(FILE_DEVICE_UNKNOWN, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)
+ 
+int __cdecl main(int argc, char* argv[])
+{
+  DWORD dwRet = 0;
+  HANDLE hFile = NULL;
+
+  hFile = CreateFile("\\\\.\\firstIOCTL", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+  if (hFile == INVALID_HANDLE_VALUE) {
+    printf("failed to open driver\n");
+    return 1;
+  }
+  DeviceIoControl(hFile, IOCTL_TEST, NULL, 0, NULL, 0, &amp;dwRet, NULL);  
+  CloseHandle(hFile);
+  return 0;
+}
+</pre><br>
+
+<p>
+結果<br>
+<img src="cpp_ioctl/1.jpg" class="maxSize"><br>
+<img src="cpp_ioctl/2.jpg" class="maxSize">
+</p>
+
+<p>
+<br><a href="../../../driver.htm">返回上一頁</a>
+</p>
+
+</div>
+</div>
+</div>
+</body>
+</html>
