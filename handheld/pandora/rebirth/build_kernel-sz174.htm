@@ -22,15 +22,15 @@
   <meta name="googlebot" content="noarchive" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
 
-  <link rel="shortcut icon" href="../../../../website.ico">
-  <link rel="stylesheet" type="text/css" href="../../../../styles/shCore.css" />
-  <link rel="stylesheet" type="text/css" href="../../../../styles/shThemeDefault.css" />
-  <link rel="stylesheet" type="text/css" href="../../../../css/html.css" media="screen, projection, tv " />
-  <link rel="stylesheet" type="text/css" href="../../../../css/layout.css" media="screen, projection, tv" />
-  <link rel="stylesheet" type="text/css" href="../../../../css/print.css" media="print" />
+  <link rel="shortcut icon" href="../../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../../css/print.css" media="print" />
   
-  <script type="text/javascript" src="../../../../scripts/shCore.js"></script>
-  <script type="text/javascript" src="../../../../scripts/shBrushCpp.js"></script>
+  <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
 
   <!-- Conditional comment to apply opacity fix for IE #content background.
        Invalid CSS, but can be removed without harming design -->
@@ -43,36 +43,30 @@
 <script type="text/javascript">SyntaxHighlighter.all();</script>
 <div id="wrapper">
 <div id="content">
-<script type="text/javascript" src="../../../../header.js"></script>
+<script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Pandora 1GHz &rArr; Debian Mark2</h3>
+<h3>Pandora Rebirth</h3>
 <p><b>Build Kernel 3.2.78</b></p>
 <hr size="1">
 <p>
-Debian Mark2預載的Kernel版本是3.2.45，不過目前最新的SuperZaxxon 1.74系統，使用的Kernel版本則是3.2.78版，因此，司徒打算將Debian Mark2直接升級到這個版號，順便體驗一下最新版的Kernel，編譯過程如下說明：
+為了可以在Pandroa上面開發Linux Kernel Driver，司徒必須先替換既有的Kernel才可以做這些事情，因此，司徒架個一個Debian Chroot並且使用如下方式編譯：
 </p>
-
 <pre>
+$ cd 
 $ git clone git://git.openpandora.org/pandora-kernel.git
 $ cd pandora-kernel
+$ git checkout tags/sz_174
 $ make omap3_pandora_defconfig
 $ make uImage modules
-$ sudo make modules_install INSTALL_MOD_PATH="/lib/modules/"
-$ sudo cp arch/arm/boot/uImage /boot/uImage-3.2.78-hf
-$ sudo vim /boot/autoboot.txt
-  setenv bootargs root=/dev/mmcblk0p2 rw rootwait console=ttyS0,115200n8 vram=6272K omapfb.vram=0:3000K mmc_core.removable=0 video=/dev/fb0
-  fatload mmc 0 ${loadaddr} <b>uImage-3.2.78-hf</b>
-  bootm ${loadaddr}
-$ sudo reboot
-</pre><br>
+$ make modules_install INSTALL_MOD_PATH=out
+</pre>
 
 <p>
-完成<br>
-<img src="build_kernel-3.2.78/1.jpg" class="maxSize">
+編譯完成後，把<b>arch/arm/boot/uImage</b>覆蓋掉原本<b>/boot/uImage-3</b>，然後把<b>out/lib/</b>底下的檔案複製到<b>/lib/</b>下，重新開機後執行<b>depmod -a<b>即可。
 </p>
 
 <p>
-<br><a href="../../../../handheld.htm">返回上一頁</a>
+<br><a href="../../../handheld.htm">返回上一頁</a>
 </p>
 
 </div>
