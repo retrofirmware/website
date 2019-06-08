@@ -44,89 +44,354 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>STC STC15W4K56S4</h3>
-<p><b>驅動0.96吋單色OLED 128x128顯示屏(SSD1306)</b></p>
+<h3>STC15W4K56S4</h3>
+<p><b>點屏(1.50" OLED 128x128 SSD1351)</b></p>
 <hr size="1">
 <p>
-[Github] <a href="https://github.com/steward-fu/gh_ssd1351_doc.git">https://github.com/steward-fu/gh_ssd1351_doc.git</a>
+<img src="ssd1351/1.jpg" class="maxSize"><br>
+<img src="ssd1351/3.jpg" class="maxSize"><br><br>
+
+stc15w4k56s4.h
 </p>
+<pre class="brush:cpp">
+#ifndef __STC15W4K56S4_H__
+#define __STC15W4K56S4_H__
+
+  #include &lt;8051.h&gt;
+  #include &lt;compiler.h&gt;
+
+  #ifdef REG8051_H
+  #undef REG8051_H
+  #endif
+
+  SFR(ACC, 0xE0);
+  SFR(B,   0xF0);
+  SFR(PSW, 0xD0);
+    SBIT(CY,  0xd0, 7);
+    SBIT(AC,  0xd0, 6);
+    SBIT(F0,  0xd0, 5);
+    SBIT(RS1, 0xd0, 4);
+    SBIT(RS0, 0xd0, 3);
+    SBIT(OV,  0xd0, 2);
+    SBIT(P,   0xd0, 0);
+  SFR(SP,  0x81);
+  SFR(DPL, 0x82);
+  SFR(DPH, 0x83);
+
+  SFR(P0, 0x80);
+    SBIT(P00, 0x80, 0);
+    SBIT(P01, 0x80, 1);
+    SBIT(P02, 0x80, 2);
+    SBIT(P03, 0x80, 3);
+    SBIT(P04, 0x80, 4);
+    SBIT(P05, 0x80, 5);
+    SBIT(P06, 0x80, 6);
+    SBIT(P07, 0x80, 7);
+  SFR(P1, 0x90);
+    SBIT(P10, 0x90, 0);
+    SBIT(P11, 0x90, 1);
+    SBIT(P12, 0x90, 2);
+    SBIT(P13, 0x90, 3);
+    SBIT(P14, 0x90, 4);
+    SBIT(P15, 0x90, 5);
+    SBIT(P16, 0x90, 6);
+    SBIT(P17, 0x90, 7);
+  SFR(P2, 0xA0);
+    SBIT(P20, 0xa0, 0);
+    SBIT(P21, 0xa0, 1);
+    SBIT(P22, 0xa0, 2);
+    SBIT(P23, 0xa0, 3);
+    SBIT(P24, 0xa0, 4);
+    SBIT(P25, 0xa0, 5);
+    SBIT(P26, 0xa0, 6);
+    SBIT(P27, 0xa0, 7);
+  SFR(P3, 0xB0);
+    SBIT(P30, 0xb0, 0);
+    SBIT(P31, 0xb0, 1);
+    SBIT(P32, 0xb0, 2);
+    SBIT(P33, 0xb0, 3);
+    SBIT(P34, 0xb0, 4);
+    SBIT(P35, 0xb0, 5);
+    SBIT(P36, 0xb0, 6);
+    SBIT(P37, 0xb0, 7);
+  SFR(P4, 0xC0);
+    SBIT(P40, 0xc0, 0);
+    SBIT(P41, 0xc0, 1);
+    SBIT(P42, 0xc0, 2);
+    SBIT(P43, 0xc0, 3);
+    SBIT(P44, 0xc0, 4);
+    SBIT(P45, 0xc0, 5);
+    SBIT(P46, 0xc0, 6);
+    SBIT(P47, 0xc0, 7);
+  SFR(P5, 0xC8);
+    SBIT(P50, 0xc8, 0);
+    SBIT(P51, 0xc8, 1);
+    SBIT(P52, 0xc8, 2);
+    SBIT(P53, 0xc8, 3);
+    SBIT(P54, 0xc8, 4);
+    SBIT(P55, 0xc8, 5);
+    SBIT(P56, 0xc8, 6);
+    SBIT(P57, 0xc8, 7);
+  SFR(P6, 0xE8);
+    SBIT(P60, 0xe8, 0);
+    SBIT(P61, 0xe8, 1);
+    SBIT(P62, 0xe8, 2);
+    SBIT(P63, 0xe8, 3);
+    SBIT(P64, 0xe8, 4);
+    SBIT(P65, 0xe8, 5);
+    SBIT(P66, 0xe8, 6);
+    SBIT(P67, 0xe8, 7);
+  SFR(P7, 0xF8);
+    SBIT(P70, 0xf8, 0);
+    SBIT(P71, 0xf8, 1);
+    SBIT(P72, 0xf8, 2);
+    SBIT(P73, 0xf8, 3);
+    SBIT(P74, 0xf8, 4);
+    SBIT(P75, 0xf8, 5);
+    SBIT(P76, 0xf8, 6);
+    SBIT(P77, 0xf8, 7);
+  SFR(P0M0, 0x94);
+  SFR(P0M1, 0x93);
+  SFR(P1M0, 0x92);
+  SFR(P1M1, 0x91);
+  SFR(P2M0, 0x96);
+  SFR(P2M1, 0x95);
+  SFR(P3M0, 0xB2);
+  SFR(P3M1, 0xB1);
+  SFR(P4M0, 0xB4);
+  SFR(P4M1, 0xB3);
+  SFR(P5M0, 0xCA);
+  SFR(P5M1, 0xC9);
+  SFR(P6M0, 0xCC);
+  SFR(P6M1, 0xCB);
+  SFR(P7M0, 0xE2);
+  SFR(P7M1, 0xE1);
+
+  SFR(PCON, 0x87);
+  SFR(AUXR, 0x8E);
+  SFR(AUXR1, 0xA2);
+  SFR(P_SW1, 0xA2);
+  SFR(CLK_DIV, 0x97);
+  SFR(BUS_SPEED, 0xA1);
+  SFR(P1ASF, 0x9D);
+  SFR(P_SW2, 0xBA);
+
+  SFR(IE, 0xA8);
+    SBIT(EA,   0xa8, 7);
+    SBIT(ELVD, 0xa8, 6);
+    SBIT(EADC, 0xa8, 5);
+    SBIT(ES,   0xa8, 4);
+    SBIT(ET1,  0xa8, 3);
+    SBIT(EX1,  0xa8, 2);
+    SBIT(ET0,  0xa8, 1);
+    SBIT(EX0,  0xa8, 0);
+  SFR(IP, 0xB8);
+    SBIT(PPCA, 0xb8, 7);
+    SBIT(PLVD, 0xb8, 6);
+    SBIT(PADC, 0xb8, 5);
+    SBIT(PS,   0xb8, 4);
+    SBIT(PT1,  0xb8, 3);
+    SBIT(PX1,  0xb8, 2);
+    SBIT(PT0,  0xb8, 1);
+    SBIT(PX0,  0xb8, 0);
+  SFR(IE2, 0xAF);
+  SFR(IP2, 0xB5);
+  SFR(INT_CLKO, 0x8F);
+
+  SFR(TCON, 0x88);
+    SBIT(TF1, 0x88, 7);
+    SBIT(TR1, 0x88, 6);
+    SBIT(TF0, 0x88, 5);
+    SBIT(TR0, 0x88, 4);
+    SBIT(IE1, 0x88, 3);
+    SBIT(IT1, 0x88, 2);
+    SBIT(IE0, 0x88, 1);
+    SBIT(IT0, 0x88, 0);
+  SFR(TMOD, 0x89);
+  SFR(TL0, 0x8A);
+  SFR(TL1, 0x8B);
+  SFR(TH0, 0x8C);
+  SFR(TH1, 0x8D);
+  SFR(T4T3M, 0xD1);
+  SFR(T3T4M, 0xD1);
+  SFR(T4H, 0xD2);
+  SFR(T4L, 0xD3);
+  SFR(T3H, 0xD4);
+  SFR(T3L, 0xD5);
+  SFR(T2H, 0xD6);
+  SFR(T2L, 0xD7);
+  SFR(WKTCL, 0xAA);
+  SFR(WKTCH, 0xAB);
+  SFR(WDT_CONTR, 0xC1);
+
+  SFR(SCON, 0x98);
+    SBIT(SM0, 0x98, 7);
+    SBIT(SM1, 0x98, 6);
+    SBIT(SM2, 0x98, 5);
+    SBIT(REN, 0x98, 4);
+    SBIT(TB8, 0x98, 3);
+    SBIT(RB8, 0x98, 2);
+    SBIT(TI, 0x98, 1);
+    SBIT(RI, 0x98, 0);
+  SFR(SBUF, 0x99);
+  SFR(S2CON, 0x9A);
+  SFR(S2BUF, 0x9B);
+  SFR(S3CON, 0xAC);
+  SFR(S3BUF, 0xAD);
+  SFR(S4CON, 0x84);
+  SFR(S4BUF, 0x85);
+  SFR(SADDR, 0xA9);
+  SFR(SADEN, 0xB9);
+
+  SFR(ADC_CONTR, 0xBC);
+  SFR(ADC_RES, 0xBD);
+  SFR(ADC_RESL, 0xBE);
+
+  SFR(SPSTAT, 0xCD);
+  SFR(SPCTL, 0xCE);
+  SFR(SPDAT, 0xCF);
+
+  SFR(IAP_DATA, 0xC2);
+  SFR(IAP_ADDRH, 0xC3);
+  SFR(IAP_ADDRL, 0xC4);
+  SFR(IAP_CMD, 0xC5);
+  SFR(IAP_TRIG, 0xC6);
+  SFR(IAP_CONTR, 0xC7);
+
+  SFR(CCON, 0xD8);
+    SBIT(CF, 0xd8, 7);
+    SBIT(CR, 0xd8, 6);
+    SBIT(CCF2, 0xd8, 2);
+    SBIT(CCF1, 0xd8, 1);
+    SBIT(CCF0, 0xd8, 0);
+  SFR(CMOD, 0xD9);
+  SFR(CL, 0xE9);
+  SFR(CH, 0xF9);
+  SFR(CCAPM0, 0xDA);
+  SFR(CCAPM1, 0xDB);
+  SFR(CCAPM2, 0xDC);
+  SFR(CCAP0L, 0xEA);
+  SFR(CCAP1L, 0xEB);
+  SFR(CCAP2L, 0xEC);
+  SFR(PCA_PWM0, 0xF2);
+  SFR(PCA_PWM1, 0xF3);
+  SFR(PCA_PWM2, 0xF4);
+  SFR(CCAP0H, 0xFA);
+  SFR(CCAP1H, 0xFB);
+  SFR(CCAP2H, 0xFC);
+
+  SFR(CMPCR1, 0xE6);
+  SFR(CMPCR2, 0xE7);
+
+  SFR(PWMCFG, 0xf1);
+  SFR(PWMCR, 0xf5);
+  SFR(PWMIF, 0xf6);
+  SFR(PWMFDCR, 0xf7);
+
+  #define PWMC        (*(unsigned int  volatile xdata *)0xfff0)
+  #define PWMCH       (*(unsigned char volatile xdata *)0xfff0)
+  #define PWMCL       (*(unsigned char volatile xdata *)0xfff1)
+  #define PWMCKS      (*(unsigned char volatile xdata *)0xfff2)
+  #define PWM2T1      (*(unsigned int  volatile xdata *)0xff00)
+  #define PWM2T1H     (*(unsigned char volatile xdata *)0xff00)
+  #define PWM2T1L     (*(unsigned char volatile xdata *)0xff01)
+  #define PWM2T2      (*(unsigned int  volatile xdata *)0xff02)
+  #define PWM2T2H     (*(unsigned char volatile xdata *)0xff02)
+  #define PWM2T2L     (*(unsigned char volatile xdata *)0xff03)
+  #define PWM2CR      (*(unsigned char volatile xdata *)0xff04)
+  #define PWM3T1      (*(unsigned int  volatile xdata *)0xff10)
+  #define PWM3T1H     (*(unsigned char volatile xdata *)0xff10)
+  #define PWM3T1L     (*(unsigned char volatile xdata *)0xff11)
+  #define PWM3T2      (*(unsigned int  volatile xdata *)0xff12)
+  #define PWM3T2H     (*(unsigned char volatile xdata *)0xff12)
+  #define PWM3T2L     (*(unsigned char volatile xdata *)0xff13)
+  #define PWM3CR      (*(unsigned char volatile xdata *)0xff14)
+  #define PWM4T1      (*(unsigned int  volatile xdata *)0xff20)
+  #define PWM4T1H     (*(unsigned char volatile xdata *)0xff20)
+  #define PWM4T1L     (*(unsigned char volatile xdata *)0xff21)
+  #define PWM4T2      (*(unsigned int  volatile xdata *)0xff22)
+  #define PWM4T2H     (*(unsigned char volatile xdata *)0xff22)
+  #define PWM4T2L     (*(unsigned char volatile xdata *)0xff23)
+  #define PWM4CR      (*(unsigned char volatile xdata *)0xff24)
+  #define PWM5T1      (*(unsigned int  volatile xdata *)0xff30)
+  #define PWM5T1H     (*(unsigned char volatile xdata *)0xff30)
+  #define PWM5T1L     (*(unsigned char volatile xdata *)0xff31)
+  #define PWM5T2      (*(unsigned int  volatile xdata *)0xff32)
+  #define PWM5T2H     (*(unsigned char volatile xdata *)0xff32)
+  #define PWM5T2L     (*(unsigned char volatile xdata *)0xff33)
+  #define PWM5CR      (*(unsigned char volatile xdata *)0xff34)
+  #define PWM6T1      (*(unsigned int  volatile xdata *)0xff40)
+  #define PWM6T1H     (*(unsigned char volatile xdata *)0xff40)
+  #define PWM6T1L     (*(unsigned char volatile xdata *)0xff41)
+  #define PWM6T2      (*(unsigned int  volatile xdata *)0xff42)
+  #define PWM6T2H     (*(unsigned char volatile xdata *)0xff42)
+  #define PWM6T2L     (*(unsigned char volatile xdata *)0xff43)
+  #define PWM6CR      (*(unsigned char volatile xdata *)0xff44)
+  #define PWM7T1      (*(unsigned int  volatile xdata *)0xff50)        
+  #define PWM7T1H     (*(unsigned char volatile xdata *)0xff50)        
+  #define PWM7T1L     (*(unsigned char volatile xdata *)0xff51)
+  #define PWM7T2      (*(unsigned int  volatile xdata *)0xff52)
+  #define PWM7T2H     (*(unsigned char volatile xdata *)0xff52)
+  #define PWM7T2L     (*(unsigned char volatile xdata *)0xff53)
+  #define PWM7CR      (*(unsigned char volatile xdata *)0xff54)
+
+#endif
+</pre><br>
 
 <p>
-<img src="ssd1351/1.jpg" class="maxSize">
+main.c
 </p>
-
-<p><img src="ssd1351/2.jpg" class="maxSize">
-</p><br>
-
 <pre class="brush:cpp">
-/*========================================================================================================
-  Basically, all of files downloaded from my website can be modified or redistributed for any purpose.
-  It is my honor to share my interesting to everybody.
-  If you find any illeage content out from my website, please contact me firstly.
-  I will remove all of the illeage parts.
-  Thanks :)
-   
-  Steward Fu
-  steward.fu@gmail.com
-  https://steward-fu.github.io/website/index.htm
-========================================================================================================*/
-#include "../include/stc15w4k56s4.h"
+#include "stc15w4k56s4.h"
 
 #define DC    P54
-#define SDI    P43
-#define RST    P42
-#define SCK    P41
+#define SDI   P43
+#define RST   P42
+#define SCK   P41
 #define CS    P40
 
-// SSD1351 Commands
-enum
-{
+enum {
   SSD1351_CMD_SETCOLUMNADDRESS          = 0x15,
   SSD1351_CMD_SETROWADDRESS             = 0x75,
-  SSD1351_CMD_WRITERAM                  = 0x5C, // Write data to GRAM and increment until another command is sent
-  SSD1351_CMD_READRAM                   = 0x5D, // Read data from GRAM and increment until another command is sent
-  SSD1351_CMD_COLORDEPTH                = 0xA0, // Numerous functions include increment direction ... see DS 
-                                                // A0[0] = Address Increment Mode (0 = horizontal, 1 = vertical)
-                                                // A0[1] = Column Address Remap (0 = left to right, 1 = right to left)
-                                                // A0[2] = Color Remap (0 = ABC, 1 = CBA) - HW RGB/BGR switch
-                                                // A0[4] = COM Scan Direction (0 = top to bottom, 1 = bottom to top)
-                                                // A0[5] = Odd/Even Paid Split
-                                                // A0[7:6] = Display Color Mode (00 = 8-bit, 01 = 65K, 10/11 = 262K, 8/16-bit interface only)
-  SSD1351_CMD_SETDISPLAYSTARTLINE       = 0xA1,
-  SSD1351_CMD_SETDISPLAYOFFSET          = 0xA2, 
-  SSD1351_CMD_SETDISPLAYMODE_ALLOFF     = 0xA4, // Force entire display area to grayscale GS0
-  SSD1351_CMD_SETDISPLAYMODE_ALLON      = 0xA5, // Force entire display area to grayscale GS63
-  SSD1351_CMD_SETDISPLAYMODE_RESET      = 0xA6, // Resets the display area relative to the above two commands
-  SSD1351_CMD_SETDISPLAYMODE_INVERT     = 0xA7, // Inverts the display contents (GS0 -> GS63, GS63 -> GS0, etc.)
-  SSD1351_CMD_FUNCTIONSELECTION         = 0xAB, // Enable/Disable the internal VDD regulator
-  SSD1351_CMD_SLEEPMODE_DISPLAYOFF      = 0xAE, // Sleep mode on (display off)
-  SSD1351_CMD_SLEEPMODE_DISPLAYON       = 0xAF, // Sleep mode off (display on)
-  SSD1351_CMD_SETPHASELENGTH            = 0xB1, // Larger capacitance may require larger delay to discharge previous pixel state
-  SSD1351_CMD_ENHANCEDDRIVINGSCHEME     = 0xB2, 
-  SSD1351_CMD_SETFRONTCLOCKDIV          = 0xB3, // DCLK divide ration fro CLK (from 1 to 16)
-  SSD1351_CMD_SETSEGMENTLOWVOLTAGE      = 0xB4,
-  SSD1351_CMD_SETGPIO                   = 0xB5,
-  SSD1351_CMD_SETSECONDPRECHARGEPERIOD  = 0xB6,
-  SSD1351_CMD_GRAYSCALELOOKUP           = 0xB8,
-  SSD1351_CMD_LINEARLUT                 = 0xB9,
-  SSD1351_CMD_SETPRECHARGEVOLTAGE       = 0xBB,
-  SSD1351_CMD_SETVCOMHVOLTAGE           = 0xBE,
-  SSD1351_CMD_SETCONTRAST               = 0xC1,
-  SSD1351_CMD_MASTERCONTRAST            = 0xC7,
-  SSD1351_CMD_SETMUXRRATIO              = 0xCA,
-  SSD1351_CMD_NOP3                      = 0xD1,
-  SSD1351_CMD_NOP4                      = 0xE3,
-  SSD1351_CMD_SETCOMMANDLOCK            = 0xFD,
+  SSD1351_CMD_WRITERAM                  = 0x5c,
+  SSD1351_CMD_READRAM                   = 0x5d,
+  SSD1351_CMD_COLORDEPTH                = 0xa0,
+  SSD1351_CMD_SETDISPLAYSTARTLINE       = 0xa1,
+  SSD1351_CMD_SETDISPLAYOFFSET          = 0xa2, 
+  SSD1351_CMD_SETDISPLAYMODE_ALLOFF     = 0xa4,
+  SSD1351_CMD_SETDISPLAYMODE_ALLON      = 0xa5,
+  SSD1351_CMD_SETDISPLAYMODE_RESET      = 0xa6,
+  SSD1351_CMD_SETDISPLAYMODE_INVERT     = 0xa7,
+  SSD1351_CMD_FUNCTIONSELECTION         = 0xab,
+  SSD1351_CMD_SLEEPMODE_DISPLAYOFF      = 0xae,
+  SSD1351_CMD_SLEEPMODE_DISPLAYON       = 0xaf,
+  SSD1351_CMD_SETPHASELENGTH            = 0xb1,
+  SSD1351_CMD_ENHANCEDDRIVINGSCHEME     = 0xb2,
+  SSD1351_CMD_SETFRONTCLOCKDIV          = 0xb3,
+  SSD1351_CMD_SETSEGMENTLOWVOLTAGE      = 0xb4,
+  SSD1351_CMD_SETGPIO                   = 0xb5,
+  SSD1351_CMD_SETSECONDPRECHARGEPERIOD  = 0xb6,
+  SSD1351_CMD_GRAYSCALELOOKUP           = 0xb8,
+  SSD1351_CMD_LINEARLUT                 = 0xb9,
+  SSD1351_CMD_SETPRECHARGEVOLTAGE       = 0xbb,
+  SSD1351_CMD_SETVCOMHVOLTAGE           = 0xbe,
+  SSD1351_CMD_SETCONTRAST               = 0xc1,
+  SSD1351_CMD_MASTERCONTRAST            = 0xc7,
+  SSD1351_CMD_SETMUXRRATIO              = 0xca,
+  SSD1351_CMD_NOP3                      = 0xd1,
+  SSD1351_CMD_NOP4                      = 0xe3,
+  SSD1351_CMD_SETCOMMANDLOCK            = 0xfd,
   SSD1351_CMD_HORIZONTALSCROLL          = 0x96,
-  SSD1351_CMD_STOPMOVING                = 0x9E,
-  SSD1351_CMD_STARTMOVING               = 0x9F  
+  SSD1351_CMD_STOPMOVING                = 0x9e,
+  SSD1351_CMD_STARTMOVING               = 0x9f  
 };
 
 void delayms(unsigned int ms)
 {
   unsigned int cnt;
+
   while(ms--){
-    for(cnt=0; cnt<1000; cnt++);
+    for(cnt=0; cnt&lt;1000; cnt++);
   }
 }
 
@@ -136,15 +401,15 @@ void CMD(char cmd)
 
   CS = 0;
   DC = 0;
-  for(i=0; i<8; i++){
+  for(i=0; i&lt;8; i++){
     SCK = 0;      
-    if((cmd & 0x80) == 0x80){
+    if((cmd &amp; 0x80) == 0x80){
       SDI = 1;
     }
     else{
       SDI = 0;
     }
-    cmd<<= 1;
+    cmd&lt;&lt;= 1;
     SCK = 1;
   }
   CS = 1;
@@ -157,15 +422,15 @@ void DATA(char dat)
 
   CS = 0;
   DC = 1;
-  for(i=0; i<8; i++){
+  for(i=0; i&lt;8; i++){
     SCK = 0;      
-    if((dat & 0x80) == 0x80){
+    if((dat &amp; 0x80) == 0x80){
       SDI = 1;
     }
     else{
       SDI = 0;
     }
-    dat<<= 1;
+    dat&lt;&lt;= 1;
     SCK = 1;
   }
   CS = 1;
@@ -176,12 +441,12 @@ void cursor(unsigned char x, unsigned char y)
 {
   CMD(SSD1351_CMD_WRITERAM);
   CMD(SSD1351_CMD_SETCOLUMNADDRESS);
-  DATA(x);                            // Start Address
-  DATA(127);    // End Address (0x7F)
+  DATA(x);
+  DATA(127);
 
   CMD(SSD1351_CMD_SETROWADDRESS);
-  DATA(y);                            // Start Address
-  DATA(127);   // End Address (0x7F)
+  DATA(y);
+  DATA(127);
   CMD(SSD1351_CMD_WRITERAM);
 }
 
@@ -196,60 +461,50 @@ void reset(void)
 void init(void)
 {
   CMD(SSD1351_CMD_SETCOMMANDLOCK);
-  DATA(0x12);                               // Unlocked to enter commands
+  DATA(0x12);
   CMD(SSD1351_CMD_SETCOMMANDLOCK);
-  DATA(0xB1);                               // Make all commands accessible 
+  DATA(0xb1);
   CMD(SSD1351_CMD_SLEEPMODE_DISPLAYOFF);
   CMD(SSD1351_CMD_SETFRONTCLOCKDIV);
-  DATA(0xF1);//was F1
+  DATA(0xf1);
   CMD(SSD1351_CMD_SETMUXRRATIO);
-  DATA(0x7f);//7f
+  DATA(0x7f);
   CMD(SSD1351_CMD_COLORDEPTH);
-  DATA(0x74);                               // Bit 7:6 = 65,536 Colors, Bit 3 = BGR or RGB
+  DATA(0x74);
   CMD(SSD1351_CMD_SETCOLUMNADDRESS);
   DATA(0x00);
-  DATA(0x7F);
+  DATA(0x7f);
   CMD(SSD1351_CMD_SETROWADDRESS);
   DATA(0x00);
-  DATA(0x7F);
+  DATA(0x7f);
   CMD(SSD1351_CMD_SETDISPLAYSTARTLINE);
   DATA(0x00);
   CMD(SSD1351_CMD_SETDISPLAYOFFSET);
   DATA(0x00);
   CMD(SSD1351_CMD_SETGPIO);
-  DATA(0x00);                               // Disable GPIO pins
+  DATA(0x00);
   CMD(SSD1351_CMD_FUNCTIONSELECTION);
-  DATA(0x01);                               // External VDD (0 = External, 1 = Internal)
+  DATA(0x01);
   CMD(SSD1351_CMD_SETPHASELENGTH);
   DATA(0x32);
   CMD(SSD1351_CMD_SETSEGMENTLOWVOLTAGE);
-  DATA(0xA0);                               // Enable External VSL
-  DATA(0xB5);
+  DATA(0xa0);
+  DATA(0xb5);
   DATA(0x55);
   CMD(SSD1351_CMD_SETPRECHARGEVOLTAGE);
   DATA(0x17);
   CMD(SSD1351_CMD_SETVCOMHVOLTAGE);
   DATA(0x05);
   CMD(SSD1351_CMD_SETCONTRAST);
-  DATA(0xC8);
+  DATA(0xc8);
   DATA(0x80);
-  DATA(0xC8);
+  DATA(0xc8);
   CMD(SSD1351_CMD_MASTERCONTRAST);
-  DATA(0x0F);                               // Maximum contrast
+  DATA(0x0f);
   CMD(SSD1351_CMD_SETSECONDPRECHARGEPERIOD);
   DATA(0x01);
   CMD(SSD1351_CMD_SETDISPLAYMODE_RESET);
-
-
-  // Use default grayscale for now to save flash space (1k), but here are
-  // the values if someone wants to change them ...
   CMD(SSD1351_CMD_GRAYSCALELOOKUP);
-
-  /*  for(uint8_t i = 1;i < 64; i++)
-  {
-  SET_CS; CLR_CS; SET_DC; ssd1351SendByte( i+12, 0 );SET_CS;
-  }
-  */
   DATA(0x05);
   DATA(0x06);
   DATA(0x07);
@@ -258,9 +513,9 @@ void init(void)
   DATA(0x0a);
   DATA(0x0b);
   DATA(0x0c);
-  DATA(0x0D);
-  DATA(0x0E);
-  DATA(0x0F);
+  DATA(0x0d);
+  DATA(0x0e);
+  DATA(0x0f);
   DATA(0x10);
   DATA(0x11);
   DATA(0x12);
@@ -271,48 +526,48 @@ void init(void)
   DATA(0x18);
   DATA(0x1a);
   DATA(0x1b);
-  DATA(0x1C);
-  DATA(0x1D);
-  DATA(0x1F);
+  DATA(0x1c);
+  DATA(0x1d);
+  DATA(0x1f);
   DATA(0x21);
   DATA(0x23);
   DATA(0x25);
   DATA(0x27);
-  DATA(0x2A);
-  DATA(0x2D);
+  DATA(0x2a);
+  DATA(0x2d);
   DATA(0x30);
   DATA(0x33);
   DATA(0x36);
   DATA(0x39);
-  DATA(0x3C);
-  DATA(0x3F);
+  DATA(0x3c);
+  DATA(0x3f);
   DATA(0x42);
   DATA(0x45);
   DATA(0x48);
-  DATA(0x4C);
+  DATA(0x4c);
   DATA(0x50);
   DATA(0x54);
   DATA(0x58);
-  DATA(0x5C);
+  DATA(0x5c);
   DATA(0x60);
   DATA(0x64);
   DATA(0x68);
-  DATA(0x6C);
+  DATA(0x6c);
   DATA(0x70);
   DATA(0x74);
   DATA(0x78);
-  DATA(0x7D);
+  DATA(0x7d);
   DATA(0x82);
   DATA(0x87);
-  DATA(0x8C);
+  DATA(0x8c);
   DATA(0x91);
   DATA(0x96);
   DATA(0x9B);
-  DATA(0xA0);
-  DATA(0xA5);
-  DATA(0xAA);
-  DATA(0xAF);
-  DATA(0xB4);
+  DATA(0xa0);
+  DATA(0xa5);
+  DATA(0xaa);
+  DATA(0xaf);
+  DATA(0xb4);
   CMD(SSD1351_CMD_SLEEPMODE_DISPLAYON);
 } 
 
@@ -322,14 +577,14 @@ void color(void)
   unsigned char r=0x00;
   unsigned char g=0x00;
   unsigned char b=0xff;
-  unsigned char data1 = (r & 0xF8) | (g >> 5);
-  unsigned char data2 = (b >> 3) | ((g >> 2) << 5);
+  unsigned char data1 = (r &amp; 0xF8) | (g &gt;&gt; 5);
+  unsigned char data2 = (b &gt;&gt; 3) | ((g &gt;&gt; 2) &lt;&lt; 5);
   cursor(0, 0);
-  for(i=0; i<128; i++){
-      for(j=0; j<128; j++){
-        DATA(data1);
-        DATA(data2);
-      }
+  for(i=0; i&lt;128; i++){
+    for(j=0; j&lt;128; j++){
+      DATA(data1);
+      DATA(data2);
+    }
   }
 }
 
@@ -364,8 +619,27 @@ void main(void)
     delayms(1000);
   }
 }
+</pre><br>
 
-</pre>
+<p>
+Makefile
+</p>
+<pre>
+all:
+  sdcc main.c
+  packihx main.ihx > main.hex
+
+flash:
+  sudo stcgal -p /dev/ttyO2 -P stc15 -o clock_source=external main.hex
+
+clean:
+  rm -rf main.ihx main.lst main.mem main.rst main.lk main.map main.rel main.sym main.hex
+</pre><br>
+
+<p>
+完成<br>
+<img src="ssd1351/2.jpg" class="maxSize">
+</p>
 
 <p>
 <br><a href="../../mcu.htm">返回上一頁</a>

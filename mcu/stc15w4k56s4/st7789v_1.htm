@@ -45,67 +45,12 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>STC15W4K56S4</h3>
-<p><b>點屏(1.45" TFT 240x240 ST7789V)</b></p>
+<p><b>點屏(1.54" IPS 240x240 ST7789V)</b></p>
 <hr size="1">
 <p>
-<img src="st7789v/1.jpg" class="maxSize"><br>
-<img src="st7789v/2.jpg" class="maxSize">
-</p>
+<img src="st7789v_1/1.jpg" class="maxSize"><br>
+<img src="st7789v_1/2.jpg" class="maxSize"><br><br>
 
-<p>
-Pinout
-</p>
-<table>
-  <tr><th>腳位</th><th>說明</th></tr>
-  <tr><td>1</td><td>LED K</td></tr>
-  <tr><td>2</td><td>LED K</td></tr>
-  <tr><td>3</td><td>GND</td></tr>
-  <tr><td>4</td><td>GND</td></tr>
-  <tr><td>5</td><td>FMARK</td></tr>
-  <tr><td>6</td><td>SDA</td></tr>
-  <tr><td>7</td><td>WR</td></tr>
-  <tr><td>8</td><td>RS(SCL)</td></tr>
-  <tr><td>9</td><td>CS</td></tr>
-  <tr><td>10</td><td>RESET</td></tr>
-  <tr><td>11</td><td>IOVCC</td></tr>
-  <tr><td>12</td><td>IOVCC</td></tr>
-  <tr><td>13</td><td>VCC</td></tr>
-  <tr><td>14</td><td>VC</td></tr>
-  <tr><td>15</td><td>GND</td></tr>
-  <tr><td>16</td><td>GND</td></tr>
-  <tr><td>17</td><td>NC</td></tr>
-  <tr><td>18</td><td>NC</td></tr>
-  <tr><td>19</td><td>NC</td></tr>
-  <tr><td>20</td><td>NC</td></tr>
-  <tr><td>21</td><td>NC</td></tr>
-  <tr><td>22</td><td>NC</td></tr>
-  <tr><td>23</td><td>LED A</td></tr>
-  <tr><td>24</td><td>LED A</td></tr>
-</table><br>
-
-<p>
-<img src="st7789v/3.jpg" class="maxSize"><br><br>
-
-Pinout
-</p>
-
-<table>
-  <tr><th>腳位</th><th>說明</th></tr>
-  <tr><td>1</td><td>IOVCC</td></tr>
-  <tr><td>2</td><td>RESET</td></tr>
-  <tr><td>3</td><td>CS</td></tr>
-  <tr><td>4</td><td>RS(SCL)</td></tr>
-  <tr><td>5</td><td>WR</td></tr>
-  <tr><td>6</td><td>SDA</td></tr>
-  <tr><td>7</td><td>FMARK</td></tr>
-  <tr><td>8</td><td>GND</td></tr>
-  <tr><td>9</td><td>LED K</td></tr>
-  <tr><td>10</td><td>VCC</td></tr>
-  <tr><td>11</td><td>GND</td></tr>
-  <tr><td>12</td><td>LED A</td></tr>
-</table><br>
-
-<p>
 stc15w4k56s4.h
 </p>
 <pre class="brush:cpp">
@@ -399,160 +344,18 @@ main.c
 <pre class="brush:cpp">
 #include "stc15w4k56s4.h"
 
-#define RST   P54
-#define CS    P43
-#define SCL   P42
-#define WR    P41
-#define SDA   P40
-
-#define Command   0
-#define Parameter 1
+#define CS    P32
+#define RST   P33
+#define SCK   P34
+#define SDA   P35
+#define WR    P36
 
 void delayms(unsigned int ms)
 {
   unsigned int cnt;
+
   while(ms--){
     for(cnt=0; cnt&lt;1000; cnt++);
-  }
-}
-
-void Write(unsigned char flag, unsigned char dat)
-{
-  int i=0;
-
-  CS = 0;
-  SCL = 0;
-  SDA = flag;
-  SCL = 1;
-  for(i=0; i&lt;8; i++){
-    SCL = 0;      
-    if((dat &amp; 0x80) == 0x80){
-      SDA = 1;
-    }
-    else{
-      SDA = 0;
-    }
-    dat&lt;&lt;= 1;
-    SCL = 1;
-  }
-  CS = 1;
-
-}
-
-void reset(void)
-{
-  RST = 0;
-  delayms(100);
-  RST = 1;
-  delayms(100);
-}
-
-void init(void)
-{
-  Write(Command, 0x11);
-  delayms(120);   
-      
-  Write(Command, 0x36);
-  Write(Parameter, 0x00); 
-
-  Write(Command, 0x3a);
-  Write(Parameter, 0x05);
-
-  Write(Command, 0x2a); 
-  Write(Parameter, 0x00); 
-  Write(Parameter, 0x00); 
-  Write(Parameter, 0x00); 
-  Write(Parameter, 0xef); 
-
-  Write(Command, 0x2b); 
-  Write(Parameter, 0x00); 
-  Write(Parameter, 0x00); 
-  Write(Parameter, 0x00); 
-  Write(Parameter, 0xef);
-
-  Write(Command, 0xb2);
-  Write(Parameter, 0x0c);
-  Write(Parameter, 0x0c);
-  Write(Parameter, 0x00);
-  Write(Parameter, 0x33);
-  Write(Parameter, 0x33);
-
-  Write(Command, 0xb7);
-  Write(Parameter, 0x56);
-
-  Write(Command, 0xbb);
-  Write(Parameter, 0x1e); 
-
-  Write(Command ,0xc0); 
-  Write(Parameter, 0x2c); 
-
-  Write(Command, 0xc2); 
-  Write(Parameter, 0x01);
-
-  Write(Command, 0xc3);
-  Write(Parameter, 0x13);
-
-  Write(Command, 0xc4); 
-  Write(Parameter, 0x20);
-
-  Write(Command, 0xc6);
-  Write(Parameter, 0x0f);
-
-  Write(Command, 0xd0);
-  Write(Parameter, 0xa4);
-  Write(Parameter, 0xa1);
-
-  Write(Command, 0xe0);
-  Write(Parameter, 0xd0);
-  Write(Parameter, 0x03);
-  Write(Parameter, 0x08);
-  Write(Parameter, 0x0e);
-  Write(Parameter, 0x11);
-  Write(Parameter, 0x2b);
-  Write(Parameter, 0x3b);
-  Write(Parameter, 0x44);
-  Write(Parameter, 0x4c);
-  Write(Parameter, 0x2b);
-  Write(Parameter, 0x16);
-  Write(Parameter, 0x15);
-  Write(Parameter, 0x1e);
-  Write(Parameter, 0x21);
-
-  Write(Command, 0xe1);
-  Write(Parameter, 0xd0);
-  Write(Parameter, 0x03);
-  Write(Parameter, 0x08);
-  Write(Parameter, 0x0e);
-  Write(Parameter, 0x11);
-  Write(Parameter, 0x2b);
-  Write(Parameter, 0x3b);
-  Write(Parameter, 0x54);
-  Write(Parameter, 0x4c);
-  Write(Parameter, 0x2b);
-  Write(Parameter, 0x16);
-  Write(Parameter, 0x15);
-  Write(Parameter, 0x1e);
-  Write(Parameter, 0x21);
-
-  Write(Command, 0x51);
-  Write(Parameter, 0x20);
-
-  Write(Command, 0xe7);
-  Write(Parameter, 0x00);
-
-  Write(Command, 0x29);
-}
-
-void color(void)
-{
-  unsigned int x, y;
-
-  Write(Command, 0x2c); 
-  for(y=0; y&lt;240; y++){
-    for(x=0; x&lt;240; x++){
-      Write(Parameter, 0xf1);
-      Write(Parameter, 0x00);
-    }
   }
 }
 
@@ -568,23 +371,179 @@ void gpio_init(void)
   P3M1 = 0x00;
   P4M0 = 0x00;
   P4M1 = 0x00;
-  P5M0 = 0x00;
-  P5M1 = 0x00;
+
+  P0 = 0xff;
+  P1 = 0xff;
+  P2 = 0xff;
+  P3 = 0xff;
+  P4 = 0xff;
+}
+
+void spi_cmd(unsigned char cmd)
+{
+  unsigned char bit;
+
+  CS = 0;
+  SCK = 0;         
+  SDA = 0;
+  SCK = 1;
+  for(bit=0; bit&lt;8; bit++){
+    SCK = 0;
+    if((cmd &amp; 0x80) == 0x80){
+      SDA = 1;
+    }
+    else{
+      SDA = 0;
+    }
+    SCK = 1;
+    cmd&lt;&lt;= 1;
+  }
+  CS = 1;
+}
+
+void spi_dat(unsigned char dat)
+{
+  unsigned char bit;
+
+  CS = 0;
+  SCK = 0;
+  SDA = 1;
+  SCK = 1;
+
+  for(bit=0; bit&lt;8; bit++){
+    SCK = 0;
+    if((dat &amp; 0x80) == 0x80){
+      SDA = 1;
+    }
+    else{
+      SDA = 0;
+    }
+    SCK = 1;
+    dat&lt;&lt;= 1;
+  }
+  CS = 1;
+}
+
+void lcd_init(void)
+{
+  spi_cmd(0x11);
+  delayms(120);
+
+  spi_cmd(0x36);     
+  spi_dat(0x00);   
+
+  spi_cmd(0x3a);
+  spi_dat(0x05);   
+
+  spi_cmd(0xb2);     
+  spi_dat(0x0c);   
+  spi_dat(0x0c);   
+  spi_dat(0x00);   
+  spi_dat(0x33);   
+  spi_dat(0x33);   
+
+  spi_cmd(0xb7);     
+  spi_dat(0x35);   
+
+  spi_cmd(0xbb);     
+  spi_dat(0x1a);   
+
+  spi_cmd(0xc0);     
+  spi_dat(0x2c);   
+
+  spi_cmd(0xc2);     
+  spi_dat(0x01);   
+
+  spi_cmd(0xc3);     
+  spi_dat(0x0b);   
+
+  spi_cmd(0xc4);     
+  spi_dat(0x20);   
+
+  spi_cmd(0xc6);     
+  spi_dat(0x0f);   
+
+  spi_cmd(0xd0);     
+  spi_dat(0xa4);   
+  spi_dat(0xa1);   
+
+  spi_cmd(0x21);     
+
+  spi_cmd(0xe0);     
+  spi_dat(0x00);   
+  spi_dat(0x19);   
+  spi_dat(0x1e);   
+  spi_dat(0x0a);   
+  spi_dat(0x09);   
+  spi_dat(0x15);   
+  spi_dat(0x3d);   
+  spi_dat(0x44);   
+  spi_dat(0x51);   
+  spi_dat(0x12);   
+  spi_dat(0x03);   
+  spi_dat(0x00);   
+  spi_dat(0x3f);   
+  spi_dat(0x3f);   
+
+  spi_cmd(0xe1);     
+  spi_dat(0x00);   
+  spi_dat(0x18);   
+  spi_dat(0x1e);   
+  spi_dat(0x0a);   
+  spi_dat(0x09);   
+  spi_dat(0x25);   
+  spi_dat(0x3f);   
+  spi_dat(0x43);   
+  spi_dat(0x52);   
+  spi_dat(0x33);   
+  spi_dat(0x03);   
+  spi_dat(0x00);   
+  spi_dat(0x3f);   
+  spi_dat(0x3f);   
+   
+  spi_cmd(0x2a);
+  spi_dat(0x00);
+  spi_dat(0x00);
+  spi_dat(0x00);
+  spi_dat(0xef);
+
+  spi_cmd(0x2b);
+  spi_dat(0x00);
+  spi_dat(0x28);
+  spi_dat(0x01);
+  spi_dat(0x18);
+
+  spi_cmd(0x29);
 }
 
 void main(void)
 {
+  unsigned int x, y;
+
   gpio_init();
   AUXR|= 0x80;
 
-  reset();
-  init();
-  color();
+  WR = 0;
+  RST = 0;
+  delayms(300);
+  RST = 1;
+  delayms(300);
+
+  lcd_init();
+
+  spi_cmd(0x2c);
+  for(y=0; y&lt;240; y++){
+    for(x=0; x&lt;240; x++){
+      spi_dat(0x7e);
+      spi_dat(0x00);
+    }
+  }
+
   while(1){
     P55 = 0;
-    delayms(1000);
+    delayms(500);
     P55 = 1;
-    delayms(1000);
+    delayms(500);
   }
 }
 </pre><br>
@@ -606,7 +565,7 @@ clean:
 
 <p>
 完成<br>
-<img src="st7789v/4.jpg" class="maxSize">
+<img src="st7789v_1/3.jpg" class="maxSize">
 </p>
 
 

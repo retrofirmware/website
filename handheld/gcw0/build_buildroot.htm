@@ -45,48 +45,30 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>GCW-Zero</h3>
-<p><b>Build Toolchain、rootfs</b></p>
+<p><b>Build Buildroot</b></p>
 <hr size="1">
 <p>
-編譯Toochain、rootfs的步驟如下說明：
+步驟如下：
 </p>
 
 <pre>
 $ sudo apt-get install bison flex gettext texinfo wget cpio python unzip mercurial subversion libncurses5-dev libc6-dev-i386 bzr
 $ git clone git://github.com/gcwnow/buildroot.git
 $ cd buildroot
+$ rm package/cmake/cmake-0001-FindQt4-do-not-prepend-CMake-root-path-when-searchin.patch
+$ vim package/cmake/cmake.mk
+  CMAKE_VERSION_MAJOR = 3.14
+  CMAKE_VERSION = $(CMAKE_VERSION_MAJOR).4
+
+$ wget https://w1.fi/releases/hostapd-2.8.tar.gz dl/hostpad-0.8_rtw_r7475.20130812.tar.gz
 $ make gcw0_defconfig
 $ make
-
->>> pwswd
-$ make menuconfig
- Target packages
-  Hardware handling
-
->>> libopk
-$ make menuconfig
- Target packages
-  Libraries
-   Filesystem
-
->>> libini master Configuration
-CMake Error at CMakeLists.txt:1 (cmake_minimum_required)
-  CMake 3.1.0 or higher is required. You are running version 2.8.12.2
-$ make menuconfig
- Target packages
-  Libraries
-   Text and terminal handling
 
 >> etna_viv master Building
 $ make menuconfig
  Target packages
   Libraries
    Graphics
-
->> hostapd 0.8_rtw_r7475.20130812 Extracting
-$ make menuconfig
- Target packages
-  Network applications
 </pre>
 
 <p>
