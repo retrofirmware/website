@@ -13,7 +13,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>司徒的教學網站</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <meta name="author" content="fullahead.org" />
   <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
@@ -45,54 +44,34 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>Nintendo GB</h3>
-<p><b>Assembly &rArr; 開發環境</b></p>
+<h3>Sega Genesis</h3>
+<p><b>如何透過IDA Pro除錯遊戲</b></p>
 <hr size="1">
 <p>
-<a href="https://github.com/rednex/rgbds">https://github.com/rednex/rgbds</a><br>
-<a href="https://github.com/sinamas/gambatte">https://github.com/sinamas/gambatte</a><br>
-<a href="https://github.com/lancekindle/DMGreport">https://github.com/lancekindle/DMGreport</a><br><br>
+Ref. <a href="https://github.com/lab313ru/smd_ida_tools">https://github.com/lab313ru/smd_ida_tools</a><br>
+Ref. <a href="https://github.com/lab313ru/smd_ida_tools/releases">https://github.com/lab313ru/smd_ida_tools/releases</a><br><br>
 
-編譯GB模擬器
-</p>
+司徒使用的是IDA Pro v6.8(SHA1: 7e4765a53f31326c90a8b06ba669632679346506, MD5: fd10242cec6521e6a74e1d4e5a855d8b)，這部份就找Google大神要了！接著是Plugin的部份，請參考Ref.部份下載並且放到IDA Pro根目錄，接著開啟IDA Pro<br>
+<img src="ida_pro/1.jpg" class="maxSize"><br><br>
 
-<pre>
-$ cd
-$ git clone https://github.com/sinamas/gambatte
-$ cd gambatte
-$ build_sdl.sh
-$ sudo cp gambatte_sdl/gambatte_sdl /usr/bin/
-</pre><br>
+接著司徒載入雷電測試(記得載入Binary格式)<br>
+<img src="ida_pro/2.jpg" class="maxSize"><br><br>
 
-<p>
-編譯開發工具
-</p>
-<pre>
-$ cd
-$ git https://github.com/rednex/rgbds
-$ cd rgbds
-$ make
-$ sudo make install
-</pre><br>
+載入後可以看到檔頭資訊<br>
+<img src="ida_pro/3.jpg" class="maxSize"><br><br>
 
-<p>
-編譯範例程式
-</p>
-<pre>
-$ cd
-$ https://github.com/lancekindle/DMGreport
-$ cd DMGreport
-$ rgbasm -o a.obj 01_minimal_template.asm 
-$ rgblink -o a.gb a.obj
-$ rgbfix -v -p0 a.gb
-$ gambatte_sdl a.gb
-</pre>
-<p>
-<img src="asm_setup/1.jpg" class="maxSize">
+接著按F9開始Debug<br>
+<img src="ida_pro/4.jpg" class="maxSize"><br><br>
+
+設定斷點<br>
+<img src="ida_pro/5.jpg" class="maxSize"><br><br>
+
+接著再度按下F9執行就可以停在設定的斷點上，而且還可以看到VRAM以及Register等資訊，真是相當強大的工具，當然也要感謝願意開發Plugin的熱心網友(Vladimir Kononovich)<br>
+<img src="ida_pro/6.jpg" class="maxSize">
 </p>
 
 <p>
-<br><a href="../../handheld.htm">返回上一頁</a>
+<br><br><a href="../../emu.htm">返回上一頁</a>
 </p>
 
 </div>

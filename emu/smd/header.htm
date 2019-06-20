@@ -45,10 +45,13 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>Sega Genesis</h3>
-<p><b>SMD檔頭資訊</b></p>
+<p><b>檔頭資訊</b></p>
 <hr size="1">
 <p>
-Ref. <a href="http://www.hacking-cult.org/?r/18/21">http://www.hacking-cult.org/?r/18/21</a><br><br>
+Ref. <a href="http://www.hacking-cult.org/?r/18/21">http://www.hacking-cult.org/?r/18/21</a><br>
+Ref. <a href="https://github.com/ekeeke/Genesis-Plus-GX">https://github.com/ekeeke/Genesis-Plus-GX</a><br><br>
+
+目前司徒知道的檔案副檔名類型，大致上有：*.smd、*.bin兩種，雖然副檔名可以隨意更改，不過一般模擬器還是會檢查檔案內部結構作為對應機制，Binary(*.bin)的檔頭資訊如下：
 </p>
 
 <table>
@@ -108,6 +111,13 @@ Ref. <a href="http://www.hacking-cult.org/?r/18/21">http://www.hacking-cult.org/
 <tr><td>0x1B8-0x1BB</td><td>SRAM end (default 0x0020FFFF)</td></tr>
 <tr><td>0x1BC-0x1FF</td><td>Notes (unused)</td></tr>
 <table><br>
+
+<p>
+因此，如果不是這個格式的檔案，基本上是可以看成SMD(*.smd)類型的檔案，但是這樣說明好像有點粗糙，因此，司徒追了一下Genesis-Plus-GX模擬器，並且把載入ROM的步驟列出來：<br>
+Step1. 檢查0x100的位置是否為<b>"ESAG"</b>，假如是，則必須做Endian交換(byte-swapped)，其實就是高低Byte互換的意思<br>
+Step2. 檢查0x100的位置是否為<b>"SEGA"</b>，假如不是，則代表SMD檔案類型，必須做de-interleave的動作，也就是前後8K Bytes互換<br>
+Step3. 接著載入處理完的檔案(Binary)
+</p>
 
 <p>
 <br><br><a href="../../emu.htm">返回上一頁</a>

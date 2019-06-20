@@ -45,38 +45,23 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>Nintendo GB</h3>
-<p><b>C/C++ &rArr; 開發環境</b></p>
+<h3>Family Computer</h3>
+<p><b>Build fceux</b></p>
 <hr size="1">
 <p>
-<a href="https://github.com/sinamas/gambatte">https://github.com/sinamas/gambatte</a><br>
-<a href="https://github.com/andreasjhkarlsson/gbdk-n">https://github.com/andreasjhkarlsson/gbdk-n</a><br><br>
+Ref. <a href="https://github.com/TASVideos/fceux">https://github.com/TASVideos/fceux</a><br><br>
 
-編譯GB模擬器
-</p>
-
-<pre>
-$ cd
-$ git clone https://github.com/sinamas/gambatte
-$ cd gambatte
-$ build_sdl.sh
-$ sudo cp gambatte_sdl/gambatte_sdl /usr/bin/
-</pre><br>
-
-<p>
-編譯開發工具以及範例程式
+編譯步驟如下：
 </p>
 <pre>
 $ cd
-$ git clone https://github.com/andreasjhkarlsson/gbdk-n
-$ cd gbdk-n
+$ git clone https://github.com/TASVideos/fceux
+$ cd fceux
+$ touch AUTHORS
+$ ./autogen.sh
+$ ./configure
 $ make
-$ make examples
-$ gambatte_sdl ./examples/galaxy/galaxy.gb
-</pre>
-<p>
-<img src="cpp_setup/1.jpg" class="maxSize">
-</p>
+</pre><br>
 
 <p>
 <br><a href="../../handheld.htm">返回上一頁</a>

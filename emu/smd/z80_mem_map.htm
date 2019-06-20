@@ -44,25 +44,32 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>IDA Pro</h3>
-<p><b>顯示OPCode</b></p>
+<h3>Sega Genesis &gt;&gt; 硬體資訊</h3>
+<p><b>Z80 Memory Map</b></p>
 <hr size="1">
 <p>
-IDA Pro預設的顯示是不會顯示OP Code，如下所示：<br>
-<img src="opcode/1.jpg" class="maxSize"><br><br>
+Ref. <a href="http://www.chibiakumas.com/68000/genesis.php">http://www.chibiakumas.com/68000/genesis.php</a><br><br>
 
-使用者可以使用如下方式開啓：<br>
-<img src="opcode/2.jpg" class="maxSize"><br><br>
-
-輸入想要顯示的Byte數量<br>
-<img src="opcode/3.jpg" class="maxSize"><br><br>
-
-完成<br>
-<img src="opcode/4.jpg" class="maxSize">
+Z80記憶體映射位置如下：
 </p>
+<table>
+<tr><th>Address</th><th>Description</th></tr>
+<tr><td>$0000~$1FFF</td><td>Sound RAM</td></tr>
+<tr><td>$2000~$3FFF</td><td>Reserved</td></tr>
+<tr><td>$4000</td><td>YM2612 A0</td></tr>
+<tr><td>$4001</td><td>YM2612 D0</td></tr>
+<tr><td>$4002</td><td>YM2612 A1</td></tr>
+<tr><td>$4003</td><td>YM2612 D1</td></tr>
+<tr><td>$4000~$5FFF</td><td>Sound Chip</td></tr>
+<tr><td>$6000</td><td>Bank Register</td></tr>
+<tr><td>$6000~$7F10</td><td>Misc</td></tr>
+<tr><td>$7F11</td><td>PSG 76489</td></tr>
+<tr><td>$7F12~$7FFF</td><td>Misc</td></tr>
+<tr><td>$8000~$FFFF</td><td>68000 Bank</td></tr>
+</table><br>
 
 <p>
-<br><a href="../../reverse.htm">返回上一頁</a>
+<br><br><a href="../../emu.htm">返回上一頁</a>
 </p>
 
 </div>

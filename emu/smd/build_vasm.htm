@@ -44,25 +44,24 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>IDA Pro</h3>
-<p><b>顯示OPCode</b></p>
+<h3>Sega Genesis</h3>
+<p><b>Build vasm</b></p>
 <hr size="1">
 <p>
-IDA Pro預設的顯示是不會顯示OP Code，如下所示：<br>
-<img src="opcode/1.jpg" class="maxSize"><br><br>
+Ref. <a href="http://sun.hasenbraten.de/vasm/index.php?view=relsrc">http://sun.hasenbraten.de/vasm/index.php?view=relsrc</a><br><br>
 
-使用者可以使用如下方式開啓：<br>
-<img src="opcode/2.jpg" class="maxSize"><br><br>
-
-輸入想要顯示的Byte數量<br>
-<img src="opcode/3.jpg" class="maxSize"><br><br>
-
-完成<br>
-<img src="opcode/4.jpg" class="maxSize">
+編譯步驟如下：
 </p>
+<pre>
+$ cd 
+$ wget http://sun.hasenbraten.de/vasm/release/vasm.tar.gz
+$ tar xvf vasm.tar.gz
+$ cd vasm
+$ make CPU=m68k SYNTAX=mot -j8
+</pre><br>
 
 <p>
-<br><a href="../../reverse.htm">返回上一頁</a>
+<br><br><a href="../../emu.htm">返回上一頁</a>
 </p>
 
 </div>
