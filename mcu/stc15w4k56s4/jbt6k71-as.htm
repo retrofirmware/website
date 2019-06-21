@@ -45,14 +45,12 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>STC15W4K56S4</h3>
-<p><b>點屏(2.80" IPS 320x240 S6D04M0X21)</b></p>
+<p><b>點屏(2.00" IPS 320x240 JBT6K71-AS)</b></p>
 <hr size="1">
 <p>
-<img src="s6d04m0x21/1.jpg" class="maxSize"><br>
-<img src="s6d04m0x21/2.jpg" class="maxSize"><br><br>
-
-16Bit<br>
-<img src="../../handheld/a330/ips_s6d04m0x21/6.jpg" class="maxSize"><br><br>
+<img src="jbt6k71-as/1.jpg" class="maxSize"><br>
+<img src="jbt6k71-as/2.jpg" class="maxSize"><br>
+<img src="jbt6k71-as/3.jpg" class="maxSize"><br><br>
 
 stc15w4k56s4.h
 </p>
@@ -347,21 +345,22 @@ main.c
 <pre class="brush:cpp">
 #include "stc15w4k56s4.h"
 
-#define RS   P54
-#define CS   P43
-#define RD   P42
-#define WR   P41
-#define RST  P40
-
+#define BL   P05
+#define RS   P04
+#define CS   P03
+#define RD   P02
+#define WR   P01
+#define RST  P00
+ 
 void delayms(unsigned int ms)
 {
   unsigned int cnt;
-
+ 
   while(ms--){
     for(cnt=0; cnt&lt;1000; cnt++);
   }
 }
-
+ 
 void lcd_write(unsigned char rs, unsigned int val)
 {
   CS = 0;
@@ -373,322 +372,132 @@ void lcd_write(unsigned char rs, unsigned int val)
   }
   RD = 1;
   WR = 1;
-
-  P0 = val;
-  P2 = (val >> 8);
+ 
+  P2 = (val &gt;&gt; 8);
+  WR = 0;
+  WR = 1;
+  P2 = val;
   WR = 0;
   WR = 1;
   CS = 1;
 }
-
+ 
 void lcd_write_cmd(unsigned int val)
 {
   lcd_write(0, val);
 }
-
+ 
 void lcd_write_data(unsigned int val)
 {
   lcd_write(1, val);
 }
-
+ 
 void lcd_set_color(void)
 {
   unsigned int i, j, color[]={0xf800, 0x7e0, 0x1f, 0};
-
-  lcd_write_cmd(0x002a);    
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x00ef);  
-
-  lcd_write_cmd(0x002b);    
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0001);
-  lcd_write_data(0x003f);
-  lcd_write_cmd(0x002c);
-
+ 
   for(i=0; i&lt;240; i++){
     for (j=0; j&lt;320; j++){
       lcd_write_data(color[i/80]);
     }
   }
 }
-
+ 
 void lcd_init(void)
 {
-  delayms(120);  
-  lcd_write_cmd(0x0001);
-  delayms(120);
-
-  lcd_write_cmd(0x00f0);    
-  lcd_write_data(0x005a); 
-  lcd_write_data(0x005a);
-
-  lcd_write_cmd(0x00f3);    
-  lcd_write_data(0x0000); 
-
-  lcd_write_cmd(0x00ff);    
-  lcd_write_data(0x0030); 
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0000); 
-  lcd_write_data(0x0040); 
-
-  lcd_write_cmd(0x0011);
-  delayms(120);
-
-  lcd_write_cmd(0x00f3);
-  lcd_write_data(0x0001);    
-  lcd_write_data(0x0026);
-  lcd_write_data(0x0026);
-  lcd_write_data(0x0007); 
-  lcd_write_data(0x0011);
-  lcd_write_data(0x0057);
-  lcd_write_data(0x0057); 
-  lcd_write_data(0x002c); 
-
-  lcd_write_cmd(0x00f4);    
-  lcd_write_data(0x0060);
-  lcd_write_data(0x0060);
-  lcd_write_data(0x006f);
-  lcd_write_data(0x006f);
-  lcd_write_data(0x0044);
-
-  lcd_write_cmd(0x00f5);    
-  lcd_write_data(0x0012);
-  lcd_write_data(0x0011);
-  lcd_write_data(0x0003);
-  lcd_write_data(0x00f0); 
-  lcd_write_data(0x0030);
-  lcd_write_data(0x001f);
-
+  lcd_write_cmd(0x0000);
   delayms(10);
-  lcd_write_cmd(0x00f3);    
-  lcd_write_data(0x0003);
-  delayms(20);
+  lcd_write_cmd(0x0000); 
+  delayms(10);
+  lcd_write_cmd(0x0000);
+  delayms(10);
 
-  lcd_write_cmd(0x00ff);    
-  lcd_write_data(0x0030); 
+  lcd_write_cmd(0x05ff);
   lcd_write_data(0x0000);
-  lcd_write_data(0x0000); 
-  lcd_write_data(0x0070);  
-  delayms(20);
+  lcd_write_cmd(0x001d);
+  lcd_write_data(0x0005);
+  delayms(100);
 
-  lcd_write_cmd(0x00f3);    
-  lcd_write_data(0x000f);
+  lcd_write_cmd(0x0000);
+  lcd_write_data(0x0001);
+  delayms(100);
 
-  lcd_write_cmd(0x00ff);    
-  lcd_write_data(0x0030); 
+  lcd_write_cmd(0x0001);
+  lcd_write_data(0x0027);
+  lcd_write_cmd(0x0002);
+  lcd_write_data(0x0200);
+  lcd_write_cmd(0x0003);
+  lcd_write_data(0x0038);
+
+  lcd_write_cmd(0x0007);
+  lcd_write_data(0x4004);
+  lcd_write_cmd(0x000d);
+  lcd_write_data(0x0011);
+  delayms(100);
+
+  lcd_write_cmd(0x0012);
+  lcd_write_data(0x0303);
+  lcd_write_cmd(0x0013);
+  lcd_write_data(0x0102);
+  lcd_write_cmd(0x001c);
   lcd_write_data(0x0000);
-  lcd_write_data(0x0000); 
-  lcd_write_data(0x0078);    
-  delayms(20);
 
-  lcd_write_cmd(0x00f3);    
-  lcd_write_data(0x001f);
+  lcd_write_cmd(0x0102);
+  lcd_write_data(0x00f6);
+  delayms(500);
 
-  lcd_write_cmd(0x00ff);    
-  lcd_write_data(0x0000); 
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0000); 
-  lcd_write_data(0x0078);  
-
-  delayms(20);
-  lcd_write_cmd(0x00f3);    
-  lcd_write_data(0x001f); 
-  delayms(40); 
-
-  lcd_write_cmd(0x00f3);
-  lcd_write_data(0x00ff);
-  lcd_write_data(0x0026);
-  lcd_write_data(0x0026);
+  lcd_write_cmd(0x0103);
   lcd_write_data(0x0007);
-  lcd_write_data(0x0055);
-  lcd_write_data(0x0057);
-  lcd_write_data(0x0057); 
-  lcd_write_data(0x002c); 
+  delayms(100);
 
-  delayms(50);  
-  lcd_write_cmd(0x0011);
-  delayms(100); 
+  lcd_write_cmd(0x0105);
+  lcd_write_data(0x0111);
+  delayms(100);
 
-  lcd_write_cmd(0x00f2);
-  lcd_write_data(0x0013);
-  lcd_write_data(0x0013);
+  lcd_write_cmd(0x0300);
+  lcd_write_data(0x0200);
+  lcd_write_cmd(0x0301);
+  lcd_write_data(0x0002);
+  lcd_write_cmd(0x0302);
+  lcd_write_data(0x0000);
+  lcd_write_cmd(0x0303);
+  lcd_write_data(0x0300);
+  lcd_write_cmd(0x0304);
+  lcd_write_data(0x0700);
+  lcd_write_cmd(0x0305);
+  lcd_write_data(0x0070);
+
+  lcd_write_cmd(0x0402);
+  lcd_write_data(0x0000);
+  lcd_write_cmd(0x0403);
+  lcd_write_data(0x013f);
+
+  lcd_write_cmd(0x0406);
+  lcd_write_data(0x0000);
+  lcd_write_cmd(0x0407);
+  lcd_write_data(0x00ef);
+  lcd_write_cmd(0x0408);
+  lcd_write_data(0x0000);
+  lcd_write_cmd(0x0409);
+  lcd_write_data(0x013f);
+
+  lcd_write_cmd(0x0200);
+  lcd_write_data(0x0000);
+  lcd_write_cmd(0x0201);
+  lcd_write_data(0x0000);
+
+  lcd_write_cmd(0x0100);
+  lcd_write_data(0xC010);
+  delayms(500);
+  lcd_write_cmd(0x0101);
   lcd_write_data(0x0001);
-  lcd_write_data(0x0008); 
-  lcd_write_data(0x0008);
-  lcd_write_data(0x0008); 
-  lcd_write_data(0x0008); 
-  lcd_write_data(0x0010); 
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0010);
-  lcd_write_data(0x0010);
+  lcd_write_cmd(0x0100);
+  lcd_write_data(0xf7fe);
+  delayms(800);
 
-  lcd_write_cmd(0x00fd);    
-  lcd_write_data(0x0055); 
-
-  lcd_write_cmd(0x0035); 
-  lcd_write_data(0x0000);    
-
-  lcd_write_cmd(0x0036);    
-  lcd_write_data(0x0048); 
-
-  lcd_write_cmd(0x003a);    
-  lcd_write_data(0x0055); 
-
-  lcd_write_cmd(0x00fe);    
-  lcd_write_data(0x0016);
-  lcd_write_data(0x0016);
-  lcd_write_data(0x0028);
-  lcd_write_data(0x0000); 
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0006); 
-         
-  lcd_write_cmd(0x00f6);    
-  lcd_write_data(0x0010);
-  lcd_write_data(0x0080);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0010);   
-         
-  lcd_write_cmd(0x0051);    
-  lcd_write_data(0x00ff);   
-         
-  lcd_write_cmd(0x0053);    
-  lcd_write_data(0x0000);   
-         
-  lcd_write_cmd(0x0055);    
-  lcd_write_data(0x0000);   
-         
-  lcd_write_cmd(0x005e);    
-  lcd_write_data(0x0000);   
-         
-  lcd_write_cmd(0x00ca);    
-  lcd_write_data(0x0080);
-  lcd_write_data(0x0080);
-  lcd_write_data(0x0020);  
-
-  lcd_write_cmd(0x00cb);    
-  lcd_write_data(0x0001); 
-  
-  lcd_write_cmd(0x00f7);    
-  lcd_write_data(0x0092);
-  lcd_write_data(0x001a);
-  lcd_write_data(0x001e);
-  lcd_write_data(0x001a); 
-  lcd_write_data(0x001d);
-  lcd_write_data(0x001d); 
-  lcd_write_data(0x001e); 
-  lcd_write_data(0x0026); 
-  lcd_write_data(0x001c);
-  lcd_write_data(0x001c);
-  lcd_write_data(0x0024);
-  lcd_write_data(0x001b); 
-  lcd_write_data(0x0009);
-  lcd_write_data(0x0011);
-  lcd_write_data(0x0018);
-
-  lcd_write_cmd(0x00f8);    
-  lcd_write_data(0x001a);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x001e);
-  lcd_write_data(0x001a); 
-  lcd_write_data(0x001d);
-  lcd_write_data(0x001a); 
-  lcd_write_data(0x001d); 
-  lcd_write_data(0x0024); 
-  lcd_write_data(0x001e);
-  lcd_write_data(0x001f);
-  lcd_write_data(0x0027);
-  lcd_write_data(0x001e); 
-  lcd_write_data(0x000a);
-  lcd_write_data(0x0011);
-  lcd_write_data(0x0011);
-
-  lcd_write_cmd(0x00f9);    
-  lcd_write_data(0x0086);
-  lcd_write_data(0x001a);
-  lcd_write_data(0x0010);
-  lcd_write_data(0x0010); 
-  lcd_write_data(0x001d);
-  lcd_write_data(0x001b); 
-  lcd_write_data(0x001f); 
-  lcd_write_data(0x0027); 
-  lcd_write_data(0x001b);
-  lcd_write_data(0x001f);
-  lcd_write_data(0x0027);
-  lcd_write_data(0x001e); 
-  lcd_write_data(0x000a);
-  lcd_write_data(0x0011);
-  lcd_write_data(0x0018);
-
-  lcd_write_cmd(0x00fa);    
-  lcd_write_data(0x001a);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x001e);
-  lcd_write_data(0x001a); 
-  lcd_write_data(0x001d);
-  lcd_write_data(0x001a); 
-  lcd_write_data(0x001d); 
-  lcd_write_data(0x0024); 
-  lcd_write_data(0x001e);
-  lcd_write_data(0x001f);
-  lcd_write_data(0x0027);
-  lcd_write_data(0x001e); 
-  lcd_write_data(0x000a);
-  lcd_write_data(0x0011);
-  lcd_write_data(0x0011);
-
-  lcd_write_cmd(0x00fb);    
-  lcd_write_data(0x0080);
-  lcd_write_data(0x001a);
-  lcd_write_data(0x001e);
-  lcd_write_data(0x001a); 
-  lcd_write_data(0x001d);
-  lcd_write_data(0x001b); 
-  lcd_write_data(0x001e); 
-  lcd_write_data(0x0026); 
-  lcd_write_data(0x0017);
-  lcd_write_data(0x001a);
-  lcd_write_data(0x001d);
-  lcd_write_data(0x0014); 
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0011);
-  lcd_write_data(0x0018);
-
-  lcd_write_cmd(0x00fc);    
-  lcd_write_data(0x001a);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x001e);
-  lcd_write_data(0x001a); 
-  lcd_write_data(0x001d);
-  lcd_write_data(0x001a); 
-  lcd_write_data(0x001d); 
-  lcd_write_data(0x0024); 
-  lcd_write_data(0x001e);
-  lcd_write_data(0x001f);
-  lcd_write_data(0x0027);
-  lcd_write_data(0x001e); 
-  lcd_write_data(0x000a);
-  lcd_write_data(0x0011);
-  lcd_write_data(0x0011);
-
-  lcd_write_cmd(0x002a);    
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x00ef);  
-
-  lcd_write_cmd(0x002b);    
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0000);
-  lcd_write_data(0x0001);
-  lcd_write_data(0x003f);
-
-  lcd_write_cmd(0x0029); 
-  lcd_write_cmd(0x002c); 
+  lcd_write_cmd(0x202);
 }
-
+ 
 void gpio_init(void)
 {
   P0M0 = 0x00;
@@ -704,17 +513,18 @@ void gpio_init(void)
   P5M0 = 0x00;
   P5M1 = 0x00;
 }
-
+ 
 void main(void)
 {
   gpio_init();
   AUXR|= 0x80;
 
+  BL = 1;
   RST = 0;
   delayms(150);
   RST = 1;
   delayms(150);
-
+ 
   lcd_init();
   lcd_set_color();
   while(1){
@@ -743,7 +553,7 @@ clean:
 
 <p>
 完成<br>
-<img src="s6d04m0x21/3.jpg" class="maxSize">
+<img src="jbt6k71-as/4.jpg" class="maxSize">
 </p>
 
 <p>
