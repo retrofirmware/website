@@ -49,7 +49,7 @@
 <p><b>設計</b></p>
 <hr size="1">
 <p>
-最先的構想是製作一台可以點對點的迷你FC掌機，而這樣的想法是來自QQ群的剃頭，雖然司徒一開始不想理他且一再拖延，不過，最終這個專案還是成行，於是司徒設定這台掌機的用途為超可攜、超高續航掌機，不過隨著時間流逝，目標越來越高遠，原本只是希望模擬FC遊戲，最後卻變成是跟丁果A320一樣的模擬效果，於是司徒開始找尋可用的核心板，最後選定使用MT7688模組(CPU 580MHz)，因為價格相對低廉且CPU速度比丁果A320好一點，至於按鍵部分(DPad、4按鍵、Start、Select、L和R)，則全部採用既有的NDSL按鍵，希望可以保有按鍵的手感(非整機手感)，屏幕則是2.0吋 IPS ILI9325 320x240解析度，於是司徒使用開源的OpenSCAD，畫了一個迷你外殼的雛型：<br>
+最先的構想是製作一台可以點對點的迷你FC掌機，而這樣的想法是來自QQ群的剃頭，雖然司徒一開始不想理他且一再拖延，不過，最終這個專案還是成行，於是司徒設定這台掌機的用途為超可攜、超高續航掌機，不過隨著時間流逝，目標越來越高遠，原本只是希望模擬FC遊戲，最後卻變成是跟丁果A320一樣的模擬效果，於是司徒開始找尋可用的核心板，最後選定使用MT7688模組(CPU 580MHz)，因為價格相對低廉且CPU速度比丁果A320快一點，至於按鍵部分(DPad、4按鍵、Start、Select、L和R)，則全部採用既有的NDSL按鍵，希望可以保有按鍵的手感(非整機手感)，屏幕則是2.0吋 IPS ILI9325 320x240解析度，於是司徒使用開源的OpenSCAD，畫了一個迷你外殼的雛型：<br>
 <img src="design/15.jpg" class="maxSize"><br><br>
 
 接著司徒使用自己的3D印表機列印<br>
@@ -100,7 +100,7 @@
 粗線果然比較好焊<br>
 <img src="design/13.jpg" class="maxSize"><br><br>
 
-由於MT7688開放出來的Kernel程式碼並沒有包含Framebuffer驅動程式，因此，司徒需要花了一些時間去移植Framebuffer驅動程式到MT7688身上，否則，第一步就走不下去了！不過，在移植之前，最先要做的事情，就是必須先把屏的驅動程式完成，於是司徒依照淘寶賣家提供的初始化程式碼做移植，雖然中途遇到一些問題，不過司徒最終還是把屏給點亮了！<br>
+由於MT7688開放出來的Kernel程式碼並沒有包含Framebuffer驅動程式，因此，司徒需要花了一些時間去移植Framebuffer驅動程式到MT7688身上，否則，第一步就走不下去了，不過，在移植之前，最先要做的事情，就是必須先把屏的驅動程式完成，於是司徒依照淘寶賣家提供的初始化程式碼做移植，雖然中途遇到一些問題，不過司徒最終還是把屏給點亮了<br>
 <img src="../../mcu/smart_mt7688/ili9335_reg/1.jpg" class="maxSize"><br><br>
 
 接著花了一些時間，順利的把Framebuffer移植到MT7688身上，而對於Framebuffer驅動程式的撰寫，司徒會找時間整理一系列的教學文章於Linux驅動程式<br>
@@ -121,7 +121,7 @@ GBC模擬器(GBC ROM)<br>
 GBC模擬器(GB ROM)<br>
 <img src="../../mcu/smart_mt7688/gnuboy/2.jpg" class="maxSize"><br>
 
-目前測試後，發現MT7688的GPIO速度太慢，更新一個畫面需要0.06秒，而雖然可以使用SPI介面，不過因為MT7688的SPI Master本身已經給Flash使用，大約計算一下，發現掃一個320x240的畫面，需要8MB/S的頻寬，而MT7688的SPI，大約只能跑出10MB/S的頻寬，加上如果把顯示與檔案系統都綁在同一個Bus上，可以預期不會得到一個好的效能表現，而司徒目前也不想額外使用Chip去做顯示處理，因此，司徒最後決定使用TI AM3358來做黑妹01的核心設計。<br><br>
+目前測試後，發現MT7688的GPIO速度太慢，更新一個畫面需要0.06秒，而雖然可以使用SPI介面，不過SPI介面的最大問題就是更新速度過慢的問題，因此，這種屏也不適合作為遊戲機的顯示用途，加上如果把顯示與檔案系統都綁在同一個SPI Bus上，可以預期不會得到一個好的效能表現，而司徒目前也不想額外使用其它晶片去做顯示處理，因此，司徒最後決定使用TI AM3358來做黑妹01的核心設計。<br><br>
 
 因此，司徒找了一塊AM3358開發板(BBGW)來作為實驗的硬體電路，待實驗成功後，再使用核心板設計最終電路，於是準備如下電路元件進行焊接<br>
 <img src="design/18.jpg" class="maxSize"><br><br>
@@ -162,7 +162,7 @@ GBC模擬器(GB ROM)<br>
 接著編譯Github上面最新的PCSX ReARMed測試，可以看到FPS是可以達到60FPS<br>
 <img src="../../mcu/bbgw/build_pcsx_rearmed/1.jpg" class="maxSize"><br><br>
 
-這個2.0吋IPS屏(320x240解析度)，具有相當不錯的可視角，而因為還沒上背光控制電路，因此，使用者可以發現會有漏光現象<br>
+這個2.0吋IPS屏(320x240解析度)，具有相當不錯的可視角<br>
 <img src="../../mcu/bbgw/build_pcsx_rearmed/2.jpg" class="maxSize"><br>
 <img src="../../mcu/bbgw/build_pcsx_rearmed/3.jpg" class="maxSize"><br>
 <img src="../../mcu/bbgw/build_pcsx_rearmed/4.jpg" class="maxSize"><br>
@@ -180,7 +180,7 @@ GBC模擬器(GB ROM)<br>
 感謝QQ群(掌機愛好者)的春華秋實幫忙設計的概念圖<br>
 <img src="design/28.jpg" class="maxSize"><br>
 
-司徒需要說明一件事情，那就是原本使用的是2.0吋 ILI9325 IPS 320x240屏，但是，因為這個屏沒有RGB介面，加上缺少Frame Sync硬體接腳，因此，無法做到VSync，導致在玩遊戲的過程中，會有閃屏的現象發生(Screen Tearing)，如果使用者有玩過丁果A320掌機或者Wiz掌機，應該就可以發現這個現象，因此，司徒再度花了一些時間找尋可以使用的屏幕，也剛好趁這個機會，司徒把屏幕從原本的2.0吋 IPS 320x240改為2.4吋 IPS 320x240，驅動介面也從原本的8080改為RGB介面，司徒希望讓這台遊戲機可以更趨完美，雖然硬體電路一再變更，不過這些都是值得的！<br><br>
+司徒需要說明一件事情，那就是原本使用的是2.0吋 ILI9325 IPS 320x240屏，但是，因為這個屏沒有RGB介面，加上缺少Frame Sync硬體接腳，因此，無法做到VSync，導致在玩遊戲的過程中，會有閃屏的現象發生(Screen Tearing)，如果使用者有玩過丁果A320掌機或者Wiz掌機，應該就可以發現這個現象，因此，司徒再度花了一些時間找尋可以使用的屏幕，也剛好趁這個機會，司徒把屏幕從原本的2.0吋 IPS 320x240改為2.4吋 IPS 320x240，驅動介面也從原本的8080改為RGB介面，司徒希望讓這台遊戲機可以更趨完美，雖然硬體電路一再變更，不過這些都是值得的<br><br>
   
 接著司徒再度花了一些時間移植驅動程式，也終於把進度跟上，下圖是2.4吋屏對比於2.0吋屏<br>
 <img src="design/29.jpg" class="maxSize"><br><br>
@@ -188,7 +188,7 @@ GBC模擬器(GB ROM)<br>
 司徒相當感謝QQ群(掌機愛好者)的群友幫忙，提供了許多意見給司徒，也相當感謝win2next幫忙設計開機圖片和黑妹01的Logo<br>
 <img src="design/30.jpg" class="maxSize"><br><br>
   
-因為已經加上背光控制電路，因此，漏光問題已經得以改善<br>
+加上背光控制電路<br>
 <img src="design/31.jpg" class="maxSize"><br><br>
   
 黑妹01的Logo如下圖所示，設計的靈感來自於HM(HandMade01)英文字母加上手工打造硬體電路的想法<br>
@@ -198,133 +198,7 @@ GBC模擬器(GB ROM)<br>
 <img src="design/33.jpg" class="maxSize"><br><br>
   
 AM3358的溫度大約是38度<br>
-<img src="design/34.jpg" class="maxSize"><br><br>
-  
-目前司徒已經開始畫Schematic電路圖，完成後就可以接著畫PCB電路並送洗電路板<br>
-<img src="design/35.jpg" class="maxSize"><br><br>
-
-目前正在畫PCB(大小為6.5cm x 7.0cm)<br>
-<img src="design/36.jpg" class="maxSize"><br>
-<img src="design/37.jpg" class="maxSize"><br><br>
-
-鋪銅<br>
-<img src="design/38.jpg" class="maxSize"><br>
-<img src="design/39.jpg" class="maxSize"><br><br>
-
-黑妹01的Logo<br>
-<img src="design/40.jpg" class="maxSize"><br><br>
-
-黑妹01的構想圖，司徒盡量不要在左右擺放插孔，因為當需要充電或者聽耳機時，會影響手感<br>
-<img src="design/41.jpg" class="maxSize"><br><br>
-
-送洗後的PCB<br>
-<img src="design/42.jpg" class="maxSize"><br>
-<img src="design/43.jpg" class="maxSize"><br><br>
-
-接的焊上元件<br>
-<img src="design/44.jpg" class="maxSize"><br><br>
-
-擺上NDSL軟膠墊<br>
-<img src="design/45.jpg" class="maxSize"><br><br>
-
-司徒打印的外殼<br>
-<img src="design/46.jpg" class="maxSize"><br><br>
-
-相當緊密的結合<br>
-<img src="design/47.jpg" class="maxSize"><br><br>
-
-測試用，因此，司徒先使用針腳焊接，這樣可以比較省成本<br>
-<img src="design/48.jpg" class="maxSize"><br>
-<img src="design/49.jpg" class="maxSize"><br>
-<img src="design/50.jpg" class="maxSize"><br><br>
-
-司徒沒有考慮好間距，導致LCD排線座位太過靠近核心板，因此，LCD排線很難插入<br>
-<img src="design/51.jpg" class="maxSize"><br><br>
-
-焊接後<br>
-<img src="design/52.jpg" class="maxSize"><br><br>
-
-正面<br>
-<img src="design/53.jpg" class="maxSize"><br><br>
-
-擺放LCD<br>
-<img src="design/54.jpg" class="maxSize"><br>
-<img src="design/55.jpg" class="maxSize"><br>
-<img src="design/56.jpg" class="maxSize"><br><br>
-
-為了節省成本，司徒最後使用模組化設計<br>
-<img src="design/57.jpg" class="maxSize"><br>
-<img src="design/58.jpg" class="maxSize"><br><br>
-
-送洗後的PCB<br>
-<img src="design/59.jpg" class="maxSize"><br><br>
-
-背面<br>
-<img src="design/60.jpg" class="maxSize"><br><br>
-
-主板<br>
-<img src="design/61.jpg" class="maxSize"><br><br>
-
-背面<br>
-<img src="design/62.jpg" class="maxSize"><br><br>
-
-套上美美的外殼<br>
-<img src="design/63.jpg" class="maxSize"><br><br>
-
-剛好貼合<br>
-<img src="design/64.jpg" class="maxSize"><br><br>
-
-LCD排線忘記留個縫隙<br>
-<img src="design/65.jpg" class="maxSize"><br><br>
-
-焊接核心板<br>
-<img src="design/66.jpg" class="maxSize"><br><br>
-
-由於這塊核心板不是全平面，因此要開孔<br>
-<img src="design/67.jpg" class="maxSize"><br><br>
-
-按鍵的PCB板<br>
-<img src="design/68.jpg" class="maxSize"><br><br>
-
-雙SDCard設計<br>
-<img src="design/69.jpg" class="maxSize"><br><br>
-
-上電測試，可以正常啟動<br>
-<img src="design/70.jpg" class="maxSize"><br><br>
-
-SDCard腳位Layout錯誤，目前已經可以開機進入系統，但是LCD那片PCB點不亮<br>
-<img src="design/71.jpg" class="maxSize"><br><br>
-
-後來發現是SDCard腳位Layout反了<br>
-<img src="design/72.jpg" class="maxSize"><br><br>
-
-LCD腳位的PCB Layout有更換，但是驅動忘記更改，測試發現，目前核心板的LCD RGB(R固定輸出高電位)<br>
-<img src="design/73.jpg" class="maxSize"><br>
-<img src="design/74.jpg" class="maxSize"><br><br>
-
-幸好有多備料，不然每次有問題都需要解焊核心板，開發成本還是有點高<br>
-<img src="design/75.jpg" class="maxSize"><br><br>
-
-最後測試發現是，LCD的腳位畫錯，因為16Bit是使用(D1~D11, D13~D17)，但是，司徒竟然把它畫成D0~D15<br>
-<img src="design/76.jpg" class="maxSize"><br><br>
-
-新的LCD PCB板<br>
-<img src="design/77.jpg" class="maxSize"><br><br>
-
-背面<br>
-<img src="design/78.jpg" class="maxSize"><br><br>
-
-焊接後<br>
-<img src="design/79.jpg" class="maxSize"><br><br>
-
-測試用的喇吧<br>
-<img src="design/80.jpg" class="maxSize"><br><br>
-
-感動的一刻，終於可以正常顯示顏色了<br>
-<img src="design/81.jpg" class="maxSize"><br><br>
-
-顏色正常<br>
-<img src="design/82.jpg" class="maxSize"><br><br>
+<img src="design/34.jpg" class="maxSize">
 </p>
 
 <p>
