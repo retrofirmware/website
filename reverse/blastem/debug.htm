@@ -44,25 +44,37 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>OllyDbg</h3>
-<p><b>Obfuscation</b></p>
+<h3>BlastEm</h3>
+<p><b>Debug ROM</b></p>
 <hr size="1">
 <p>
-Obfuscation(花指令)是最常用來Anti-Debug的技巧，雖然OllyDbg可以忽略並繼續單步執行，但是使用者可能會搞混目前指令到底是什麼，如果遇到這種程式，使用者可以單行組譯或者圈選多行組譯。<br><br>
+Ref. <a href="https://www.retrodev.com/blastem/">https://www.retrodev.com/blastem/</a><br><br>
 
-原始程式<br>
-<img src="obfuscation/1.jpg" class="maxSize"><br><br>
+編譯步驟如下：
+</p>
+<pre>
+$ cd
+$ wget https://www.retrodev.com/repos/blastem/archive/8aeac7bd9fa7.tar.gz
+$ tar xvf wget 8aeac7bd9fa7.tar.gz
+$ cd blastem-8aeac7bd9fa7
+$ make
+</pre><br>
 
-單行組譯(<b>Ctrl + e</b>和<b>Enter</b>)<br>
-<img src="obfuscation/2.jpg" class="maxSize"><br><br>
+<p>
+接著先log一下位址(使用音速小子測試)：
+</p>
+<pre>
+$ ./blastem -l 1.smd
+</pre>
+<p>
+紀錄的位址位於address.log<br><br>
 
-多行組譯<br>
-<img src="obfuscation/3.jpg" class="maxSize"><br>
-<img src="obfuscation/4.jpg" class="maxSize">
+接著使用debug方式執行且設定斷點於0xad00(紀錄於address.log)<br>
+<img src="debug/1.jpg" class="maxSize">
 </p>
 
 <p>
-<br><a href="../../reverse.htm">返回上一頁</a>
+<br><br><a href="../../reverse.htm">返回上一頁</a>
 </p>
 
 </div>

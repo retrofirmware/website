@@ -44,25 +44,34 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>OllyDbg</h3>
-<p><b>Obfuscation</b></p>
+<h3>IDA Pro</h3>
+<p><b>Debug ROM(SMD)</b></p>
 <hr size="1">
 <p>
-Obfuscation(花指令)是最常用來Anti-Debug的技巧，雖然OllyDbg可以忽略並繼續單步執行，但是使用者可能會搞混目前指令到底是什麼，如果遇到這種程式，使用者可以單行組譯或者圈選多行組譯。<br><br>
+Ref. <a href="https://github.com/lab313ru/smd_ida_tools">https://github.com/lab313ru/smd_ida_tools</a><br>
+Ref. <a href="https://github.com/lab313ru/smd_ida_tools/releases">https://github.com/lab313ru/smd_ida_tools/releases</a><br><br>
 
-原始程式<br>
-<img src="obfuscation/1.jpg" class="maxSize"><br><br>
+司徒使用的是IDA Pro v6.8(SHA1: 7e4765a53f31326c90a8b06ba669632679346506, MD5: fd10242cec6521e6a74e1d4e5a855d8b)，這部份就找Google大神要了！接著是Plugin的部份，請參考Ref.部份下載並且放到IDA Pro根目錄，接著開啟IDA Pro<br>
+<img src="debug_smd/1.jpg" class="maxSize"><br><br>
 
-單行組譯(<b>Ctrl + e</b>和<b>Enter</b>)<br>
-<img src="obfuscation/2.jpg" class="maxSize"><br><br>
+接著司徒載入雷電測試(記得載入Binary格式)<br>
+<img src="debug_smd/2.jpg" class="maxSize"><br><br>
 
-多行組譯<br>
-<img src="obfuscation/3.jpg" class="maxSize"><br>
-<img src="obfuscation/4.jpg" class="maxSize">
+載入後可以看到檔頭資訊<br>
+<img src="debug_smd/3.jpg" class="maxSize"><br><br>
+
+接著按F9開始Debug<br>
+<img src="debug_smd/4.jpg" class="maxSize"><br><br>
+
+設定斷點<br>
+<img src="debug_smd/5.jpg" class="maxSize"><br><br>
+
+接著再度按下F9執行就可以停在設定的斷點上，而且還可以看到VRAM以及Register等資訊，真是相當強大的工具，當然也要感謝願意開發Plugin的熱心網友(Vladimir Kononovich)<br>
+<img src="debug_smd/6.jpg" class="maxSize">
 </p>
 
 <p>
-<br><a href="../../reverse.htm">返回上一頁</a>
+<br><br><a href="../../reverse.htm">返回上一頁</a>
 </p>
 
 </div>

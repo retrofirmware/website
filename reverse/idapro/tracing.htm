@@ -44,21 +44,32 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>OllyDbg</h3>
-<p><b>Obfuscation</b></p>
+<h3>IDA Pro</h3>
+<p><b>Tracing function</b></p>
 <hr size="1">
 <p>
-Obfuscation(花指令)是最常用來Anti-Debug的技巧，雖然OllyDbg可以忽略並繼續單步執行，但是使用者可能會搞混目前指令到底是什麼，如果遇到這種程式，使用者可以單行組譯或者圈選多行組譯。<br><br>
+IDA Pro本身具備動態、靜態Debug功能，雖然司徒最常使用的功能還是靜態功能，不過IDA Pro本身的動態Tracing function功能也是一個相當值得注意的功能，因為該功能可以記錄程式本身跑過的副程式，在某些狀態下，更適合靜態分析、司徒使用記事本示範一下IDA Pro的Tracing function功能。<br><br>
 
-原始程式<br>
-<img src="obfuscation/1.jpg" class="maxSize"><br><br>
+設定要Trace的間格(F2斷點)<br>
+<img src="tracing/1.jpg" class="maxSize"><br><br>
 
-單行組譯(<b>Ctrl + e</b>和<b>Enter</b>)<br>
-<img src="obfuscation/2.jpg" class="maxSize"><br><br>
+Free run後，停在第一個斷點<br>
+<img src="tracing/2.jpg" class="maxSize"><br><br>
 
-多行組譯<br>
-<img src="obfuscation/3.jpg" class="maxSize"><br>
-<img src="obfuscation/4.jpg" class="maxSize">
+Enable Function tracing<br>
+<img src="tracing/3.jpg" class="maxSize"><br><br>
+
+Icon變成點下狀態<br>
+<img src="tracing/7.jpg" class="maxSize"><br><br>
+
+Debugger &gt;&gt; Tracing &gt;&gt; Tracing options<br>
+<img src="tracing/4.jpg" class="maxSize"><br><br>
+
+開啟Tracing window<br>
+<img src="tracing/5.jpg" class="maxSize"><br><br>
+
+再度Free run後，程式會停在第二個斷點，即可以看到tracing結果<br>
+<img src="tracing/6.jpg" class="maxSize">
 </p>
 
 <p>

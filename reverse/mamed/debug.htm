@@ -44,25 +44,49 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>OllyDbg</h3>
-<p><b>Obfuscation</b></p>
+<h3>MAMED</h3>
+<p><b>Debug ROM</b></p>
 <hr size="1">
 <p>
-Obfuscation(花指令)是最常用來Anti-Debug的技巧，雖然OllyDbg可以忽略並繼續單步執行，但是使用者可能會搞混目前指令到底是什麼，如果遇到這種程式，使用者可以單行組譯或者圈選多行組譯。<br><br>
+Ref. <a href="http://www.emu999.net/info/xsjx/2013/48103.html">http://www.emu999.net/info/xsjx/2013/48103.html</a><br>
+Ref. <a href="https://sourceforge.net/projects/testinput/files/">https://sourceforge.net/projects/testinput/files/</a><br><br>
 
-原始程式<br>
-<img src="obfuscation/1.jpg" class="maxSize"><br><br>
+司徒使用WINE當作測試環境<br><br>
 
-單行組譯(<b>Ctrl + e</b>和<b>Enter</b>)<br>
-<img src="obfuscation/2.jpg" class="maxSize"><br><br>
+1. 下載<a href="https://sourceforge.net/projects/testinput/files/">MAME Debugger</a><br>
+2. 解壓縮下載的Debugger<br>
+3. 把ROM放到roms資料夾<br>
+4. 產生mame.ini檔案
+</p>
+<pre>
+$ wine mamed.exe -createconfig
+</pre><br>
 
-多行組譯<br>
-<img src="obfuscation/3.jpg" class="maxSize"><br>
-<img src="obfuscation/4.jpg" class="maxSize">
+<p>
+5. 修改mame.ini
+</p>
+<pre>
+video    gdi
+window   1
+debug    1
+</pre><br>
+
+<p>
+6. 執行(只須加上ROM檔名就可以)
+</p>
+<pre>
+$ wine mamed.exe xxx
+</pre><br>
+
+<p>
+<img src="debug/1.jpg" class="maxSize"><br><br>
+
+7. 接著設定斷點(bpset 100)並按下F5執行，就可以停在中斷點<br>
+<img src="debug/2.jpg" class="maxSize"><br><br>
 </p>
 
 <p>
-<br><a href="../../reverse.htm">返回上一頁</a>
+<br><br><a href="../../emu.htm">返回上一頁</a>
 </p>
 
 </div>

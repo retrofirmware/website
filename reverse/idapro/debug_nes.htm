@@ -13,6 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>司徒的教學網站</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <meta name="author" content="fullahead.org" />
   <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
@@ -44,21 +45,25 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>OllyDbg</h3>
-<p><b>Obfuscation</b></p>
+<h3>IDA Pro</h3>
+<p><b>Debug ROM(NES)</b></p>
 <hr size="1">
 <p>
-Obfuscation(花指令)是最常用來Anti-Debug的技巧，雖然OllyDbg可以忽略並繼續單步執行，但是使用者可能會搞混目前指令到底是什麼，如果遇到這種程式，使用者可以單行組譯或者圈選多行組譯。<br><br>
+Ref. <a href="https://github.com/patois/nesldr">https://github.com/patois/nesldr</a><br>
+Ref. <a href="https://github.com/patois/MadNES">https://github.com/patois/MadNES</a><br>
+Ref. <a href="https://github.com/patois/bankswitch">https://github.com/patois/bankswitch</a><br>
+Ref. <a href="http://www.openrce.org/repositories/users/dennis/NESpackage.zip">http://www.openrce.org/repositories/users/dennis/NESpackage.zip</a><br><br>
 
-原始程式<br>
-<img src="obfuscation/1.jpg" class="maxSize"><br><br>
+目前的IDA Pro雖然有nesdbg，不過目前看來是半成品，尚沒有完成。<br><br>
 
-單行組譯(<b>Ctrl + e</b>和<b>Enter</b>)<br>
-<img src="obfuscation/2.jpg" class="maxSize"><br><br>
+1. nes.ldw放到IDA Pro的loaders目錄<br>
+2. bankswitch.plw和MadNES.plw放到IDA Pro的plugins目錄<br>
+3. 開啟IDA Pro並且載入NES遊戲<br>
+<img src="debug_nes/1.jpg" class="maxSize"><br>
+<img src="debug_nes/2.jpg" class="maxSize"><br><br>
 
-多行組譯<br>
-<img src="obfuscation/3.jpg" class="maxSize"><br>
-<img src="obfuscation/4.jpg" class="maxSize">
+4. 使用bankswitch切換Bank(載入位址於ROM:8000)<br>
+<img src="debug_nes/3.jpg" class="maxSize">
 </p>
 
 <p>

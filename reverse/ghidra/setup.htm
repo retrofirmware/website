@@ -44,21 +44,48 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>OllyDbg</h3>
-<p><b>Obfuscation</b></p>
+<h3>Ghidra</h3>
+<p><b>安裝環境</b></p>
 <hr size="1">
 <p>
-Obfuscation(花指令)是最常用來Anti-Debug的技巧，雖然OllyDbg可以忽略並繼續單步執行，但是使用者可能會搞混目前指令到底是什麼，如果遇到這種程式，使用者可以單行組譯或者圈選多行組譯。<br><br>
+Ref. <a href="https://ghidra-sre.org/">https://ghidra-sre.org/</a><br>
+Ref. <a href="https://www.cjavapy.com/article/90/">https://www.cjavapy.com/article/90/</a><br><br>
 
-原始程式<br>
-<img src="obfuscation/1.jpg" class="maxSize"><br><br>
+開源的Reversing Tool，聽說是NSA之前在使用的，司徒測試一下，發現具有直接反譯成C語言的功能，即使是MIPS執行檔案也是，而相較於付費的IDA Pro，Ghidra真的是相當佛心！因此，司徒決定先介紹一下安裝過程，當作日後使用筆記。<br><br>
 
-單行組譯(<b>Ctrl + e</b>和<b>Enter</b>)<br>
-<img src="obfuscation/2.jpg" class="maxSize"><br><br>
+1. Debian x64<br>
+2. 安裝OpenJDK 11
+</p>
+<pre>
+$ cd
+$ wget https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz
+$ sudo mkdir /usr/local/jdk
+$ tar -zxf openjdk-11.0.1_linux-x64_bin.tar.gz -C /usr/local/jdk
+$ echo "JAVA_HOME=/usr/local/jdk/jdk-11.0.1" | sudo tee -a ~/.bash_profile &amp;&amp;echo "export JAVA_HOME" | sudo tee -a ~/.bash_profile
+$ echo "PATH=$PATH:$JAVA_HOME/bin" | sudo tee -a ~/.bash_profile &amp;&amp;echo "export PATH" | sudo tee -a ~/.bash_profile &amp;&amp;source ~/.bash_profile  
+</pre><br>
 
-多行組譯<br>
-<img src="obfuscation/3.jpg" class="maxSize"><br>
-<img src="obfuscation/4.jpg" class="maxSize">
+<p>
+3. 安裝Ghidra
+</p>
+<pre>
+$ cd
+$ wget https://ghidra-sre.org/ghidra_9.0.4_PUBLIC_20190516.zip
+$ unzip ghidra_9.0.4_PUBLIC_20190516.zip
+$ cd ghidra_9.0.4
+$ ./ghidraRun
+  *******************************************************
+  JDK 11+ could not be found and must be manually chosen!
+  *******************************************************
+  Enter path to JDK home directory (ENTER for dialog): /usr/local/jdk/jdk-11.0.1
+  Saved changes to /home/steward/.ghidra/.ghidra-9.0.4/java_home.save
+
+$ ./ghidraRun
+</pre><br>
+
+<p>
+完成<br>
+<img src="setup/1.jpg" class="maxSize">
 </p>
 
 <p>

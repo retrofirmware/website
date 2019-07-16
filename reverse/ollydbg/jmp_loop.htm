@@ -49,18 +49,13 @@
 <p><b>JMP $</b></p>
 <hr size="1">
 <p>
-雖然<b>INT 3</b>加上OllyDbg自動攔截中斷功能已經是相當好用的Debug方式，但是，當遇到Service程式時，<b>JMP $</b>會比<b>INT 3</b>更好用，因為Patch <b>JMP $</b>後的Service程式會拉高CPU Usage，很容易使用Task Manager查看並使用OllDbg Attach Debug，唯一需要注意的事情就是<b>JMP $</b>安排的位置，位置太後面時，Service會併到SYSTEM Process裡，這樣會讓Debug更難。
-</p>
+<b>JMP $</b>的OPCode是<b>0xeb 0xfe</b>，當遇到要Debug Service程式時，<b>JMP $</b>會比<b>INT 3</b>(Enable自動攔截中斷功能)更好用，因為Patch後的Service程式會拉高CPU Usage，很容易使用Task Manager查看並使用OllDbg Attach，唯一需要注意的事情就是Patch的位置，位置太後面時，Service會併到SYSTEM Process裡，這樣會無法使用OllyDbg Debug。<br><br>
 
-<p>
-Patch <b>JMP $</b>前<br>
-<img src="jmp_loop/1.jpg" class="maxSize">
-</p>
+Patch前<br>
+<img src="jmp_loop/1.jpg" class="maxSize"><br><br>
 
-<p>
-Patch <b>JMP $</b>後<br>
-<img src="jmp_loop/2.jpg" class="maxSize"><br>
-P.S. <b>JMP $</b>的OP Code是<b>0xEB 0xFE</b>
+Patch後<br>
+<img src="jmp_loop/2.jpg" class="maxSize">
 </p>
 
 <p>
