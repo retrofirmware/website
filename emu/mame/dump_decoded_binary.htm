@@ -154,10 +154,6 @@ diff -Naur old/src/emu/romload.c new/src/emu/romload.c
        rom_region_name(regiontag, romdata-&gt;machine-&gt;gamedrv, source, region);
 -      LOG(("Processing region \"%s\" (length=%X)\n", regiontag.cstr(), regionlength));
 +      printf("region \"%s\" (length=%X)\n", regiontag.cstr(), regionlength);
-+      if(strcmp(regiontag.cstr(), "mainbios") == 0){
-+        match_region = 1;
-+        printf("match region\n");
-+      }
  
        /* the first entry must be a region */
        assert(ROMENTRY_ISREGION(region));
