@@ -45,39 +45,11 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>Nintendo Entertainment System &gt;&gt; 支援振動功能 &gt;&gt; Hack ROM</h3>
-<p><b>Mighty Final Fight(快打旋風)</b></p>
+<h3>FCEUX &gt;&gt; 讓NES遊戲支援振動功能</h3>
+<p><b>Register</b></p>
 <hr size="1">
 <p>
-首先感謝QQ Hank(勇七)協助Hack這個遊戲，因此，司徒拿來說明一下Hack過程。<br><br>
-
-遊戲畫面<br>
-<img src="rumble_1/1.jpg" class="maxSize"><br><br>
-
-打人時的斷點(0xEFCB)<br>
-<img src="rumble_1/4.jpg" class="maxSize"><br><br>
-
-往回跑才是原本的地方，呼叫客製的副程式0xEFC0<br>
-<img src="rumble_1/5.jpg" class="maxSize"><br><br>
-
-0xEFC0，0x1F是使用的變數，內容0xF0，當數到0xFF時就會停止振動<br>
-<img src="rumble_1/6.jpg" class="maxSize"><br><br>
-
-被打時的斷點(0xF928)<br>
-<img src="rumble_1/7.jpg" class="maxSize"><br><br>
-
-內容0xF0，當數到0xFF時就會停止振動<br>
-<img src="rumble_1/8.jpg" class="maxSize"><br><br>
-
-計數中斷<br>
-<img src="rumble_1/9.jpg" class="maxSize"><br><br>
-
-每次加1，數到0x00就不振動<br>
-<img src="rumble_1/10.jpg" class="maxSize"><br><br>
-
-Binary Diff<br>
-<img src="rumble_1/2.jpg" class="maxSize"><br>
-<img src="rumble_1/3.jpg" class="maxSize"><br><br>
+CPU Register 0x4009, Bit0: 1(開始震動), 0(停止振動)
 </p>
 
 <p>

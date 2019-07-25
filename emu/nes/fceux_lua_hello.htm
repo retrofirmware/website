@@ -45,29 +45,31 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>Nintendo Entertainment System</h3>
-<p><b>Patch Sprite(ASCII)</b></p>
+<h3>Nintendo Entertainment System &gt;&gt; FCEUX &gt;&gt; LUA</h3>
+<p><b>Hello world!</b></p>
 <hr size="1">
 <p>
-目標：把Contra的1988字串改成2019<br><br>
+Ref. <a href="http://www.fceux.com/web/help/fceux.html?LuaGettingStarted.html">http://www.fceux.com/web/help/fceux.html?LuaGettingStarted.html</a><br><br>
 
-原本字樣<br>
-<img src="patch_sprite_ascii/1.jpg" class="maxSize"><br><br>
+hello.lua
+</p>
+<pre class="brush:cpp">
+while (true) do
+  gui.text(50,50,"Hello world!");
+  emu.frameadvance();
+end;
+</pre><br>
 
-叫出Debugger並且停住畫面(Step Into)<br>
-<img src="patch_sprite_ascii/2.jpg" class="maxSize"><br><br>
+<p>
+接著執行任意一個遊戲並帶入LUA
+</p>
+<pre>
+$ fceux --loadlua test.lua xxx.nes
+</pre><br>
 
-使用Name Table Viewer查看PPU Address，"1"的Tile ID是0x31且儲存在PPU 0x2b13位置<br>
-<img src="patch_sprite_ascii/3.jpg" class="maxSize"><br><br>
-
-叫出PPU Memory，這才發現是ASCII方式顯示<br>
-<img src="patch_sprite_ascii/4.jpg" class="maxSize"><br><br>
-
-使用VIM編輯並且儲存<br>
-<img src="patch_sprite_ascii/5.jpg" class="maxSize"><br><br>
-
+<p>
 完成<br>
-<img src="patch_sprite_ascii/6.jpg" class="maxSize">
+<img src="fceux_lua_hello/1.jpg" class="maxSize">
 </p>
 
 <p>
