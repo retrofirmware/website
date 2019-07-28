@@ -44,7 +44,7 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>RG300</h3>
+<h3>Retro Game Plus (2週年紀念版)</h3>
 <p><b>移植FCEUX(支援振動)</b></p>
 <hr size="1">
 <pre class="brush:cpp">
@@ -106,7 +106,7 @@ diff -Naur old/src/drivers/dingux-sdl/dingoo.cpp new/src/drivers/dingux-sdl/ding
    CloseGame();
 +  
 +  if(motordev &gt; 0){
-+    motorreg[0x418]|= 4;
++    motorreg[0x414]|= 4;
 +    munmap((void*)motorreg, 4096);
 +    close(motordev);
 +  }
@@ -146,7 +146,7 @@ diff -Naur old/src/drivers/dingux-sdl/input.cpp new/src/drivers/dingux-sdl/input
                  // Power switch, SDL_GetKeyState will not ever see this.
                  // Keep a record of it.
                  MenuRequested = true;
-+                motorreg[0x418]|= 4;
++                motorreg[0x414]|= 4;
 +             }
              break;
          default:
@@ -173,10 +173,10 @@ diff -Naur old/src/x6502.cpp new/src/x6502.cpp
 +void do_rumble(unsigned char val)
 +{
 +  if(val){
-+    motorreg[0x414]|= 4;
++    motorreg[0x418]|= 4;
 +  }
 +  else{
-+    motorreg[0x418]|= 4;
++    motorreg[0x414]|= 4;
 +  }
 +}
 +
