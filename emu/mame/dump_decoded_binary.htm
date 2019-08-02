@@ -88,17 +88,7 @@ diff -Naur old/src/emu/romload.c new/src/emu/romload.c
 +  printf("all done\n");
    return ROM_GETLENGTH(romp);
  }
- 
-@@ -922,10 +923,9 @@
-     /* handle fills */
-     if (ROMENTRY_ISFILL(romp))
-       fill_rom_data(romdata, romp++);
--
-     /* handle copies */
-     else if (ROMENTRY_ISCOPY(romp))
--      copy_rom_data(romdata, romp++);
-+      copy_rom_data(romdata, romp++); 
- 
+  
      /* handle files */
      else if (ROMENTRY_ISFILE(romp))
 @@ -935,7 +935,7 @@
