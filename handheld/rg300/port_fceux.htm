@@ -47,6 +47,9 @@
 <h3>RG300</h3>
 <p><b>移植FCEUX(支援振動)</b></p>
 <hr size="1">
+<p>
+目前司徒先移植FCEUX模擬器，讓其可以支援振動功能，思路相當簡單，只要在模擬器開始執行時，Remap Memory並且初始化馬達的狀態，接著判斷是否有對0x4009 CPU Register做設定，藉此控制馬達的狀態，如下程式：
+</p>
 <pre class="brush:cpp">
 diff -Naur old/src/drivers/dingux-sdl/dingoo.cpp new/src/drivers/dingux-sdl/dingoo.cpp
 --- old/src/drivers/dingux-sdl/dingoo.cpp  2019-05-07 16:32:59.613981947 +0800

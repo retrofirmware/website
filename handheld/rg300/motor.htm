@@ -48,19 +48,48 @@
 <p><b>支援振動馬達</b></p>
 <hr size="1">
 <p>
+司徒最近打算讓開源掌機都可以支援振動功能，因為這樣可以讓遊戲更加有樂趣，當然搭配的則是Hack NES遊戲，借此讓NES遊戲支援振動功能，而第一台開刀的機器就是RG300，因為RG300是目前司徒拿到最新的開源掌機，當然，司徒也相當感謝揚立銘提供的PCB焊點圖，讓司徒可以快速完成硬體改機。<br><br>
+
+使用的腳位為LCD_SDA(TP148)<br>
 <img src="motor/1.jpg" class="maxSize"><br><br>
+
+馬達<br>
 <img src="motor/2.jpg" class="maxSize"><br><br>
+
+接著就開始焊接<br>
 <img src="motor/3.jpg" class="maxSize"><br><br>
+
+幸運地，初始化後的LCD_SDA腳位是低電位，因此，一顆NPN電晶體即可解决<br>
 <img src="motor/4.jpg" class="maxSize"><br><br>
+
+讓馬達置中，藉此得到比較平衡的振動<br>
 <img src="motor/5.jpg" class="maxSize"><br><br>
+
+完成配線<br>
 <img src="motor/6.jpg" class="maxSize"><br><br>
+
+反電動勢二極體<br>
 <img src="motor/7.jpg" class="maxSize"><br><br>
+
+44R限流電阻<br>
 <img src="motor/8.jpg" class="maxSize"><br><br>
+
+電路圖<br>
 <img src="motor/9.jpg" class="maxSize"><br><br>
+
+完成後的樣子<br>
 <img src="motor/10.jpg" class="maxSize"><br><br>
+
+接著找下Remap位置<br>
 <img src="motor/11.jpg" class="maxSize"><br><br>
+
+Set Register<br>
 <img src="motor/12.jpg" class="maxSize"><br><br>
-<img src="motor/13.jpg" class="maxSize">
+
+Clear Regsiter<br>
+<img src="motor/13.jpg" class="maxSize"><br><br>
+
+最後司徒寫個馬達測試App
 </p>
 
 <pre class="brush:cpp">
