@@ -45,20 +45,18 @@
 <div id="content">
 <script type="text/javascript" src="../../../../header.js"></script>
 <div id="page">
-<h3>Pandora 1GHz &rArr; Debian Mark2</h3>
+<h3>Pandora 1GHz &gt;&gt; Debian Mark2</h3>
 <p><b>解決無法更改scim-pinyin字型的問題</b></p>
 <hr size="1">
 <p>
 司徒常常遇到無法修改拼音輸入法的字型問題，測試幾次後，發現如下方式可以修複(xxx是使用者名字)：
 </p>
-
 <pre>
 $ cd
 $ sudo chown xxx:xxx -R .scim
 $ chmod 0777 -R .scim
 $ nano .scim/config
 </pre>
-
 <pre class="brush:cpp">
 /Panel/Gtk/Font = Droid Sans 14
 </pre><br>

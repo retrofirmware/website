@@ -45,17 +45,14 @@
 <div id="content">
 <script type="text/javascript" src="../../../../header.js"></script>
 <div id="page">
-<h3>Pandora 1GHz &rArr; Debian Mark2</h3>
+<h3>Pandora 1GHz &gt;&gt; Debian Mark2</h3>
 <p><b>Build MIPSEL Toolchain(Buildroot 201602)</b></p>
 <hr size="1">
 <p>
-司徒會想在Pandora上編譯MIPSEL Toolchain的主要目的，就是希望可以在Pandora上開發A320的Dingux Kernel，雖然Jessie可以透過Emdebian安裝MIPSEL Toolchain，不過目前尚未有ARM平台的Prebuilt Binary，因此，司徒只好手動編譯MIPSEL Toolchain，而在Pandora上編譯Buildroot時，需要注意swap空間是否太少，如果swap空間太少時，會發生gcc編譯錯誤的問題，因此，如果swap Partition太少或者沒有swap Partition時，建議手動掛載swap，如下所示：
-</p>
+司徒會想在Pandora上編譯MIPSEL Toolchain的主要目的，就是希望可以在Pandora上開發A320的Dingux Kernel，雖然Jessie可以透過Emdebian安裝MIPSEL Toolchain，不過目前尚未有ARM平台的Prebuilt Binary，因此，司徒只好手動編譯MIPSEL Toolchain，而在Pandora上編譯Buildroot時，需要注意SWAP空間是否太少，如果SWAP空間太少時，會發生gcc編譯錯誤的問題。<br><br>
 
-<p>
-掛載2GB swap空間
+掛載2GB SWAP空間
 </p>
-
 <pre>
 $ sudo dd if=/dev/zero of=swapfile bs=1M count=2000
 $ sudo mkswap swapfile
@@ -63,9 +60,8 @@ $ sudo swapon swapfile
 </pre><br>
 
 <p>
-編譯buildroot
+編譯Buildroot
 </p>
-
 <pre>
 $ wget https://buildroot.org/downloads/buildroot-2016.02.tar.gz
 $ tar zxvf buildroot-2016.02.tar.gz
@@ -75,13 +71,11 @@ $ make menuconfig
 
 <p>
 <img src="build_mipsel-2016.02/1.jpg" class="maxSize">
-</p><br>
-
+</p>
 <pre>
 $ make
-$ output/host/usr/bin/mipsel-linux-gcc
+$ ./output/host/usr/bin/mipsel-linux-gcc
 </pre>
-
 <p>
 <img src="build_mipsel-2016.02/2.jpg" class="maxSize">
 </p>

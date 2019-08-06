@@ -45,13 +45,12 @@
 <div id="content">
 <script type="text/javascript" src="../../../../header.js"></script>
 <div id="page">
-<h3>Pandora 1GHz &rArr; SuperZaxxon</h3>
+<h3>Pandora 1GHz &gt;&gt; SuperZaxxon</h3>
 <p><b>如何讓SDCard可以顯示中文檔名</b></p>
 <hr size="1">
 <p>
 SDCard插在左邊卡槽且Label名稱是Game
 </p>
-
 <pre>
 $ sudo vim /usr/bin/game2utf8.sh
 </pre>
@@ -68,7 +67,6 @@ mount -t auto -o dirsync,noatime,umask=0,utf8 /dev/mmcblk0p1 /media/Game
 <p>
 設定vfat mount格式為utf8
 </p>
-
 <pre>
 $ sudo nano /etc/xdg/xfce4/mount.rc
 </pre>
@@ -83,7 +81,6 @@ shotname=winnt
 <p>
 執行如下指令：
 </p>
-
 <pre>
 $ sudo chmod 0777 /usr/bin/game2utf8.sh
 $ sudo game2utf8.sh

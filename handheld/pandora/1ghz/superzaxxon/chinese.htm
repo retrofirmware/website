@@ -45,14 +45,12 @@
 <div id="content">
 <script type="text/javascript" src="../../../../header.js"></script>
 <div id="page">
-<h3>Pandora 1GHz &rArr; SuperZaxxon</h3>
+<h3>Pandora 1GHz &gt;&gt; SuperZaxxon</h3>
 <p><b>中文輸入法</b></p>
 <hr size="1">
 <p>
-Pandora掌機是一台功能相當強大的掌機，但是對於安裝多國語言的說明檔案卻是相當稀少，司徒搜尋一下網路資源並測試後，發現如下步驟就可以讓Pandora掌機變成中文介面和具有中文輸入功能，但是並不是全部都是中文介面，部份文字仍然是英文文字，不過至少可以輸入中文。
-</p>
+Pandora掌機是一台功能相當強大的掌機，但是對於安裝多國語言的說明檔案卻是相當稀少，司徒搜尋一下網路資源並測試後，發現如下步驟就可以讓Pandora掌機變成中文介面和具有中文輸入功能，但是並不是全部都是中文介面，部份文字仍然是英文文字，不過至少可以輸入中文。<br><br>
 
-<p>
 更新中文套件和輸入套件
 </p>
 
@@ -66,40 +64,35 @@ $ sudo opkg install locale-base-zh-tw
 <p>
 設定中文語系
 </p>
-
 <pre>
 $ sudo nano ~/.profile
 </pre>
-
 <pre class="brush:cpp">
 export LANG=zh_TW.UTF-8
 export LC_ALL=zh_TW.UTF-8
 export XMODIFIERS=@im=uim
 export GTK_IM_MODULE=uim
-uim-xim &
-uim-toolbar-gtk &
+uim-xim &amp;
+uim-toolbar-gtk &amp;
 </pre><br>
 
 <p>
 支援中文檔名(SDCard)
 </p>
-
 <pre>
 $ sudo nano /etc/udev/scripts/mount.sh
 </pre>
 
 <pre class="brush:cpp">
-if ! $MOUNT -t auto -o dirsync,noatime,umask=0,utf8 $DEVNAME "/media/$name" && ! $MOUNT -t auto -o dirsync,noatime,utf8 $DEVNAME "/media/$name"
+if ! $MOUNT -t auto -o dirsync,noatime,umask=0,utf8 $DEVNAME "/media/$name" &amp;&amp; ! $MOUNT -t auto -o dirsync,noatime,utf8 $DEVNAME "/media/$name"
 </pre><br>
 
 <p>
 設定vfat mount格式為utf8
 </p>
-
 <pre>
 $ sudo nano /etc/xdg/xfce4/mount.rc
 </pre>
-
 <pre class="brush:cpp">
 [vfat]
 uid=<auto>
@@ -110,17 +103,14 @@ shotname=winnt
 <p>
 下載中文套件並複製到Pandora掌機的Flash根目錄
 </p>
-
 <pre>
 $ cd ~
-$ git clone https://github.com/steward-fu/gh_pandora_utility.git
-$ sudo cp -a gh_pandora_utility/chinese/* /
+$ sudo cp -a pandora_utility/chinese/* /
 </pre><br>
 
 <p>
 重新開機
 </p>
-
 <pre>
 $ sudo reboot
 </pre><br>
