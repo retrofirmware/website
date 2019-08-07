@@ -48,10 +48,8 @@
 <p><b>解析Pollux UART.nb0</b></p>
 <hr size="1">
 <p>
-由於Pollux本身具備UART Bootloader模式，該模式可以避免使用SDCard更新失敗而造成無法開機的狀況，算是一種相當好的設計，因為這樣代表Wiz掌機是燒不死的，這樣可以讓司徒更加安心的開發軟體程式，而當Pollux處於UART Bootloader模式時，它會等待使用者傳送512B或16KB的資料，Wiz掌機是設定成16KB容量，所以當Pollux處於UART Bootloader模式時，Pollux會使用Baudrate 19200 bps等待使用者傳送16KB的資料到記憶體，一旦UART接收的資料達到16KB後，Pollux會直接跳到0x0000位址開始執行。
-</p>
+Pollux本身內建UART Bootloader程式，該程式可以避免使用SDCard更新失敗而造成無法開機的狀況，相當便利的設計，因為這代表Wiz掌機是燒不死的，讓司徒可以更加安心的開發軟體程式，而當Pollux處於UART Bootloader模式時，它會等待使用者傳送512B或16KB的資料，Wiz掌機預設設定為等待16KB資料，所以當Pollux處於UART Bootloader模式時，Pollux會使用Baudrate 19200 bps等待使用者傳送16KB的資料到記憶體，一旦UART接收的資料達到16KB後，Pollux會直接跳到0x0000位址開始執行。<br><br>
 
-<p>
 既然已經知道Pollux的基本運作原理，司徒就帶大家先來分析一下UART.nb0檔案
 </p>
 
@@ -71,42 +69,14 @@
 </p>
 
 <table>
-  <thead>
-    <tr>
-      <th>檔案格式</th>
-      <th>UART.nb0對應位址</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th style="background-color: rgb(152,203,0); color:#000000;" align="right">EA Comment(64 Bytes NULL)</th>
-      <td>0x1000</td>
-    </tr>
-    <tr>
-      <th style="background-color: rgb(255,204,1); color:#000000;" align="right">ECEC Signature</th>
-      <td>0x1040</td>
-    </tr>
-    <tr>
-      <th style="background-color: rgb(254,0,9); color:#ffffff;" align="right">ROM Header Address</th>
-      <td>0x1044</td>
-    </tr>
-    <tr>
-      <th style="background-color: rgb(254,0,9); color:#ffffff;" align="right">ROM Header Extension</th>
-      <td></td>
-    </tr>
-    <tr>
-      <th style="background-color: rgb(254,0,9); color:#ffffff;" align="right">Chain Information</th>
-      <td></td>
-    </tr>
-    <tr>
-      <th style="background-color: rgb(254,0,9); color:#ffffff;" align="right">ROM Header Structure</th>
-      <td>0x3F24</td>
-    </tr>
-    <tr>
-      <th style="background-color: rgb(153,205,253); color:#000000;" align="right">Modules and Files Index Data</th>
-      <td>0x3F78</td>
-    </tr>
-  </tbody>
+<tr><th>檔案格式</th><th>UART.nb0對應位址</th></tr>
+  <tr><th style="background-color: rgb(152,203,0); color:#000000;" align="right">EA Comment(64 Bytes NULL)</th><td>0x1000</td></tr>
+  <tr><th style="background-color: rgb(255,204,1); color:#000000;" align="right">ECEC Signature</th><td>0x1040</td></tr>
+  <tr><th style="background-color: rgb(254,0,9); color:#ffffff;" align="right">ROM Header Address</th><td>0x1044</td></tr>
+  <tr><th style="background-color: rgb(254,0,9); color:#ffffff;" align="right">ROM Header Extension</th><td></td></tr>
+  <tr><th style="background-color: rgb(254,0,9); color:#ffffff;" align="right">Chain Information</th><td></td></tr>
+  <tr><th style="background-color: rgb(254,0,9); color:#ffffff;" align="right">ROM Header Structure</th><td>0x3F24</td></tr>
+  <tr><th style="background-color: rgb(153,205,253); color:#000000;" align="right">Modules and Files Index Data</th><td>0x3F78</td></tr>
 </table><br>
 
 <pre>
@@ -146,11 +116,7 @@ Module load buffer offset:                      0x00001000
 </pre>
 
 <p>
-分析到這裡時，司徒發覺兩個地方怪怪的，第一個問題是開頭怎麼都是0x00的資料？第二個問題則是nk.exe檔案問題？針對第一個問題，司徒使用IDA Pro反組譯後，發現反組譯後的組合語言是<b>ANDEQ R0, R0, R0</b>，這個指令其實類似於NOP指令的作用(不做任何事情)，直到0x1000位址才開始真正執行程式，只是為何要填入4096個0x00就有點怪，至於第二個問題，UART.nb0竟然包含一個nk.exe檔案，但是，司徒想了再想後，發覺可能是為了WinCE相容問題，因此才會做這樣的設計，因為就算包含ROM Header、TOC Entry資料結構，但是，Pollux一開始會從0x0000位址開始執行，所以Pollux可以不用在意後面的相關資料(因為程式不會執行到這裡)。
-</p>
-
-<p>
-所以結論就是UART.nb0包含兩種相容模式，第一種就是單純的Bootloader程式，第二種就是WinCE相容的XIP檔案格式，若使用在Wiz掌機身上，由於目前還沒有WinCE系統移植，因此UART.nb0算是一種單純的Bootloader程式，而真正的程式是從0x1000才開始執行。
+分析到這裡時，司徒發覺兩個地方怪怪的，第一個問題是開頭怎麼都是0x00的資料？第二個問題則是nk.exe檔案問題？針對第一個問題，司徒使用IDA Pro反組譯後，發現反組譯後的組合語言是<b>ANDEQ R0, R0, R0</b>，這個指令其實類似於NOP指令的作用(不做任何事情)，直到0x1000位址才開始真正執行程式，只是為何要填入4096個0x00就有點怪，至於第二個問題，UART.nb0竟然包含一個nk.exe檔案，但是，司徒想了再想後，發覺可能是為了WinCE相容問題，因此才會做這樣的設計，因為就算包含ROM Header、TOC Entry資料結構，但是，Pollux一開始會從0x0000位址開始執行，所以Pollux可以不用在意後面的相關資料(因為程式不會執行到這裡)。所以結論就是UART.nb0包含兩種相容模式，第一種就是單純的Bootloader程式，第二種就是WinCE相容的XIP檔案格式，若使用在Wiz掌機身上，由於目前還沒有WinCE系統移植，因此UART.nb0算是一種單純的Bootloader程式，而真正的程式是從0x1000才開始執行。
 </p>
 
 <p>

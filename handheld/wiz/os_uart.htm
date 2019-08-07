@@ -48,20 +48,16 @@
 <p><b>安裝原廠系統(Flash)(透過UART)</b></p>
 <hr size="1">
 <p>
-Wiz掌機一般都是透過SDCard更新韌體，但是，若不小心更新到錯誤的韌體，而無法開機時，使用者也可以使用如下方式救回Wiz掌機，但是，前提是需要製作一條UART傳輸線，若使用者已經有該UART傳輸線時，還需要將第8腳位和第9腳位各自透過1K歐姆電阻連接到GND，這樣才可以讓Pollux進入UART Bootloader模式，步驟說明如下。
-</p>
-
-<p>
-更新步驟：<br>
-1. 下載<a href="https://github.com/steward-fu/gh_wiz_unbrick_tool.git">Wiz Bootloader Tool</a>並解壓縮<br>
+Wiz掌機一般都是透過SDCard更新韌體，但是，若不小心更新到錯誤的韌體，而無法開機時，使用者也可以使用如下方式救回Wiz掌機，但是，前提是需要製作一條UART傳輸線，若使用者已經有該UART傳輸線時，還需要將第8腳位和第9腳位各自透過1K歐姆電阻連接到GND，這樣才可以讓Pollux進入UART Bootloader模式，步驟說明如下：<br>
+1. 下載Wiz Bootloader Tool並解壓縮<br>
 2. 將Wiz Connector的第8腳位(CFG Bootmode 1)、第9腳位(CFG Bootmode 0)各自透過1K歐姆電阻連接到GND<br>
 3. 準備一張2GB SDCard並格式化成<b>FAT16</b><br>
 4. 將Wiz掌機的韌體解壓縮到SDCard根目錄<br>
 5. 將2GB SDCard插入Wiz掌機<br>
-6. Power off Wiz掌機並連接UART傳輸線到PC<br>
-7. Power on Wiz掌機<br>
-8. 執行MES_DNW_V2.5.exe並設定連接的COM Port、Baudrate 115200bps(Configuration &rArr; Options)<br>
-9. 傳送UART檔案(Serial Port &rArr; Uartboot_16K &rArr; UART.nb0)
+6. 關機並連接UART傳輸線到PC<br>
+7. 開機<br>
+8. 執行MES_DNW_V2.5.exe並設定連接的COM Port、Baudrate 115200bps(Configuration &gt; Options)<br>
+9. 傳送UART檔案(Serial Port &gt; Uartboot_16K &gt; UART.nb0)
 </p>
 
 <pre>
@@ -76,7 +72,6 @@ Wiz掌機一般都是透過SDCard更新韌體，但是，若不小心更新到�
 5. FORMAT NAND
 Select operation (1~5)
 </pre><br>
-
 <p>
 10. 輸入<b>1</b>並傳送NAND檔案(Serial Port &rArr; Transmit &rArr; NAND.nb0)
 </p>
