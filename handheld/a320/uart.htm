@@ -48,35 +48,23 @@
 <p><b>焊接UART接頭</b></p>
 <hr size="1">
 <p>
-由於A320掌機沒有UART的Connector，如果想要開發程式或者測試韌體都是相當的不方便，而在上次司徒更換液晶螢幕時，發現A320掌機的PCB上面有保留UART的TX、RX焊點，因此，可以將這兩個焊點拉出來，這樣就可以透過UART進行偵錯或者測試，司徒將整個改機過程說明如下：
-</p>
+由於A320掌機沒有UART的Connector，如果想要開發程式或者測試韌體都是相當的不方便，而在上次司徒更換液晶螢幕時，發現A320掌機的PCB上面有保留UART的TX、RX焊點，因此，可以將這兩個焊點拉出來，這樣就可以透過UART進行偵錯或者測試，司徒將整個改機過程說明如下。<br><br>
 
-<p>
 首先開啟機殼並且把液晶螢幕往上提起，這時就可以看到UART的TX、RX焊點<br>
-<img src="uart/1.jpg" class="maxSize">
-</p>
+<img src="uart/1.jpg" class="maxSize"><br><br>
 
-<p>
 因為司徒有看到PD3、PD4焊點，所以想說之後可以拿來當作I2C或者其它介面(如另一組UART)，所以司徒就順便把它們也焊出來<br>
-<img src="uart/2.jpg" class="maxSize">
-</p>
+<img src="uart/2.jpg" class="maxSize"><br><br>
 
-<p>
 接著就使用一個連接器把TX、RX、PD3、PD4、GND這五隻腳位連接出來，因為剛好PCB有一個IC槽沒有焊IC，所以就放在這裡<br>
-<img src="uart/3.jpg" class="maxSize">
-</p>
+<img src="uart/3.jpg" class="maxSize"><br><br>
 
-<p>
 為了要保持A320掌機美美的外觀，所以司徒只好鑽五個小洞<br>
-<img src="uart/4.jpg" class="maxSize">
-</p>
+<img src="uart/4.jpg" class="maxSize"><br><br>
 
-<p>
 最後連接UART測試(注意：輸出、輸入電壓是3.3V)<br>
-<img src="uart/5.jpg" class="maxSize">
-</p>
+<img src="uart/5.jpg" class="maxSize"><br><br>
 
-<p>
 最後，欣賞一下Dingux Z4系統的輸出訊息(Baudrate: 57600bps)
 </p>
 
@@ -101,7 +89,7 @@ reading zimage
 
 1220608 bytes read
 ## Starting application at 0x80600000 ...
-</pre>
+</pre><br>
 
 <p>
 <br><a href="../../handheld.htm">返回上一頁</a>
