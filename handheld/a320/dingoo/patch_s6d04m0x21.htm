@@ -44,11 +44,11 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Dingoo A320 &rArr; Dingoo</h3>
+<h3>Dingoo A320 &gt;&gt; Dingoo</h3>
 <p><b>Patch ILI9338.DL(支援S6D04M0X21)</b></p>
 <hr size="1">
 <p>
-雖然司徒之前已經幫A320掌機替換過IPS屏，但是替換的屏是2.6吋IPS ILI9340，而原本A320掌機的屏幕則是2.8吋，當初選擇2.6吋的原因是找不到37 Pin 2.8吋IPS屏，因此，只好將就使用，如今已經可以從淘寶網找到2.8吋IPS屏，於是司徒再度燃起換屏的興致，只是此次換屏的過程可說是相當幸苦，因爲除了一開始點不亮之外，最後還遇到Binary Patch空間不足的問題，因爲這個屏需要更多初始化指令，雖然過程一波三折，不過最後還是成功完成這個任務，於是司徒整理成此篇文章，分享給有需要的人。<br><br>
+雖然司徒之前已經幫A320掌機替換過IPS屏，但是替換的屏是2.6吋IPS ILI9340，而原本A320掌機的屏幕則是2.8吋，當初選擇2.6吋的原因是找不到37Pin 2.8吋IPS屏，因此，只好將就使用，如今已經可以從淘寶網找到2.8吋IPS屏，於是司徒再度燃起換屏的興致，只是此次換屏的過程可說是相當幸苦，因爲除了一開始點不亮之外，最後還遇到Binary Patch空間不足的問題，因爲這個屏需要更多初始化指令，雖然過程一波三折，不過最後還是成功完成這個任務，於是司徒整理成此篇文章，分享給有需要的人。<br><br>
 
 DL檔案的檔頭如下：<br>
 <img src="patch_ili9340/1.jpg" class="maxSize"><br>
@@ -62,12 +62,11 @@ CCDL, IMPT, EXPT, RAWD, [ERPT], [&lt;null&gt;]
 <p>
 每個區塊的長度為32 Bytes且格式如下：
 </p>
-
 <pre class="brush:cpp">
-char     name[4]; // 4-byte ASCII chunk name
-uint32_t ident;   // Chunk identifer
-uint32_t offset;  // Offset of this chunks data area in the file.
-uint32_t size;    // Size of this chunks data area in the file (usually padded to 16-bytes).
+char name[4];
+uint32_t ident;
+uint32_t offset;
+uint32_t size;
 </pre><br>
 
 <p>

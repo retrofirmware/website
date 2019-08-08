@@ -13,6 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>司徒的教學網站</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <meta name="author" content="fullahead.org" />
   <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
@@ -44,27 +45,23 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Dingoo A320 &gt;&gt; OpenDingux</h3>
-<p><b>Build Buildroot</b></p>
+<h3>Nokia N900 >> Maemo</h3>
+<p><b>如何控制振動馬達</b></p>
 <hr size="1">
 <p>
-OpenDingux系統有釋出buildroot的config檔案，方便使用者添加或者刪除相關元件，如果使用者有興趣自行編譯系統，可以參考如下方式：
-</p>
+Ref. <a href="https://wiki.maemo.org/Phone_control#Start_Vibrating_Incoming_Call">https://wiki.maemo.org/Phone_control#Start_Vibrating_Incoming_Call</a><br><br>
 
+方法如下：
+</p>
 <pre>
-$ sudo mv a320_toolchain/mipsel-linux-uclibc /opt/toolchain
-$ export PATH=$PATH:/opt/toolchain/usr/bin/
-$ cd a320_opendingux/buildroot-201211
-$ make a320_defconfig
-$ make
+$ dbus-send --system --print-reply --dest=com.nokia.mce /com/nokia/mce/request com.nokia.mce.request.req_start_manual_vibration int32:255 int32:1000
 </pre>
-
 <p>
-編譯後的RootFS檔案位於：output/images/rootfs.squashfs
+P.S. 255是振動強度，1000則是振動時間
 </p>
 
 <p>
-<br><a href="../../../handheld.htm">返回上一頁</a>
+<br><a href="../../../phone.htm">返回上一頁</a>
 </p>
 
 </div>

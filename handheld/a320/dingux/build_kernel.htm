@@ -44,7 +44,7 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Dingoo A320 &rArr; Dingux</h3>
+<h3>Dingoo A320 &gt;&gt; Dingux</h3>
 <p><b>Build Kernel</b></p>
 <hr size="1">
 <p>
@@ -52,13 +52,10 @@ A320掌機興起的開源風潮就是因為Dingux系統的移植，讓這一台�
 
 如下方式編譯Kernel：
 </p>
-
 <pre>
-$ git clone https://github.com/steward-fu/a320_toolchain.git
-$ sudo mv a320_toolchain/mipsel-linux-uclibc /opt/toolchain
+$ sudo mv toolchain/mipsel-linux-uclibc /opt/toolchain
 $ export PATH=$PATH:/opt/toolchain/usr/bin/
-$ git clone https://github.com/steward-fu/a320_dingux.git
-$ cd a320_dingux/linux-2.6.24.3/
+$ cd dingux/linux-2.6.24.3/
 $ make a320_defconfig
 $ make zImage
 </pre><br>

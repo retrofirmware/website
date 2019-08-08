@@ -44,11 +44,11 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Dingoo A320 &rArr; Dingoo</h3>
+<h3>Dingoo A320 &gt;&gt; Dingoo</h3>
 <p><b>Patch ILI9338.DL(支援ILI9340)</b></p>
 <hr size="1">
 <p>
-雖然丁果官方並沒有釋出Dingoo原始碼，加上司徒換屏的ILI9340型號也不在官方支援的清單中，於是激起司徒再度使用逆向工程的手法，讓Dingoo系統也可以支援ILI9349，不然，如果只有Dingux、OpenDingux系統可以使用的話，似乎有點遺撼，因為七夜這款遊戲也無法在這兩個系統上執行。<br><br>
+由於官方並沒有釋出Dingoo原始程式碼，因此，修改的方式就只能透過Patch Binary，加上ILI9340屏也不在官方支援的清單中，於是再度激起司徒使用逆向工程的手法，讓Dingoo系統也可以支援ILI9340，這樣至少可以使用更好的屏幕，再次爽玩七夜這款遊戲。<br><br>
 
 使用者如果有燒錄過Dingoo系統，應該有發現需要ILI93xx.DL、A320.HXF這兩個檔案，其中ILI93xx.DL就是初始化相關硬體的程式碼，格式不像一般的ELF檔案：<br>
 <img src="patch_ili9340/1.jpg" class="maxSize"><br>
@@ -64,10 +64,10 @@ CCDL, IMPT, EXPT, RAWD, [ERPT], [&lt;null&gt;]
 </p>
 
 <pre class="brush:cpp">
-char     name[4]; // 4-byte ASCII chunk name
-uint32_t ident;   // Chunk identifer
-uint32_t offset;  // Offset of this chunks data area in the file.
-uint32_t size;    // Size of this chunks data area in the file (usually padded to 16-bytes).
+char name[4];
+uint32_t ident;
+uint32_t offset;
+uint32_t size;
 </pre><br>
 
 <p>
@@ -146,7 +146,7 @@ cf0:  00000000   nop
 </pre><br>
 
 <p>
-因為使用到Binary Patch的方式，通常需要考慮到是否空間不足的問題，幸運地，司徒發現只需修改幾行指令就可以點亮ILI9340，沒有遇到需要額外找尋空間的問題：
+因為使用到Binary Patch的方式，通常需要考慮到是否空間不足的問題，幸運地，司徒發現只需修改幾行指令就可以點亮ILI9340，沒有遇到需要額外找尋空間的問題
 </p>
 
 <pre class="brush:cpp">
@@ -159,8 +159,8 @@ Mcupanel_Data(0x01);
 Mcupanel_Command(0xC0);
 //Mcupanel_Data(0x26);
 //Mcupanel_Data(0x01);
-Mcupanel_Data(0X27); // patch it
-Mcupanel_Data(0X09); // patch it
+Mcupanel_Data(0X27);
+Mcupanel_Data(0X09);
 
 Mcupanel_Command(0xC1);
 Mcupanel_Data(0x10);
@@ -168,9 +168,9 @@ Mcupanel_Data(0x10);
 //Mcupanel_Command(0xC5);
 //Mcupanel_Data(0x10);
 //Mcupanel_Data(0x52);
-Mcupanel_Command(0xB6); // patch it
-Mcupanel_Data(0X0A);    // patch it
-Mcupanel_Data(0X02);    // patch it
+Mcupanel_Command(0xB6);
+Mcupanel_Data(0X0A);
+Mcupanel_Data(0X02);
 
 Mcupanel_Command(0x26);
 Mcupanel_Data(0x01);
@@ -190,21 +190,21 @@ Mcupanel_Command(0xE0);
 //Mcupanel_Data(0x13);
 //Mcupanel_Data(0x0E);
 //Mcupanel_Data(0x0C);
-Mcupanel_Data(0x0f); // patch it
-Mcupanel_Data(0x3f); // patch it
-Mcupanel_Data(0x3f); // patch it
-Mcupanel_Data(0x02); // patch it
-Mcupanel_Data(0x04); // patch it
-Mcupanel_Data(0x05); // patch it
-Mcupanel_Data(0x49); // patch it
-Mcupanel_Data(0x75); // patch it
-Mcupanel_Data(0x20); // patch it
-Mcupanel_Data(0x08); // patch it
-Mcupanel_Data(0x14); // patch it
-Mcupanel_Data(0x0c); // patch it
-Mcupanel_Data(0x15); // patch it
-Mcupanel_Data(0x0e); // patch it
-Mcupanel_Data(0x00); // patch it
+Mcupanel_Data(0x0f);
+Mcupanel_Data(0x3f);
+Mcupanel_Data(0x3f);
+Mcupanel_Data(0x02);
+Mcupanel_Data(0x04);
+Mcupanel_Data(0x05);
+Mcupanel_Data(0x49);
+Mcupanel_Data(0x75);
+Mcupanel_Data(0x20);
+Mcupanel_Data(0x08);
+Mcupanel_Data(0x14);
+Mcupanel_Data(0x0c);
+Mcupanel_Data(0x15);
+Mcupanel_Data(0x0e);
+Mcupanel_Data(0x00);
 
 Mcupanel_Command(0XE1);
 //Mcupanel_Data(0x0C);
@@ -222,21 +222,21 @@ Mcupanel_Command(0XE1);
 //Mcupanel_Data(0x33);
 //Mcupanel_Data(0x37);
 //Mcupanel_Data(0x0F);
-Mcupanel_Data(0x00); // patch it
-Mcupanel_Data(0x00); // patch it
-Mcupanel_Data(0x00); // patch it
-Mcupanel_Data(0x0c); // patch it
-Mcupanel_Data(0x1a); // patch it
-Mcupanel_Data(0x0d); // patch it
-Mcupanel_Data(0x3a); // patch it
-Mcupanel_Data(0x8a); // patch it
-Mcupanel_Data(0x40); // patch it
-Mcupanel_Data(0x08); // patch it
-Mcupanel_Data(0x11); // patch it
-Mcupanel_Data(0x0f); // patch it
-Mcupanel_Data(0x3f); // patch it
-Mcupanel_Data(0x3f); // patch it
-Mcupanel_Data(0x0f); // patch it
+Mcupanel_Data(0x00);
+Mcupanel_Data(0x00);
+Mcupanel_Data(0x00);
+Mcupanel_Data(0x0c);
+Mcupanel_Data(0x1a);
+Mcupanel_Data(0x0d);
+Mcupanel_Data(0x3a);
+Mcupanel_Data(0x8a);
+Mcupanel_Data(0x40);
+Mcupanel_Data(0x08);
+Mcupanel_Data(0x11);
+Mcupanel_Data(0x0f);
+Mcupanel_Data(0x3f);
+Mcupanel_Data(0x3f);
+Mcupanel_Data(0x0f);
 
 Mcupanel_Command(0x2a);
 Mcupanel_Data(0x00);
@@ -257,7 +257,7 @@ Mcupanel_Command(0x2c);
 </pre><br>
 
 <p>
-需要Patch蠻多地方，不過，幸好只有內容需要更改，不然真的很麻煩，Patch後的Bnary片段如下：
+需要Patch蠻多地方，不過，幸好只有內容需要更改，不然真的很麻煩，Patch後的Bnary如下：
 </p>
 
 <pre>

@@ -13,7 +13,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>司徒的教學網站</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <meta name="author" content="fullahead.org" />
   <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
@@ -45,43 +44,31 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>PocketGo &gt;&gt; Retroarch</h3>
-<p><b>Build Retroarch</b></p>
+<h3>Python</h3>
+<p><b>MySQL</b></p>
 <hr size="1">
-<p>
-Ref. <a href="https://github.com/RetroPie/RetroPie-Setup/wiki">https://github.com/RetroPie/RetroPie-Setup/wiki</a><br><br>
+<pre class="brush:cpp">
+import os
+import sys
+import MySQLdb
 
-編譯步驟如下：
-</p>
-<pre>
-$ cd ~
-$ export PATH=$PATH:/opt/miyoo/bin
-$ export TARGETMACH=arm-linux
-$ export BUILDMACH=i686-pc-linux-gnu
-$ export CROSS=arm-linux
-$ export CC=${CROSS}-gcc
-$ export LD=${CROSS}-ld
-$ export AS=${CROSS}-as
-$ export CXX=${CROSS}-g++
-$ git clone https://github.com/libretro/RetroArch
-$ cd RetroArch
-$ ./fetch-submodules.sh
-$ PKG_CONF_PATH=/opt/miyoo/bin/pkg-config ./configure --disable-ffmpeg --disable-cg --disable-opengl_core --disable-pulse --disable-jack --disable-mali_fbdev --disable-x11 --disable-sdl2 --disable-wayland --disable-egl --enable-sdl --disable-opengl1 --disable-videocore --disable-v4l2 --disable-discord
-$ vim config.mk +8
-  LIBRARY_DIRS = -L/opt/miyoo/arm-miyoo-linux-uclibcgnueabi/sysroot/usr/lib
+DB = 'xxx'
+USER = 'xxx'
+PASSWD = 'xxx'
+IP = 'xxx.xxx.xxx.xxx'
 
-$ make
+db = MySQLdb.connect(IP, USER, PASSWD, DB, charset=UTF8)
+cur = db.cursor()
+cur.execute('lock table ' + my_table + ' write;')
+cur.execute(my_command)
+ret = cur.fetchall()
+cur.execute('unlock table;')
+db.commit()
+db.close()
 </pre><br>
 
 <p>
-完成<br>
-<img src="build_retroarch/1.jpg" class="maxSize"><br>
-<img src="build_retroarch/2.jpg" class="maxSize"><br>
-<img src="build_retroarch/3.jpg" class="maxSize">
-</p>
-
-<p>
-<br><a href="../../handheld.htm">返回上一頁</a>
+<br><a href="../../program.htm">返回上一頁</a>
 </p>
 
 </div>

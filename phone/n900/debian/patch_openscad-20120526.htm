@@ -72,14 +72,16 @@
 
 <p>
 往上尋找Branch的位置<br>
-<img src="patch_openscad-20120526/2.jpg" class="maxSize"><br>
-將0x83E5C和0x83EB0的BNE(0x1A)指令改成BEQ(0x0A)即可。
+<img src="patch_openscad-20120526/2.jpg" class="maxSize"><br><br>
+
+將所有<b>BNE loc_83ECC</b>(0x1a)都Patch成<b>BEQ loc_83ECC</b>(0x0a)即可，總共有5個地方需要Patch，如下所示：<br>
+<img src="patch_openscad-20120526/6.jpg" class="maxSize"><br>
 </p>
 
 <p>
 Patch過後的Binary可以直接替換<b>/usr/bin/openscad</b>檔案，執行後的畫面如下：<br>
 <img src="patch_openscad-20120526/4.jpg" class="maxSize"><br>
-現在司徒終於可以在N900上使用OpenSCAD畫2D/3D圖形了！
+P.S. 假如右邊Render區域無法正常顯示，請安裝<b>libgl1-mesa-swrast</b>套件
 </p>
 
 <p>

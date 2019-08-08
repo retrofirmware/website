@@ -44,29 +44,20 @@
 <div id="content">
 <script type="text/javascript" src="../../../../header.js"></script>
 <div id="page">
-<h3>Dingoo A320 &rArr; Dingoo &rArr; S2D</h3>
+<h3>Dingoo A320 &gt;&gt; Dingoo &gt;&gt; S2D</h3>
 <p><b>開發環境(Windows)</b></p>
 <hr size="1">
 <p>
-S2D-SDK是一款提供給Dingoo系統使用的2D圖形運算開發安裝包，該開發安裝包比較貼近遊戲設計師的用法，對於底層硬體控制的細節進行包裝，因此，使用這個開發安裝包開發遊戲時，可以不必專注在硬體的細處理上，只需專注在遊戲開發上即可。<br><br>
-
-S2D-SDK是運作在Cygwin模擬環境中，因此，使用者需要先安裝Cygwin模擬環境，使用者可以從<a href="http://www.cygwin.com/">官網</a>下載Cygwin安裝檔案，下載完之後便可以開始安裝，一路安裝直到<b>Select Packages</b>視窗出現，將Devel底下的make選項打勾(如下圖)，接著就按照預設的設定繼續安裝。<br>
+S2D-SDK是一款提供給Dingoo系統使用的2D圖形運算開發安裝包，該開發安裝包比較貼近遊戲設計師的用法，對於底層硬體控制的細節進行包裝，因此，使用這個開發安裝包開發遊戲時，可以不必專注在硬體的細處理上，只需專注在遊戲開發上即可。S2D-SDK是運作在Cygwin模擬環境中，因此，使用者需要先安裝Cygwin模擬環境，使用者可以從<a href="http://www.cygwin.com/">官網</a>下載Cygwin安裝檔案，下載完之後便可以開始安裝，一路安裝直到<b>Select Packages</b>視窗出現，將Devel底下的make選項打勾(如下圖)，接著就按照預設的設定繼續安裝。<br>
 <img src="setup_windows/1.jpg" class="maxSize"><br><br>
 
-下載<a href="https://github.com/steward-fu/a320_toolchain.git">Toolchain</a>開發工具，將下載完的檔案放到Cygwin安裝資料夾裡(如：C:\cygwin\dingoo\)並且解壓縮，接著下載<a href="https://github.com/steward-fu/a320_sdk.git">S2D-SDK</a>開發工具包，將下載完的檔案放到<b>C:\</b>，接著需要新增幾個環境變數，環境變數設定位於：控制台 &rArr; 系統 &rArr; 進階 &rArr; 環境變數，新增變數如下：
+下載Toolchain開發工具，將下載完的檔案放到Cygwin安裝資料夾裡(如：C:\cygwin\dingoo\)並且解壓縮，接著下載S2D-SDK開發工具包，將下載完的檔案放到<b>C:\</b>，接著需要新增幾個環境變數：
 </p>
 <pre>
-name: MIPSLIB
-value: c:\cygwin\dingoo\gh_a320_toolchain\mipsel-linux-uclibc\lib
-
-name: MIPSTOOLS
-value: c:\cygwin\dingoo\gh_a320_toolchain\mipsel-linux-uclibc\include
-
-name: S2DINC
-value: c:\s2dsdk\inc
-
-name: S2DLIB
-value: c:\s2dsdk\lib
+MIPSLIB=c:\cygwin\dingoo\gh_a320_toolchain\mipsel-linux-uclibc\lib
+MIPSTOOLS=c:\cygwin\dingoo\gh_a320_toolchain\mipsel-linux-uclibc\include
+S2DINC=c:\s2dsdk\inc
+S2DLIB=c:\s2dsdk\lib
 </pre>
 
 <p>

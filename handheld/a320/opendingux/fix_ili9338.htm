@@ -44,11 +44,11 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Dingoo A320 &rArr; OpenDingux</h3>
+<h3>Dingoo A320 &gt;&gt; OpenDingux</h3>
 <p><b>修正ILI9338青藍色問題</b></p>
 <hr size="1">
 <p>
-入手A320掌機後，司徒很期待GBA模擬器可以運行的跟GBA-SP掌機(AGS-101)一樣好，但是，司徒發現原生系統的GBA模擬器，FPS速度實在是太快了，而且顏色過淡，比起GBA-SP掌機，真是天差地遠，就算是使用Dingux系統，也是一樣存在這樣的問題。司徒後來發現原生系統的GBA模擬器，若開啟聲音，它的FPS就可以下降的跟GBA-SP很接近，加上原生系統的濾波效果比Dingux系統好很多，所以原生系統的GBA模擬器算是比較可以接受的，至於顏色鮮豔問題，這應該是跟顯示屏比較有關係，看來應該是極限了！雖然已經知道是顯示屏的問題，司徒還是上網搜尋ILI9338的顯示問題，發現有很多人在討論這個顯示屏的青藍色問題，發現目前只有OpenDingux有針對軟體做顏色補償，雖然解法僅是針對顏色調整，不過為了有比較好的遊戲視覺，司徒還是想嘗試一下，司徒只好重新安裝OpenDingux系統，並且把Dingux系統的GBA模擬器拿去OpenDingux系統玩，發現顏色真的比較好，因此使用者如果想讓顏色好看一點的話，建議換OpenDingux系統。<br><br>
+入手A320掌機後，司徒很期待GBA模擬器可以運行的跟GBA-SP掌機(AGS-101)一樣好，但是，司徒發現原生系統的GBA模擬器，FPS速度實在是太快了，而且顏色過淡，比起GBA-SP掌機，真是天差地遠，就算是使用Dingux系統，也是一樣存在問題。司徒後來發現原生系統的GBA模擬器，若開啟聲音，它的FPS就可以下降的跟GBA-SP很接近，加上原生系統的濾波效果比Dingux系統好很多，所以原生系統的GBA模擬器算是比較可以接受的，至於顏色鮮豔問題，這應該是跟顯示屏比較有關係，為此，司徒上網搜尋ILI9338的顯示問題，發現有很多人在討論這個顯示屏的青藍色問題，目前得知只有OpenDingux系統有透過驅動做顏色補償，雖然解法僅是針對顏色調整，不過為了有比較好的遊戲體驗，還是值得，使用者如果想讓顏色好看一點的話，建議換OpenDingux系統。<br><br>
 
 原始顏色<br>
 <img src="fix_ili9338/1.jpg" class="maxSize"><br><br>
@@ -65,7 +65,6 @@
 <pre>
 $ vim drivers/video/jz4740_slcd_panels.c +329
 </pre>
-
 <pre class="brush:cpp">
 static void ili9338_set_color_table(struct jzfb *jzfb)
 {

@@ -44,7 +44,7 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Dingoo A320 &rArr; Dingux</h3>
+<h3>Dingoo A320 &gt;&gt; Dingux</h3>
 <p><b>移植S6D04M0X21驅動程式</b></p>
 <hr size="1">
 <p>
@@ -55,289 +55,289 @@ diff jz4740_slcd_orgi.h jz4740_slcd.h
 </pre>
 <pre class="brush:cpp">
 33a34,318
-> 
-> #ifdef CONFIG_JZ_SLCD_A320_S6D04M0X21
-> #define PIN_RS_N  (32*2+19)  /* Port 2 pin 19: RS# (register select, active low) */
-> #define PIN_CS_N  (32*1+17)  /* Port 1 pin 17: CS# (chip select, active low) */
-> #define PIN_RESET_N  (32*1+18)  /* Port 1 pin 18: RESET# (reset, active low) */
-> 
-> #define  __slcd_special_pin_init()  \
-> do {          \
->   __gpio_as_output(PIN_RS_N);  \
->   __gpio_set_pin(PIN_RS_N);  \
->   __gpio_as_output(PIN_CS_N);  \
->   __gpio_set_pin(PIN_CS_N);  \
->   __gpio_as_output(PIN_RESET_N);  \
->   __gpio_clear_pin(PIN_RESET_N);  \
-> } while(0)
-> 
-> #define __slcd_special_on()     \
-> do {          \
->   /* RESET pulse */    \
->   __gpio_clear_pin(PIN_RESET_N);  \
->   mdelay(10);      \
->   __gpio_set_pin(PIN_RESET_N);  \
->   mdelay(50);      \
->           \
->   /* Enable chip select */  \
->   __gpio_clear_pin(PIN_CS_N);  \
->           \
->   /* Black magic */    \
->   mdelay(120); \
->   Mcupanel_Command(0x0001); \
->   mdelay(120); \
->   Mcupanel_Command(0x00f0); \
->   Mcupanel_Data(0x005a); \
->   Mcupanel_Data(0x005a); \
->   Mcupanel_Command(0x00f3); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Command(0x00ff); \
->   Mcupanel_Data(0x0030); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0040); \
->   Mcupanel_Command(0x0011); \
->   mdelay(120); \
->   Mcupanel_Command(0x00f3); \
->   Mcupanel_Data(0x0001); \
->   Mcupanel_Data(0x0026); \
->   Mcupanel_Data(0x0026); \
->   Mcupanel_Data(0x0007); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Data(0x0057); \
->   Mcupanel_Data(0x0057); \
->   Mcupanel_Data(0x002c); \
->   Mcupanel_Command(0x00f4); \
->   Mcupanel_Data(0x0060); \
->   Mcupanel_Data(0x0060); \
->   Mcupanel_Data(0x006F); \
->   Mcupanel_Data(0x006F); \
->   Mcupanel_Data(0x0044); \
->   Mcupanel_Command(0x00f5); \
->   Mcupanel_Data(0x0012); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Data(0x0003); \
->   Mcupanel_Data(0x00f0); \
->   Mcupanel_Data(0x0030); \
->   Mcupanel_Data(0x001f); \
->   mdelay(10); \
->   Mcupanel_Command(0x00f3); \
->   Mcupanel_Data(0x0003); \
->   mdelay(20); \
->   Mcupanel_Command(0x00ff); \
->   Mcupanel_Data(0x0030); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0070); \
->   mdelay(20); \
->   Mcupanel_Command(0x00f3); \
->   Mcupanel_Data(0x000f); \
->   Mcupanel_Command(0x00ff); \
->   Mcupanel_Data(0x0030); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0078); \
->   mdelay(20); \
->   Mcupanel_Command(0x00f3); \
->   Mcupanel_Data(0x001f); \
->   Mcupanel_Command(0x00ff); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0078); \
->   mdelay(20); \
->   Mcupanel_Command(0x00f3); \
->   Mcupanel_Data(0x001f); \
->   mdelay(40); \
->   Mcupanel_Command(0x00f3); \
->   Mcupanel_Data(0x00ff); \
->   Mcupanel_Data(0x0026); \
->   Mcupanel_Data(0x0026); \
->   Mcupanel_Data(0x0007); \
->   Mcupanel_Data(0x0055); \
->   Mcupanel_Data(0x0057); \
->   Mcupanel_Data(0x0057); \
->   Mcupanel_Data(0x002c); \
->   mdelay(50); \
->   Mcupanel_Command(0x0011); \
->   mdelay(100); \
->   Mcupanel_Command(0x00f2); \
->   Mcupanel_Data(0x0013); \
->   Mcupanel_Data(0x0013); \
->   Mcupanel_Data(0x0001); \
->   Mcupanel_Data(0x0008); \
->   Mcupanel_Data(0x0008); \
->   Mcupanel_Data(0x0008); \
->   Mcupanel_Data(0x0008); \
->   Mcupanel_Data(0x0010); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0010); \
->   Mcupanel_Data(0x0010); \
->   Mcupanel_Command(0x00fd); \
->   Mcupanel_Data(0x0055); \
->   Mcupanel_Command(0x0035); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Command(0x0036); \
->   Mcupanel_Data(0x00e8); \
->   Mcupanel_Command(0x003a); \
->   Mcupanel_Data(0x0055); \
->   Mcupanel_Command(0x00fe); \
->   Mcupanel_Data(0x0016); \
->   Mcupanel_Data(0x0016); \
->   Mcupanel_Data(0x0028); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0006); \
->   Mcupanel_Command(0x00f6); \
->   Mcupanel_Data(0x0010); \
->   Mcupanel_Data(0x0080); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0010); \
->   Mcupanel_Command(0x0051); \
->   Mcupanel_Data(0x00ff); \
->   Mcupanel_Command(0x0053); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Command(0x0055); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Command(0x005e); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Command(0x00ca); \
->   Mcupanel_Data(0x0080); \
->   Mcupanel_Data(0x0080); \
->   Mcupanel_Data(0x0020); \
->   Mcupanel_Command(0x00cb); \
->   Mcupanel_Data(0x0001); \
->   Mcupanel_Command(0x00f7); \
->   Mcupanel_Data(0x0092); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x0026); \
->   Mcupanel_Data(0x001c); \
->   Mcupanel_Data(0x001c); \
->   Mcupanel_Data(0x0024); \
->   Mcupanel_Data(0x001b); \
->   Mcupanel_Data(0x0009); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Data(0x0018); \
->   Mcupanel_Command(0x00f8); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x0024); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x001f); \
->   Mcupanel_Data(0x0027); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x000a); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Command(0x00f9); \
->   Mcupanel_Data(0x0086); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x0010); \
->   Mcupanel_Data(0x0010); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x001b); \
->   Mcupanel_Data(0x001f); \
->   Mcupanel_Data(0x0027); \
->   Mcupanel_Data(0x001b); \
->   Mcupanel_Data(0x001f); \
->   Mcupanel_Data(0x0027); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x000a); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Data(0x0018); \
->   Mcupanel_Command(0x00fa); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x0024); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x001f); \
->   Mcupanel_Data(0x0027); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x000a); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Command(0x00fb); \
->   Mcupanel_Data(0x0080); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x001b); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x0026); \
->   Mcupanel_Data(0x0017); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x0014); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Data(0x0018); \
->   Mcupanel_Command(0x00fc); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x001a); \
->   Mcupanel_Data(0x001d); \
->   Mcupanel_Data(0x0024); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x001f); \
->   Mcupanel_Data(0x0027); \
->   Mcupanel_Data(0x001e); \
->   Mcupanel_Data(0x000a); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Data(0x0011); \
->   Mcupanel_Command(0x002a); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0001); \
->   Mcupanel_Data(0x003f); \
->   Mcupanel_Command(0x002b); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x0000); \
->   Mcupanel_Data(0x00ef); \
->   Mcupanel_Command(0x0029); \
->   Mcupanel_Command(0x002c); \
-> } while (0)
-> 
-> /* TODO(IGP): make sure LCD power consumption is low in these conditions */
-> 
-> #define __slcd_special_off()    \
-> do {          \
->   /* Keep chip select disabled */  \
->   __gpio_set_pin(PIN_CS_N);  \
->   /* Keep RESET active */    \
->   __gpio_clear_pin(PIN_RESET_N);  \
-> } while (0)
-> 
-> #define __slcd_special_rs_enable()  \
-> do {          \
->   __gpio_clear_pin(PIN_RS_N);  \
-> } while (0)
-> 
-> #define __slcd_special_rs_disable()  \
-> do {          \
->   __gpio_set_pin(PIN_RS_N);  \
-> } while(0)
-> 
-> #endif /* CONFIG_JZ_SLCD_A320_S6D04M0X21 */
+&gt; 
+&gt; #ifdef CONFIG_JZ_SLCD_A320_S6D04M0X21
+&gt; #define PIN_RS_N  (32*2+19)  /* Port 2 pin 19: RS# (register select, active low) */
+&gt; #define PIN_CS_N  (32*1+17)  /* Port 1 pin 17: CS# (chip select, active low) */
+&gt; #define PIN_RESET_N  (32*1+18)  /* Port 1 pin 18: RESET# (reset, active low) */
+&gt; 
+&gt; #define  __slcd_special_pin_init()  \
+&gt; do {          \
+&gt;   __gpio_as_output(PIN_RS_N);  \
+&gt;   __gpio_set_pin(PIN_RS_N);  \
+&gt;   __gpio_as_output(PIN_CS_N);  \
+&gt;   __gpio_set_pin(PIN_CS_N);  \
+&gt;   __gpio_as_output(PIN_RESET_N);  \
+&gt;   __gpio_clear_pin(PIN_RESET_N);  \
+&gt; } while(0)
+&gt; 
+&gt; #define __slcd_special_on()     \
+&gt; do {          \
+&gt;   /* RESET pulse */    \
+&gt;   __gpio_clear_pin(PIN_RESET_N);  \
+&gt;   mdelay(10);      \
+&gt;   __gpio_set_pin(PIN_RESET_N);  \
+&gt;   mdelay(50);      \
+&gt;           \
+&gt;   /* Enable chip select */  \
+&gt;   __gpio_clear_pin(PIN_CS_N);  \
+&gt;           \
+&gt;   /* Black magic */    \
+&gt;   mdelay(120); \
+&gt;   Mcupanel_Command(0x0001); \
+&gt;   mdelay(120); \
+&gt;   Mcupanel_Command(0x00f0); \
+&gt;   Mcupanel_Data(0x005a); \
+&gt;   Mcupanel_Data(0x005a); \
+&gt;   Mcupanel_Command(0x00f3); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Command(0x00ff); \
+&gt;   Mcupanel_Data(0x0030); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0040); \
+&gt;   Mcupanel_Command(0x0011); \
+&gt;   mdelay(120); \
+&gt;   Mcupanel_Command(0x00f3); \
+&gt;   Mcupanel_Data(0x0001); \
+&gt;   Mcupanel_Data(0x0026); \
+&gt;   Mcupanel_Data(0x0026); \
+&gt;   Mcupanel_Data(0x0007); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Data(0x0057); \
+&gt;   Mcupanel_Data(0x0057); \
+&gt;   Mcupanel_Data(0x002c); \
+&gt;   Mcupanel_Command(0x00f4); \
+&gt;   Mcupanel_Data(0x0060); \
+&gt;   Mcupanel_Data(0x0060); \
+&gt;   Mcupanel_Data(0x006F); \
+&gt;   Mcupanel_Data(0x006F); \
+&gt;   Mcupanel_Data(0x0044); \
+&gt;   Mcupanel_Command(0x00f5); \
+&gt;   Mcupanel_Data(0x0012); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Data(0x0003); \
+&gt;   Mcupanel_Data(0x00f0); \
+&gt;   Mcupanel_Data(0x0030); \
+&gt;   Mcupanel_Data(0x001f); \
+&gt;   mdelay(10); \
+&gt;   Mcupanel_Command(0x00f3); \
+&gt;   Mcupanel_Data(0x0003); \
+&gt;   mdelay(20); \
+&gt;   Mcupanel_Command(0x00ff); \
+&gt;   Mcupanel_Data(0x0030); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0070); \
+&gt;   mdelay(20); \
+&gt;   Mcupanel_Command(0x00f3); \
+&gt;   Mcupanel_Data(0x000f); \
+&gt;   Mcupanel_Command(0x00ff); \
+&gt;   Mcupanel_Data(0x0030); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0078); \
+&gt;   mdelay(20); \
+&gt;   Mcupanel_Command(0x00f3); \
+&gt;   Mcupanel_Data(0x001f); \
+&gt;   Mcupanel_Command(0x00ff); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0078); \
+&gt;   mdelay(20); \
+&gt;   Mcupanel_Command(0x00f3); \
+&gt;   Mcupanel_Data(0x001f); \
+&gt;   mdelay(40); \
+&gt;   Mcupanel_Command(0x00f3); \
+&gt;   Mcupanel_Data(0x00ff); \
+&gt;   Mcupanel_Data(0x0026); \
+&gt;   Mcupanel_Data(0x0026); \
+&gt;   Mcupanel_Data(0x0007); \
+&gt;   Mcupanel_Data(0x0055); \
+&gt;   Mcupanel_Data(0x0057); \
+&gt;   Mcupanel_Data(0x0057); \
+&gt;   Mcupanel_Data(0x002c); \
+&gt;   mdelay(50); \
+&gt;   Mcupanel_Command(0x0011); \
+&gt;   mdelay(100); \
+&gt;   Mcupanel_Command(0x00f2); \
+&gt;   Mcupanel_Data(0x0013); \
+&gt;   Mcupanel_Data(0x0013); \
+&gt;   Mcupanel_Data(0x0001); \
+&gt;   Mcupanel_Data(0x0008); \
+&gt;   Mcupanel_Data(0x0008); \
+&gt;   Mcupanel_Data(0x0008); \
+&gt;   Mcupanel_Data(0x0008); \
+&gt;   Mcupanel_Data(0x0010); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0010); \
+&gt;   Mcupanel_Data(0x0010); \
+&gt;   Mcupanel_Command(0x00fd); \
+&gt;   Mcupanel_Data(0x0055); \
+&gt;   Mcupanel_Command(0x0035); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Command(0x0036); \
+&gt;   Mcupanel_Data(0x00e8); \
+&gt;   Mcupanel_Command(0x003a); \
+&gt;   Mcupanel_Data(0x0055); \
+&gt;   Mcupanel_Command(0x00fe); \
+&gt;   Mcupanel_Data(0x0016); \
+&gt;   Mcupanel_Data(0x0016); \
+&gt;   Mcupanel_Data(0x0028); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0006); \
+&gt;   Mcupanel_Command(0x00f6); \
+&gt;   Mcupanel_Data(0x0010); \
+&gt;   Mcupanel_Data(0x0080); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0010); \
+&gt;   Mcupanel_Command(0x0051); \
+&gt;   Mcupanel_Data(0x00ff); \
+&gt;   Mcupanel_Command(0x0053); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Command(0x0055); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Command(0x005e); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Command(0x00ca); \
+&gt;   Mcupanel_Data(0x0080); \
+&gt;   Mcupanel_Data(0x0080); \
+&gt;   Mcupanel_Data(0x0020); \
+&gt;   Mcupanel_Command(0x00cb); \
+&gt;   Mcupanel_Data(0x0001); \
+&gt;   Mcupanel_Command(0x00f7); \
+&gt;   Mcupanel_Data(0x0092); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x0026); \
+&gt;   Mcupanel_Data(0x001c); \
+&gt;   Mcupanel_Data(0x001c); \
+&gt;   Mcupanel_Data(0x0024); \
+&gt;   Mcupanel_Data(0x001b); \
+&gt;   Mcupanel_Data(0x0009); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Data(0x0018); \
+&gt;   Mcupanel_Command(0x00f8); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x0024); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x001f); \
+&gt;   Mcupanel_Data(0x0027); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x000a); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Command(0x00f9); \
+&gt;   Mcupanel_Data(0x0086); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x0010); \
+&gt;   Mcupanel_Data(0x0010); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x001b); \
+&gt;   Mcupanel_Data(0x001f); \
+&gt;   Mcupanel_Data(0x0027); \
+&gt;   Mcupanel_Data(0x001b); \
+&gt;   Mcupanel_Data(0x001f); \
+&gt;   Mcupanel_Data(0x0027); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x000a); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Data(0x0018); \
+&gt;   Mcupanel_Command(0x00fa); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x0024); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x001f); \
+&gt;   Mcupanel_Data(0x0027); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x000a); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Command(0x00fb); \
+&gt;   Mcupanel_Data(0x0080); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x001b); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x0026); \
+&gt;   Mcupanel_Data(0x0017); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x0014); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Data(0x0018); \
+&gt;   Mcupanel_Command(0x00fc); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x001a); \
+&gt;   Mcupanel_Data(0x001d); \
+&gt;   Mcupanel_Data(0x0024); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x001f); \
+&gt;   Mcupanel_Data(0x0027); \
+&gt;   Mcupanel_Data(0x001e); \
+&gt;   Mcupanel_Data(0x000a); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Data(0x0011); \
+&gt;   Mcupanel_Command(0x002a); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0001); \
+&gt;   Mcupanel_Data(0x003f); \
+&gt;   Mcupanel_Command(0x002b); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x0000); \
+&gt;   Mcupanel_Data(0x00ef); \
+&gt;   Mcupanel_Command(0x0029); \
+&gt;   Mcupanel_Command(0x002c); \
+&gt; } while (0)
+&gt; 
+&gt; /* TODO(IGP): make sure LCD power consumption is low in these conditions */
+&gt; 
+&gt; #define __slcd_special_off()    \
+&gt; do {          \
+&gt;   /* Keep chip select disabled */  \
+&gt;   __gpio_set_pin(PIN_CS_N);  \
+&gt;   /* Keep RESET active */    \
+&gt;   __gpio_clear_pin(PIN_RESET_N);  \
+&gt; } while (0)
+&gt; 
+&gt; #define __slcd_special_rs_enable()  \
+&gt; do {          \
+&gt;   __gpio_clear_pin(PIN_RS_N);  \
+&gt; } while (0)
+&gt; 
+&gt; #define __slcd_special_rs_disable()  \
+&gt; do {          \
+&gt;   __gpio_set_pin(PIN_RS_N);  \
+&gt; } while(0)
+&gt; 
+&gt; #endif /* CONFIG_JZ_SLCD_A320_S6D04M0X21 */
 </pre><br>
 
 <pre>
@@ -345,17 +345,17 @@ diff Kconfig_orgi Kconfig
 </pre>
 <pre class="brush:cpp">
 250a251,255
-> config JZ_SLCD_A320_S6D04M0X21
->   bool "Dingoo A320 S6D04M0X21 smart LCD panel"
->   ---help---
->   Driver for S6D04M0X21 smart IPS panel as connected in Dingoo A320.
+&gt; config JZ_SLCD_A320_S6D04M0X21
+&gt;   bool "Dingoo A320 S6D04M0X21 smart LCD panel"
+&gt;   ---help---
+&gt;   Driver for S6D04M0X21 smart IPS panel as connected in Dingoo A320.
 </pre><br>
 
 <pre>
 $ make menuconfig
 </pre>
 <p>
-Device Drivers &rArr; Graphics support &rArr; Support for frame buffer devices &rArr; SLCD panel &rArr; Dingoo A320 S6D04M0X21 smart LCD panel<br>
+Device Drivers &gt; Graphics support &gt; Support for frame buffer devices &gt; SLCD panel &gt; Dingoo A320 S6D04M0X21 smart LCD panel<br>
 <img src="port_s6d04m0x21/1.jpg" class="maxSize">
 </p>
 

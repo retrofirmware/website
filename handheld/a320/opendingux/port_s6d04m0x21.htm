@@ -44,7 +44,7 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Dingoo A320 &rArr; OpenDingux</h3>
+<h3>Dingoo A320 &gt;&gt; OpenDingux</h3>
 <p><b>移植S6D04M0X21驅動程式</b></p>
 <hr size="1">
 <p>
@@ -56,308 +56,308 @@ diff qi-kernel/drivers/video/jz4740_slcd_panels_orig.c qi-kernel/drivers/video/j
 </pre>
 <pre class="brush:cpp">
 676,969d675
-< 
-< #ifdef CONFIG_JZ_SLCD_S6D04M0X21
-< 
-< #define S6D04M0X21_GPIO_CS_N   JZ_GPIO_PORTB(17)  /* Chip select */
-< #define S6D04M0X21_GPIO_RESET_N   JZ_GPIO_PORTB(18)  /* LCD reset */
-< 
-< static void s6d04m0x21_enable(struct jzfb *jzfb)
-< {
-<   /* RESET pulse */
-<   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 0);
-<   mdelay(100);
-<   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 1);
-<   mdelay(150);
-< 
-<   /* Enable chip select */
-<   gpio_set_value(S6D04M0X21_GPIO_CS_N, 0);
-< 
-<   /* Black magic */
-<   mdelay(160);
-<   send_panel_command(jzfb,0x0001); 
-<   mdelay(120); 
-<   send_panel_command(jzfb,0x00f0); 
-<   send_panel_data(jzfb,0x005a); 
-<   send_panel_data(jzfb,0x005a); 
-<   send_panel_command(jzfb,0x00f3); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_command(jzfb,0x00ff); 
-<   send_panel_data(jzfb,0x0030); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0040); 
-<   send_panel_command(jzfb,0x0011); 
-<   mdelay(120); 
-<   send_panel_command(jzfb,0x00f3); 
-<   send_panel_data(jzfb,0x0001); 
-<   send_panel_data(jzfb,0x0026); 
-<   send_panel_data(jzfb,0x0026); 
-<   send_panel_data(jzfb,0x0007); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_data(jzfb,0x0057); 
-<   send_panel_data(jzfb,0x0057); 
-<   send_panel_data(jzfb,0x002c); 
-<   send_panel_command(jzfb,0x00f4); 
-<   send_panel_data(jzfb,0x0060); 
-<   send_panel_data(jzfb,0x0060); 
-<   send_panel_data(jzfb,0x006F); 
-<   send_panel_data(jzfb,0x006F); 
-<   send_panel_data(jzfb,0x0044); 
-<   send_panel_command(jzfb,0x00f5); 
-<   send_panel_data(jzfb,0x0012); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_data(jzfb,0x0003); 
-<   send_panel_data(jzfb,0x00f0); 
-<   send_panel_data(jzfb,0x0030); 
-<   send_panel_data(jzfb,0x001f); 
-<   mdelay(10); 
-<   send_panel_command(jzfb,0x00f3); 
-<   send_panel_data(jzfb,0x0003); 
-<   mdelay(20); 
-<   send_panel_command(jzfb,0x00ff); 
-<   send_panel_data(jzfb,0x0030); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0070); 
-<   mdelay(20); 
-<   send_panel_command(jzfb,0x00f3); 
-<   send_panel_data(jzfb,0x000f); 
-<   send_panel_command(jzfb,0x00ff); 
-<   send_panel_data(jzfb,0x0030); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0078); 
-<   mdelay(20); 
-<   send_panel_command(jzfb,0x00f3); 
-<   send_panel_data(jzfb,0x001f); 
-<   send_panel_command(jzfb,0x00ff); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0078); 
-<   mdelay(20); 
-<   send_panel_command(jzfb,0x00f3); 
-<   send_panel_data(jzfb,0x001f); 
-<   mdelay(40); 
-<   send_panel_command(jzfb,0x00f3); 
-<   send_panel_data(jzfb,0x00ff); 
-<   send_panel_data(jzfb,0x0026); 
-<   send_panel_data(jzfb,0x0026); 
-<   send_panel_data(jzfb,0x0007); 
-<   send_panel_data(jzfb,0x0055); 
-<   send_panel_data(jzfb,0x0057); 
-<   send_panel_data(jzfb,0x0057); 
-<   send_panel_data(jzfb,0x002c); 
-<   mdelay(50); 
-<   send_panel_command(jzfb,0x0011); 
-<   mdelay(100); 
-<   send_panel_command(jzfb,0x00f2); 
-<   send_panel_data(jzfb,0x0013); 
-<   send_panel_data(jzfb,0x0013); 
-<   send_panel_data(jzfb,0x0001); 
-<   send_panel_data(jzfb,0x0008); 
-<   send_panel_data(jzfb,0x0008); 
-<   send_panel_data(jzfb,0x0008); 
-<   send_panel_data(jzfb,0x0008); 
-<   send_panel_data(jzfb,0x0010); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0010); 
-<   send_panel_data(jzfb,0x0010); 
-<   send_panel_command(jzfb,0x00fd); 
-<   send_panel_data(jzfb,0x0055); 
-<   send_panel_command(jzfb,0x0035); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_command(jzfb,0x0036); 
-<   send_panel_data(jzfb,0x00e8); 
-<   send_panel_command(jzfb,0x003a); 
-<   send_panel_data(jzfb,0x0055); 
-<   send_panel_command(jzfb,0x00fe); 
-<   send_panel_data(jzfb,0x0016); 
-<   send_panel_data(jzfb,0x0016); 
-<   send_panel_data(jzfb,0x0028); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0006); 
-<   send_panel_command(jzfb,0x00f6); 
-<   send_panel_data(jzfb,0x0010); 
-<   send_panel_data(jzfb,0x0080); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0010); 
-<   send_panel_command(jzfb,0x0051); 
-<   send_panel_data(jzfb,0x00ff); 
-<   send_panel_command(jzfb,0x0053); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_command(jzfb,0x0055); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_command(jzfb,0x005e); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_command(jzfb,0x00ca); 
-<   send_panel_data(jzfb,0x0080); 
-<   send_panel_data(jzfb,0x0080); 
-<   send_panel_data(jzfb,0x0020); 
-<   send_panel_command(jzfb,0x00cb); 
-<   send_panel_data(jzfb,0x0001); 
-<   send_panel_command(jzfb,0x00f7); 
-<   send_panel_data(jzfb,0x0092); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x0026); 
-<   send_panel_data(jzfb,0x001c); 
-<   send_panel_data(jzfb,0x001c); 
-<   send_panel_data(jzfb,0x0024); 
-<   send_panel_data(jzfb,0x001b); 
-<   send_panel_data(jzfb,0x0009); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_data(jzfb,0x0018); 
-<   send_panel_command(jzfb,0x00f8); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x0024); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x001f); 
-<   send_panel_data(jzfb,0x0027); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x000a); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_command(jzfb,0x00f9); 
-<   send_panel_data(jzfb,0x0086); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x0010); 
-<   send_panel_data(jzfb,0x0010); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x001b); 
-<   send_panel_data(jzfb,0x001f); 
-<   send_panel_data(jzfb,0x0027); 
-<   send_panel_data(jzfb,0x001b); 
-<   send_panel_data(jzfb,0x001f); 
-<   send_panel_data(jzfb,0x0027); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x000a); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_data(jzfb,0x0018); 
-<   send_panel_command(jzfb,0x00fa); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x0024); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x001f); 
-<   send_panel_data(jzfb,0x0027); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x000a); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_command(jzfb,0x00fb); 
-<   send_panel_data(jzfb,0x0080); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x001b); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x0026); 
-<   send_panel_data(jzfb,0x0017); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x0014); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_data(jzfb,0x0018); 
-<   send_panel_command(jzfb,0x00fc); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x001a); 
-<   send_panel_data(jzfb,0x001d); 
-<   send_panel_data(jzfb,0x0024); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x001f); 
-<   send_panel_data(jzfb,0x0027); 
-<   send_panel_data(jzfb,0x001e); 
-<   send_panel_data(jzfb,0x000a); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_data(jzfb,0x0011); 
-<   send_panel_command(jzfb,0x002a); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0001); 
-<   send_panel_data(jzfb,0x003f); 
-<   send_panel_command(jzfb,0x002b); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x0000); 
-<   send_panel_data(jzfb,0x00ef); 
-<   send_panel_command(jzfb,0x0029); 
-<   send_panel_command(jzfb,0x002c); 
-< }
-< 
-< /* TODO(IGP): make sure LCD power consumption is low in these conditions */
-< static void s6d04m0x21_disable(struct jzfb *jzfb)
-< {
-<   /* Keep chip select disabled */
-<   gpio_set_value(S6D04M0X21_GPIO_CS_N, 1);
-<   /* Keep RESET active */
-<   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 0);
-< }
-< 
-< static int s6d04m0x21_init(struct jzfb *jzfb)
-< {
-<   struct device *dev = &jzfb->pdev->dev;
-<   int ret;
-< 
-<   ret = gpio_request(S6D04M0X21_GPIO_CS_N, dev_name(dev));
-<   if (ret)
-<     goto err_cs;
-<   gpio_direction_output(S6D04M0X21_GPIO_CS_N, 1);
-< 
-<   ret = gpio_request(S6D04M0X21_GPIO_RESET_N, dev_name(dev));
-<   if (ret)
-<     goto err_reset;
-<   gpio_direction_output(S6D04M0X21_GPIO_RESET_N, 0);
-<   
-<   mdelay(100);
-<   return 0;
-< 
-< err_reset:
-<   gpio_free(S6D04M0X21_GPIO_CS_N);
-< err_cs:
-<   dev_err(dev, "Could not reserve GPIO pins for S6D04M0X21 panel driver\n");
-<   return ret;
-< }
-< 
-< static void s6d04m0x21_exit(struct jzfb *jzfb)
-< {
-<   gpio_free(S6D04M0X21_GPIO_CS_N);
-<   gpio_free(S6D04M0X21_GPIO_RESET_N);
-< }
-< 
-< #endif
-< 
+&lt; 
+&lt; #ifdef CONFIG_JZ_SLCD_S6D04M0X21
+&lt; 
+&lt; #define S6D04M0X21_GPIO_CS_N   JZ_GPIO_PORTB(17)  /* Chip select */
+&lt; #define S6D04M0X21_GPIO_RESET_N   JZ_GPIO_PORTB(18)  /* LCD reset */
+&lt; 
+&lt; static void s6d04m0x21_enable(struct jzfb *jzfb)
+&lt; {
+&lt;   /* RESET pulse */
+&lt;   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 0);
+&lt;   mdelay(100);
+&lt;   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 1);
+&lt;   mdelay(150);
+&lt; 
+&lt;   /* Enable chip select */
+&lt;   gpio_set_value(S6D04M0X21_GPIO_CS_N, 0);
+&lt; 
+&lt;   /* Black magic */
+&lt;   mdelay(160);
+&lt;   send_panel_command(jzfb,0x0001); 
+&lt;   mdelay(120); 
+&lt;   send_panel_command(jzfb,0x00f0); 
+&lt;   send_panel_data(jzfb,0x005a); 
+&lt;   send_panel_data(jzfb,0x005a); 
+&lt;   send_panel_command(jzfb,0x00f3); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_command(jzfb,0x00ff); 
+&lt;   send_panel_data(jzfb,0x0030); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0040); 
+&lt;   send_panel_command(jzfb,0x0011); 
+&lt;   mdelay(120); 
+&lt;   send_panel_command(jzfb,0x00f3); 
+&lt;   send_panel_data(jzfb,0x0001); 
+&lt;   send_panel_data(jzfb,0x0026); 
+&lt;   send_panel_data(jzfb,0x0026); 
+&lt;   send_panel_data(jzfb,0x0007); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_data(jzfb,0x0057); 
+&lt;   send_panel_data(jzfb,0x0057); 
+&lt;   send_panel_data(jzfb,0x002c); 
+&lt;   send_panel_command(jzfb,0x00f4); 
+&lt;   send_panel_data(jzfb,0x0060); 
+&lt;   send_panel_data(jzfb,0x0060); 
+&lt;   send_panel_data(jzfb,0x006F); 
+&lt;   send_panel_data(jzfb,0x006F); 
+&lt;   send_panel_data(jzfb,0x0044); 
+&lt;   send_panel_command(jzfb,0x00f5); 
+&lt;   send_panel_data(jzfb,0x0012); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_data(jzfb,0x0003); 
+&lt;   send_panel_data(jzfb,0x00f0); 
+&lt;   send_panel_data(jzfb,0x0030); 
+&lt;   send_panel_data(jzfb,0x001f); 
+&lt;   mdelay(10); 
+&lt;   send_panel_command(jzfb,0x00f3); 
+&lt;   send_panel_data(jzfb,0x0003); 
+&lt;   mdelay(20); 
+&lt;   send_panel_command(jzfb,0x00ff); 
+&lt;   send_panel_data(jzfb,0x0030); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0070); 
+&lt;   mdelay(20); 
+&lt;   send_panel_command(jzfb,0x00f3); 
+&lt;   send_panel_data(jzfb,0x000f); 
+&lt;   send_panel_command(jzfb,0x00ff); 
+&lt;   send_panel_data(jzfb,0x0030); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0078); 
+&lt;   mdelay(20); 
+&lt;   send_panel_command(jzfb,0x00f3); 
+&lt;   send_panel_data(jzfb,0x001f); 
+&lt;   send_panel_command(jzfb,0x00ff); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0078); 
+&lt;   mdelay(20); 
+&lt;   send_panel_command(jzfb,0x00f3); 
+&lt;   send_panel_data(jzfb,0x001f); 
+&lt;   mdelay(40); 
+&lt;   send_panel_command(jzfb,0x00f3); 
+&lt;   send_panel_data(jzfb,0x00ff); 
+&lt;   send_panel_data(jzfb,0x0026); 
+&lt;   send_panel_data(jzfb,0x0026); 
+&lt;   send_panel_data(jzfb,0x0007); 
+&lt;   send_panel_data(jzfb,0x0055); 
+&lt;   send_panel_data(jzfb,0x0057); 
+&lt;   send_panel_data(jzfb,0x0057); 
+&lt;   send_panel_data(jzfb,0x002c); 
+&lt;   mdelay(50); 
+&lt;   send_panel_command(jzfb,0x0011); 
+&lt;   mdelay(100); 
+&lt;   send_panel_command(jzfb,0x00f2); 
+&lt;   send_panel_data(jzfb,0x0013); 
+&lt;   send_panel_data(jzfb,0x0013); 
+&lt;   send_panel_data(jzfb,0x0001); 
+&lt;   send_panel_data(jzfb,0x0008); 
+&lt;   send_panel_data(jzfb,0x0008); 
+&lt;   send_panel_data(jzfb,0x0008); 
+&lt;   send_panel_data(jzfb,0x0008); 
+&lt;   send_panel_data(jzfb,0x0010); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0010); 
+&lt;   send_panel_data(jzfb,0x0010); 
+&lt;   send_panel_command(jzfb,0x00fd); 
+&lt;   send_panel_data(jzfb,0x0055); 
+&lt;   send_panel_command(jzfb,0x0035); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_command(jzfb,0x0036); 
+&lt;   send_panel_data(jzfb,0x00e8); 
+&lt;   send_panel_command(jzfb,0x003a); 
+&lt;   send_panel_data(jzfb,0x0055); 
+&lt;   send_panel_command(jzfb,0x00fe); 
+&lt;   send_panel_data(jzfb,0x0016); 
+&lt;   send_panel_data(jzfb,0x0016); 
+&lt;   send_panel_data(jzfb,0x0028); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0006); 
+&lt;   send_panel_command(jzfb,0x00f6); 
+&lt;   send_panel_data(jzfb,0x0010); 
+&lt;   send_panel_data(jzfb,0x0080); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0010); 
+&lt;   send_panel_command(jzfb,0x0051); 
+&lt;   send_panel_data(jzfb,0x00ff); 
+&lt;   send_panel_command(jzfb,0x0053); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_command(jzfb,0x0055); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_command(jzfb,0x005e); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_command(jzfb,0x00ca); 
+&lt;   send_panel_data(jzfb,0x0080); 
+&lt;   send_panel_data(jzfb,0x0080); 
+&lt;   send_panel_data(jzfb,0x0020); 
+&lt;   send_panel_command(jzfb,0x00cb); 
+&lt;   send_panel_data(jzfb,0x0001); 
+&lt;   send_panel_command(jzfb,0x00f7); 
+&lt;   send_panel_data(jzfb,0x0092); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x0026); 
+&lt;   send_panel_data(jzfb,0x001c); 
+&lt;   send_panel_data(jzfb,0x001c); 
+&lt;   send_panel_data(jzfb,0x0024); 
+&lt;   send_panel_data(jzfb,0x001b); 
+&lt;   send_panel_data(jzfb,0x0009); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_data(jzfb,0x0018); 
+&lt;   send_panel_command(jzfb,0x00f8); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x0024); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x001f); 
+&lt;   send_panel_data(jzfb,0x0027); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x000a); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_command(jzfb,0x00f9); 
+&lt;   send_panel_data(jzfb,0x0086); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x0010); 
+&lt;   send_panel_data(jzfb,0x0010); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x001b); 
+&lt;   send_panel_data(jzfb,0x001f); 
+&lt;   send_panel_data(jzfb,0x0027); 
+&lt;   send_panel_data(jzfb,0x001b); 
+&lt;   send_panel_data(jzfb,0x001f); 
+&lt;   send_panel_data(jzfb,0x0027); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x000a); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_data(jzfb,0x0018); 
+&lt;   send_panel_command(jzfb,0x00fa); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x0024); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x001f); 
+&lt;   send_panel_data(jzfb,0x0027); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x000a); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_command(jzfb,0x00fb); 
+&lt;   send_panel_data(jzfb,0x0080); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x001b); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x0026); 
+&lt;   send_panel_data(jzfb,0x0017); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x0014); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_data(jzfb,0x0018); 
+&lt;   send_panel_command(jzfb,0x00fc); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x001a); 
+&lt;   send_panel_data(jzfb,0x001d); 
+&lt;   send_panel_data(jzfb,0x0024); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x001f); 
+&lt;   send_panel_data(jzfb,0x0027); 
+&lt;   send_panel_data(jzfb,0x001e); 
+&lt;   send_panel_data(jzfb,0x000a); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_data(jzfb,0x0011); 
+&lt;   send_panel_command(jzfb,0x002a); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0001); 
+&lt;   send_panel_data(jzfb,0x003f); 
+&lt;   send_panel_command(jzfb,0x002b); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x0000); 
+&lt;   send_panel_data(jzfb,0x00ef); 
+&lt;   send_panel_command(jzfb,0x0029); 
+&lt;   send_panel_command(jzfb,0x002c); 
+&lt; }
+&lt; 
+&lt; /* TODO(IGP): make sure LCD power consumption is low in these conditions */
+&lt; static void s6d04m0x21_disable(struct jzfb *jzfb)
+&lt; {
+&lt;   /* Keep chip select disabled */
+&lt;   gpio_set_value(S6D04M0X21_GPIO_CS_N, 1);
+&lt;   /* Keep RESET active */
+&lt;   gpio_set_value(S6D04M0X21_GPIO_RESET_N, 0);
+&lt; }
+&lt; 
+&lt; static int s6d04m0x21_init(struct jzfb *jzfb)
+&lt; {
+&lt;   struct device *dev = &jzfb-&gt;pdev-&gt;dev;
+&lt;   int ret;
+&lt; 
+&lt;   ret = gpio_request(S6D04M0X21_GPIO_CS_N, dev_name(dev));
+&lt;   if (ret)
+&lt;     goto err_cs;
+&lt;   gpio_direction_output(S6D04M0X21_GPIO_CS_N, 1);
+&lt; 
+&lt;   ret = gpio_request(S6D04M0X21_GPIO_RESET_N, dev_name(dev));
+&lt;   if (ret)
+&lt;     goto err_reset;
+&lt;   gpio_direction_output(S6D04M0X21_GPIO_RESET_N, 0);
+&lt;   
+&lt;   mdelay(100);
+&lt;   return 0;
+&lt; 
+&lt; err_reset:
+&lt;   gpio_free(S6D04M0X21_GPIO_CS_N);
+&lt; err_cs:
+&lt;   dev_err(dev, "Could not reserve GPIO pins for S6D04M0X21 panel driver\n");
+&lt;   return ret;
+&lt; }
+&lt; 
+&lt; static void s6d04m0x21_exit(struct jzfb *jzfb)
+&lt; {
+&lt;   gpio_free(S6D04M0X21_GPIO_CS_N);
+&lt;   gpio_free(S6D04M0X21_GPIO_RESET_N);
+&lt; }
+&lt; 
+&lt; #endif
+&lt; 
 997,1003d702
-<   },
-< #endif
-< #ifdef CONFIG_JZ_SLCD_S6D04M0X21
-<   {
-<     s6d04m0x21_init, s6d04m0x21_exit,
-<     s6d04m0x21_enable, s6d04m0x21_disable,
-<     "s6d04m0x21",
+&lt;   },
+&lt; #endif
+&lt; #ifdef CONFIG_JZ_SLCD_S6D04M0X21
+&lt;   {
+&lt;     s6d04m0x21_init, s6d04m0x21_exit,
+&lt;     s6d04m0x21_enable, s6d04m0x21_disable,
+&lt;     "s6d04m0x21",
 </pre><br>
 
 <pre>
@@ -365,9 +365,9 @@ diff qi-kernel/drivers/video/Kconfig_orig.c qi-kernel/drivers/video/Kconfig.c
 </pre>
 <pre class="brush:cpp">
 2417a2418,2421
-> config JZ_SLCD_S6D04M0X21
->   bool "S6D04M0X21 Smart LCD panel"
->   depends on FB_JZ4740_SLCD
+&gt; config JZ_SLCD_S6D04M0X21
+&gt;   bool "S6D04M0X21 Smart LCD panel"
+&gt;   depends on FB_JZ4740_SLCD
 </pre><br>
 
 <pre>
