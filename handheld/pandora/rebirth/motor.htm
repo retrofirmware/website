@@ -71,7 +71,9 @@ GPIO測試
 
 <pre>
 $ sudo chmod 0777 /sys/class/gpio/export 
-$ sudo chmod 0777 /sys/class/gpio/unexport 
+$ sudo chmod 0777 /sys/class/gpio/unexport
+$ sudo chmod 0777 /sys/class/gpio/gpio58/direction
+$ sudo chmod 0777 /sys/class/gpio/gpio64/direction
 
 $ echo 58 > /sys/class/gpio/export 
 $ echo 64 > /sys/class/gpio/export

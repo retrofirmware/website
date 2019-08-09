@@ -49,10 +49,10 @@
 <hr size="1">
 <p>
 Wiz掌機一般都是透過SDCard更新韌體，但是，若不小心更新到錯誤的韌體，而無法開機時，使用者也可以使用如下方式救回Wiz掌機，但是，前提是需要製作一條UART傳輸線，若使用者已經有該UART傳輸線時，還需要將第8腳位和第9腳位各自透過1K歐姆電阻連接到GND，這樣才可以讓Pollux進入UART Bootloader模式，步驟說明如下：<br>
-1. 下載Wiz Bootloader Tool並解壓縮<br>
+1. 下載<a href="https://github.com/steward-fu/wiz/releases/download/v1.0/unbrick.7z">Wiz Unbrick Tool</a>並解壓縮<br>
 2. 將Wiz Connector的第8腳位(CFG Bootmode 1)、第9腳位(CFG Bootmode 0)各自透過1K歐姆電阻連接到GND<br>
 3. 準備一張2GB SDCard並格式化成<b>FAT16</b><br>
-4. 將Wiz掌機的韌體解壓縮到SDCard根目錄<br>
+4. 將<a href="https://github.com/steward-fu/wiz/releases/download/v1.0/v1.2.6.7z">Wiz系統</a>解壓縮到SDCard根目錄<br>
 5. 將2GB SDCard插入Wiz掌機<br>
 6. 關機並連接UART傳輸線到PC<br>
 7. 開機<br>
