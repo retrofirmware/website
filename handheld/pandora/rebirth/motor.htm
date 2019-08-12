@@ -52,31 +52,57 @@
 Ref. <a href="https://www.openpandora.org/downloads/PANDORA_Hackers_manual_v100.pdf">https://www.openpandora.org/downloads/PANDORA_Hackers_manual_v100.pdf</a><br>
 Ref. <a href="https://pyra-handheld.com/boards/threads/talking-to-the-gpios-on-the-ext-connector.63146/">https://pyra-handheld.com/boards/threads/talking-to-the-gpios-on-the-ext-connector.63146/</a><br><br>
 
+由於司徒最近都在幫開源掌機增加振動功能，身爲司徒最愛的掌機，Pandora自然逃不過被改造的命運，只是Pandora的LCD排線目前已經無法購買，司徒也怕再度扯斷而讓此機報廢，經過長久的考慮，司徒最終還是決定動手改造，希望可以在Pandora身上開發出一些支援振動的遊戲，於是誕生這篇振動改造文章。<br><br>
+
+從Hack文件可以得知目前有許多可用的GPIO腳位，而LED7、LED8更是預留N-FET焊點，剛好司徒手上僅有NPN電晶體，因此，這兩個GPIO是最適合拿來改造振動馬達的位置，最幸運的地方在於這兩根GPIO開機後都是處於低電位，剛好一顆NPN即可解決，而Hack文件的說明如下：<br>
 <img src="motor/1.jpg" class="maxSize"><br><br>
+
+PCB位置<br>
 <img src="motor/2.jpg" class="maxSize"><br><br>
+
+MMBG3904<br>
 <img src="motor/3.jpg" class="maxSize"><br><br>
+
+接著找尋擺放振動馬達的位置<br>
 <img src="motor/4.jpg" class="maxSize"><br><br>
+
+直接使用三秒膠固定<br>
 <img src="motor/5.jpg" class="maxSize"><br><br>
-<img src="motor/6.jpg" class="maxSize"><br><br>
+
+固定後的樣子<br>
+<img src="motor/6.jpg" class="maxSize"><br>
 <img src="motor/7.jpg" class="maxSize"><br><br>
+
+接著焊接限流電阻<br>
 <img src="motor/8.jpg" class="maxSize"><br><br>
+
+完成跳線<br>
 <img src="motor/9.jpg" class="maxSize"><br><br>
+
+接著挖洞<br>
 <img src="motor/10.jpg" class="maxSize"><br><br>
+
+電鑽果然好用<br>
 <img src="motor/11.jpg" class="maxSize"><br><br>
+
+完美改造<br>
 <img src="motor/12.jpg" class="maxSize"><br><br>
+
+電路圖<br>
 <img src="motor/13.jpg" class="maxSize"><br><br>
 
-GPIO測試
+GPIO控制
 </p>
 
 <pre>
 $ sudo chmod 0777 /sys/class/gpio/export 
 $ sudo chmod 0777 /sys/class/gpio/unexport
-$ sudo chmod 0777 /sys/class/gpio/gpio58/direction
-$ sudo chmod 0777 /sys/class/gpio/gpio64/direction
 
 $ echo 58 > /sys/class/gpio/export 
 $ echo 64 > /sys/class/gpio/export
+
+$ sudo chmod 0777 /sys/class/gpio/gpio58/direction
+$ sudo chmod 0777 /sys/class/gpio/gpio64/direction
 
 $ echo "high" > /sys/class/gpio/gpio58/direction
 $ echo "high" > /sys/class/gpio/gpio64/direction
