@@ -52,15 +52,15 @@ Dingoo-SDK開發包提供的是開發函式庫，除了可以在Linux系統上�
 
 首先從<a href="http://www.cygwin.com/">官網</a>下載安裝檔案，下載完之後便可以開始安裝，一路安裝直到出現<b>Select Packages</b>視窗時，將Devel底下的make選項打勾(如下圖)，接著就按照預設的設定繼續安裝。<br>
 <img src="../s2d/setup_windows/1.jpg" class="maxSize"><br>
-1. 下載Toolchain編譯工具並放到<b>c:\cygwin\dingoo\</b>資料夾<br>
-2. 下載SDK r324開發工具包並放到<b>c:\cygwin\dingoo\</b>資料夾<br><br>
+1. 上網找尋MIPSEL Toolchain for Cygwin並放到<b>c:\cygwin\dingoo\</b>資料夾<br>
+2. 下載<a href="https://github.com/steward-fu/a320/releases/download/v1.0/sdk.7z">SDK r324</a>開發工具包並放到<b>c:\cygwin\dingoo\</b>資料夾<br><br>
 
 接著開啟<b>c:\cygwin\cygwin.bat</b>檔案並添加相關設定路徑
 </p>
 
 <pre>
 SET DINGOO_SDK=/dingoo/a320_sdk
-SET MIPSTOOLS=/dingoo/a320_toolchain/mipsel-linux-uclibc
+SET MIPSTOOLS=/dingoo/mipsel-linux-uclibc
 SET PATH=%PATH%;%MIPSTOOLS%/usr/bin;%DINGOO_SDK%
 </pre><br>
 

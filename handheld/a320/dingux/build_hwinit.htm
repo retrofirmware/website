@@ -45,27 +45,18 @@
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
 <h3>Dingoo A320 &gt;&gt; Dingux</h3>
-<p><b>Build FBA-SDL</b></p>
+<p><b>Build Kernel</b></p>
 <hr size="1">
 <p>
-FBA模擬器可以說是相當熱門的大型街機模擬器，它可以支援的街機硬體種類相當豐盛，因此也被大量移植到許多遊戲平台身上，作為指標性的街機模擬器，司徒當然也要說明一下它的編譯過程，將來若有機會移植到其它遊戲平台身上時，成功的編譯方式就是移植的第一個步驟，因此，司徒今天就介紹一下如何編譯FBA模擬器。<br><br>
+Ref. <a href="https://github.com/steward-fu/a320/releases/download/v1.1/dingux.7z">hwinit</a><br>
+Ref. <a href="https://github.com/steward-fu/a320/releases/download/v1.0/toolchain.tar.gz">toolchain</a><br><br>
 
-使用如下方式編譯：
+編譯方式如下：
 </p>
-
 <pre>
-$ sudo mv a320_toolchain/mipsel-linux-uclibc /opt/
-$ export PATH=$PATH:/opt/mipsel-linux-uclibc/usr/bin/
-$ cd a320_emulator/fba-sdl
-$ mv Makefile.dingux-gcc makefile.dingux-gcc
-$ make -f makefile.dingux-gcc
-  ...
-$ make -f makefile.dingux-gcc
-</pre>
-
-<p>
-從上面的命令可以看出需要執行兩次make指令，這是因為第一次的make指令會產生一個未知檔案的錯誤，但是，只要再次執行make指令即可編譯成功。
-</p>
+$ make clean
+$ make
+</pre><br>
 
 <p>
 <br><a href="../../../handheld.htm">返回上一頁</a>

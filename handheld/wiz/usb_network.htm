@@ -48,10 +48,13 @@
 <p><b>如何讓USB介面變成Network裝置</b></p>
 <hr size="1">
 <p>
-1. 複製USBNetwork-1.1.0資料夾到SDCard<br>
-2. 從Wiz的Launcher選擇NetworkUp.gpe<br>
-3. 透過USB連接到PC<br>
-4. 設定IP
+Ref. <a href="https://pyra-handheld.com/boards/threads/howto-wiz-usb-ethernet-with-stock-usb-cable.47339/">https://pyra-handheld.com/boards/threads/howto-wiz-usb-ethernet-with-stock-usb-cable.47339/</a><br><br>
+
+1. 下載<a href="http://www.mercenary.net/OpenWiz/USBNetwork-1.1.0.tar.bz2">USBNetwork</a><br>
+2. 複製USBNetwork-1.1.0資料夾到SDCard<br>
+3. 從Wiz的Launcher選擇NetworkUp.gpe<br>
+4. 透過USB連接到PC<br>
+5. 設定IP
 </p>
 <pre>
 $ ifconfig usb0 inet 10.0.0.1 netmask 255.255.255.0
