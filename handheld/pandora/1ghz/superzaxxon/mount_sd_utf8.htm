@@ -59,7 +59,6 @@ $ sudo vim /usr/bin/game2utf8.sh
 #!/bin/sh
 umount /media/Game
 mkdir -p /media/Game
-chown steward:steward /media/Game
 chmod 0777 /media/Game
 mount -t auto -o dirsync,noatime,umask=0,utf8 /dev/mmcblk0p1 /media/Game
 </pre><br>

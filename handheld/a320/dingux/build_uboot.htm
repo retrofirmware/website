@@ -13,7 +13,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>司徒的教學網站</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <meta name="author" content="fullahead.org" />
   <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
@@ -22,15 +21,15 @@
   <meta name="googlebot" content="noarchive" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.1, maximum-scale=100.0"/>
 
-  <link rel="shortcut icon" href="../../../../website.ico">
-  <link rel="stylesheet" type="text/css" href="../../../../styles/shCore.css" />
-  <link rel="stylesheet" type="text/css" href="../../../../styles/shThemeDefault.css" />
-  <link rel="stylesheet" type="text/css" href="../../../../css/html.css" media="screen, projection, tv " />
-  <link rel="stylesheet" type="text/css" href="../../../../css/layout.css" media="screen, projection, tv" />
-  <link rel="stylesheet" type="text/css" href="../../../../css/print.css" media="print" />
+  <link rel="shortcut icon" href="../../../website.ico">
+  <link rel="stylesheet" type="text/css" href="../../../styles/shCore.css" />
+  <link rel="stylesheet" type="text/css" href="../../../styles/shThemeDefault.css" />
+  <link rel="stylesheet" type="text/css" href="../../../css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="../../../css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="../../../css/print.css" media="print" />
   
-  <script type="text/javascript" src="../../../../scripts/shCore.js"></script>
-  <script type="text/javascript" src="../../../../scripts/shBrushCpp.js"></script>
+  <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+  <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
 
   <!-- Conditional comment to apply opacity fix for IE #content background.
        Invalid CSS, but can be removed without harming design -->
@@ -43,28 +42,31 @@
 <script type="text/javascript">SyntaxHighlighter.all();</script>
 <div id="wrapper">
 <div id="content">
-<script type="text/javascript" src="../../../../header.js"></script>
+<script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>Pandora 1GHz &gt;&gt; Debian Mark2</h3>
-<p><b>build pnd library</b></p>
+<h3>Dingoo A320 &gt;&gt; Dingux</h3>
+<p><b>build uboot</b></p>
 <hr size="1">
 <p>
-編譯歩驟如下：
+編譯步驟如下：
 </p>
 <pre>
-$ git clone git://git.openpandora.org/pandora-libraries.git
-$ cd pandora-libraries
+$ cd
+$ wget https://github.com/steward-fu/a320/releases/download/v1.0/cc-dx.tar.gz
+$ tar xvf cc-dx.tar.gz
+$ sudo cp -a a320 /opt/a320
+$ export PATH=$PATH:/opt/a320/usr/bin/
+
+$ wget https://github.com/steward-fu/a320/releases/download/v1.1/uboot.7z
+$ tar xvf uboot.tar.gz
+$ cd uboot
+$ make a320_config
+$ make clean
 $ make
-$ make deploy
-$ deployment/usr/bin/pnd_info /media/mmcblk1p1/pandora/menu/pcsx_rearmed_r22.pnd 
-</pre>
+</pre><br>
 
 <p>
-<img src="build_pnd/1.jpg" class="maxSize">
-</p>
-
-<p>
-<br><a href="../../../../handheld.htm">返回上一頁</a>
+<br><a href="../../../handheld.htm">返回上一頁</a>
 </p>
 
 </div>

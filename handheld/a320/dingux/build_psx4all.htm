@@ -45,17 +45,23 @@
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
 <h3>Dingoo A320 &gt;&gt; Dingux</h3>
-<p><b>Buils PSX4ALL</b></p>
+<p><b>build psx4all</b></p>
 <hr size="1">
 <p>
-Ref. <a href="https://github.com/steward-fu/a320/releases/download/v1.1/psx4all.tar.gz">psx4all</a><br>
-Ref. <a href="https://github.com/steward-fu/a320/releases/download/v1.0/toolchain.tar.gz">toolchain</a><br><br>
-
 PSX4ALL模擬器算是早期的PS1模擬器，該模擬器除了具備久遠的歷史之外，司徒覺得它算是比較輕量級的PS1模擬器，當然它的模擬效能也算是相當不錯，所以被大量移植到許多掌機身上，雖然新版的PCSX-ReARMed模擬器具有更好的效能表現，不過目前尚未被移植到Dinaoo A320掌機身上，因此我們先將重點擺在PSX4ALL模擬器身上，司徒今天就說明一下如何編譯Dingux系統的PSX4ALL模擬器。<br><br>
 
 使用如下方式編譯：
 </p>
 <pre>
+$ cd
+$ wget https://github.com/steward-fu/a320/releases/download/v1.0/cc-dx.tar.gz
+$ tar xvf cc-dx.tar.gz
+$ sudo cp -a a320 /opt/a320
+$ export PATH=$PATH:/opt/a320/usr/bin/
+
+$ wget https://github.com/steward-fu/a320/releases/download/v1.1/psx4all.tar.gz
+$ tar xvf psx4all.tar.gz
+$ cd psx4all
 $ make clean
 $ make
 </pre><br>

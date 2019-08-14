@@ -48,12 +48,18 @@
 <p><b>Build pollux_dpc_set</b></p>
 <hr size="1">
 <p>
-Ref. <a href="https://github.com/steward-fu/wiz/releases/download/v1.0/GPH_SDK-10.02_linux.tar.gz">toolchain</a><br>
-Ref. <a href="https://github.com/steward-fu/wiz/releases/download/v1.2/pollux_dpc_set.tar.gz">pollux_dpc_set</a><br><br>
-
 編譯步驟如下：
 </p>
 <pre>
+$ cd
+$ wget https://github.com/steward-fu/wiz/releases/download/v1.0/GPH_SDK-10.02_linux.tar.gz
+$ tar xvf GPH_SDK-10.02_linux.tar.gz
+$ sudo cp -a GPH_SDK /opt/wiz/
+$ export PATH=$PATH:/opt/wiz/tools/gcc-4.0.2-glibc-2.3.6/arm-linux/bin/
+
+$ wget https://github.com/steward-fu/wiz/releases/download/v1.2/pollux_dpc_set.tar.gz
+$ tar xvf pollux_dpc_set.tar.gz
+$ cd pollux_dpc_set
 $ rm pollux_dpc_set
 $ make
 </pre><br>

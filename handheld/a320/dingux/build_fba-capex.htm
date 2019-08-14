@@ -45,15 +45,21 @@
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
 <h3>Dingoo A320 &gt;&gt; Dingux</h3>
-<p><b>Build FBA-Capex</b></p>
+<p><b>build fba-capex</b></p>
 <hr size="1">
 <p>
-Ref. <a href="https://github.com/steward-fu/a320/releases/download/v1.1/fba-capex.tar.gz">fba-capex</a><br>
-Ref. <a href="https://github.com/steward-fu/a320/releases/download/v1.0/toolchain.tar.gz">toolchain</a><br><br>
-
 使用如下方式編譯：
 </p>
 <pre>
+$ cd
+$ wget https://github.com/steward-fu/a320/releases/download/v1.0/cc-dx.tar.gz
+$ tar xvf cc-dx.tar.gz
+$ sudo cp -a a320 /opt/a320
+$ export PATH=$PATH:/opt/a320/usr/bin/
+
+$ wget https://github.com/steward-fu/a320/releases/download/v1.1/fba-capex.tar.gz
+$ tar xvf fba-capex.tar.gz
+$ cd fba-capex
 $ make clean
 $ make
 </pre><br>
