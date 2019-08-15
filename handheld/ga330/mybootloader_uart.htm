@@ -54,10 +54,10 @@
 </p>
 
 <pre>
-c:\> PATH c:/ga330/cygwin/arm-linux/bin;c:/ga330/CYGWIN/BIN;C:\windows\
-c:\> arm-linux-objcopy --change-addresses=0x00000000 -I binary -O elf32-littlearm -B arm rom.bin rom-elf
-c:\> arm-linux-objcopy --set-section-flags .data=code rom-elf
-c:\> arm-linux-objdump -d rom-elf &gt; rom.dis
+c:\&gt; PATH c:/ga330/cygwin/arm-linux/bin;c:/ga330/CYGWIN/BIN;C:\windows\
+c:\&gt; arm-linux-objcopy --change-addresses=0x00000000 -I binary -O elf32-littlearm -B arm rom.bin rom-elf
+c:\&gt; arm-linux-objcopy --set-section-flags .data=code rom-elf
+c:\&gt; arm-linux-objdump -d rom-elf &gt; rom.dis
 </pre><br>
 
 <p>
@@ -232,14 +232,14 @@ SECTIONS
 </p>
 
 <pre>
-c:\> PATH c:/ga330/cygwin/arm-linux/bin;c:/ga330/CYGWIN/BIN;C:\windows\
-c:\> arm-linux-gcc -fno-pic -pipe -O2 -Wall -finline-functions -fomit-frame-pointer -msoft-float -fno-builtin -mcpu=arm926ej-s -c ga330_boot.s
-c:\> arm-linux-gcc -nostdlib -o boot-elf32 ga330_boot.o -T ga330_link
-c:\> arm-linux-objcopy -O binary boot-elf32 boot.bin
+c:\&gt; PATH c:/ga330/cygwin/arm-linux/bin;c:/ga330/CYGWIN/BIN;C:\windows\
+c:\&gt; arm-linux-gcc -fno-pic -pipe -O2 -Wall -finline-functions -fomit-frame-pointer -msoft-float -fno-builtin -mcpu=arm926ej-s -c ga330_boot.s
+c:\&gt; arm-linux-gcc -nostdlib -o boot-elf32 ga330_boot.o -T ga330_link
+c:\&gt; arm-linux-objcopy -O binary boot-elf32 boot.bin
 </pre><br>
 
 <p>
-接著使用司徒之前介紹的燒錄步驟，將boot.bin燒錄到MiniSD並插上UART線，接著按下D-Pad的<b class="content">下按鈕</b>開機，即可看到如下的開機訊息(Baudrate: 115200bps)
+接著使用司徒之前介紹的燒錄步驟，將boot.bin燒錄到MiniSD並插上UART線，接著按下DPad的<b class="content">下按鈕</b>開機，即可看到如下的開機訊息(Baudrate: 115200bps)
 </p>
 
 <pre>
