@@ -46,29 +46,34 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>Miyoo</h3>
-<p><b>Build XBoot</b></p>
+<p><b>build xboot</b></p>
 <hr size="1">
 <p>
-Ref. <a href="http://nano.lichee.pro/get_started/first_eat.html">http://nano.lichee.pro/get_started/first_eat.html</a>
+參可資訊：<br>
+1. <a href="http://nano.lichee.pro/get_started/first_eat.html">http://nano.lichee.pro/get_started/first_eat.html</a><br><br>
+
+編譯步驟如下：
 </p>
 <pre>
-$ cd ~/Downloads/
+$ cd
+$ wget https://github.com/steward-fu/miyoo/releases/download/v1.0/toolchain.7z
+$ 7za x toolchain.7z
+$ sudo cp -a miyoo /opt/
+$ export PATH=$PATH:/opt/miyoo/bin
+
 $ git clone -b f1c100s-kk131 https://github.com/xboot/xboot.git
 $ cd xboot
 $ make CROSS_COMPILE=arm-linux-gnueabi- PLATFORM=arm32-f1c100s
 </pre><br>
 
 <p>
-測試xboot.bin
+開機測試
 </p>
 <pre>
 $ sudo sunxi-fel spl output/xboot.bin
 $ sudo sunxi-fel -p write 0x80000000 output/xboot.bin
-$ sudo sunxi-fel exec 0x80000000;
-</pre>
-<p>
-P.S. 由於目前燒錄到SPI Flash後，無法啟動，因此，建議每次都從RAM執行。
-</p>
+$ sudo sunxi-fel exec 0x80000000
+</pre><br>
 
 <p>
 <br><a href="../../handheld.htm">返回上一頁</a>

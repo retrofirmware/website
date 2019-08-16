@@ -46,15 +46,16 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>Miyoo</h3>
-<p><b>Build Kernel 4.14.0</b></p>
+<p><b>build kernel 4.14.0</b></p>
 <hr size="1">
 <p>
-目前司徒已經移植完Kernel 4.14.0程式碼，使用者可以使用如下指令編譯：
+編譯步驟如下：
 </p>
 <pre>
-$ cd ~/Downloads/
-$ git clone https://github.com/steward-fu/f1c500s_kernel
-$ cd f1c500s_kernel
+$ cd
+$ wget https://github.com/steward-fu/miyoo/releases/download/v1.2/kernel.7z
+$ 7za x kernel.7z
+$ cd kernel
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- miyoo_defconfig
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- clean
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j8

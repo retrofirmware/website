@@ -13,7 +13,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>司徒的教學網站</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-lowast="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <meta name="author" content="fullahead.org" />
   <meta name="keywords" content="XHTML, CSS, template, FullAhead" />
@@ -45,27 +44,57 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>Miyoo</h3>
-<p><b>Build ASCIIpOrtal</b></p>
+<h3>GPD Pocket 2</h3>
+<p><b>安裝系統(Debian 9)</b></p>
 <hr size="1">
+<p>
+1. 下載並安裝<a href="http://cdimage.debian.org/mirror/cdimage/archive/9.4.0/amd64/iso-cd/debian-9.4.0-amd64-xfce-CD-1.iso">Debian 9</a><br>
+2. 安裝Wifi驅動
+</p>
 <pre>
-$ cd ~/
-$ wget https://github.com/steward-fu/miyoo/releases/download/v20190508_1/toolchain.7z
-$ 7za x toolchain.7z
-$ sudo mv miyoo /opt
-$ export PATH=$PATH:/opt/miyoo/bin
-$ wget https://github.com/steward-fu/miyoo/releases/download/v20190508_4/src_asciiportal.7z
-$ 7za x src_asciiportal.7z
-$ cd asciiportal/PDCurses/sdl1
-$ make clean
-$ make
-$ cd ../../
-$ make clean
-$ make
+$ sudo apt-get install kernel-package firmware-intel-sound pulseaudio firmware-iwlwifi -y
 </pre><br>
 
 <p>
-<br><a href="../../handheld.htm">返回上一頁</a>
+3. Fix Touchscreen
+</p>
+<pre>
+$ sudo vim /etc/udev/rules.d/90-goodix-touchscreen.rules
+  ACTION=="add|change", KERNEL=="event[0-9]*", ATTRS{name}=="Goodix Capacitive TouchScreen", ENV{LIBINPUT_CALIBRATION_MATRIX}="0 1 0 -1 0 1"
+</pre><br>
+
+<p>
+4. Build Kernel 5.2.0(修復聲音以及亮度調整)
+</p>
+<pre>
+$ cd
+$ wget https://github.com/torvalds/linux/archive/v5.2.tar.gz
+$ tar xvf v5.2.tar.gz
+$ cd linux-5.2
+$ cp /boot/config-$(uname -r) .config
+$ make menuconfig
+$ make -j8
+$ make modules
+$ sudo make modules_install
+$ sudo make install
+$ sudo reboot
+</pre><br>
+
+<p>
+5. 最佳DPI設定<br>
+Settings &gt; Appearance &gt; Fonts &gt; DPI &gt; 150<br>
+Settings &gt; Window Manager &gt; Style &gt; Default-hdpi<br>
+Settings &gt; Settings Manager &gt; Settings Editor &gt; xsettings &gt; Gtk &gt; IconSizes
+</p>
+<pre>
+gtk-large-toolbar=48,48:gtk-small-toolbar=48,48:gtk-menu=48,48:gtk-dialog=48,48:gtk-button=48,48:gtk-dnd=48,48
+</pre>
+<p>
+Settings &gt; Settings Manager &gt; Settings Editor &gt; xfce4-panel &gt; size &gt; 48
+</p>
+
+<p>
+<br><a href="../../umpc.htm">返回上一頁</a>
 </p>
 
 </div>
