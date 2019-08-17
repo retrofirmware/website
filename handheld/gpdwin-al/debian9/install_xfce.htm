@@ -45,11 +45,11 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>GPDWin 上蓋鋁合金版 &rArr; Debian 9.0</h3>
+<h3>GPDWin 上蓋鋁合金版 &gt;&gt; Debian 9.0</h3>
 <p><b>安裝系統(XFCE)</b></p>
 <hr size="1">
 <p>
-GPD Win掌機搭配Debian系統和XFCE4介面已經被司徒調校到相當不錯的地步，基本上，作為一台小筆電並且取代Windows系統應該是沒問題的，如果使用者喜愛Linux系統，可以參考如下安裝步驟：<br>
+安裝步驟如下：<br>
 1. 下載Debian 9.0 ISO並且制作USB開機片<br>
 2. 接著透過USB開機(Fn + F7)並按照一般安裝步驟就可以安裝完成<br>
 3. 於安裝中，選擇使用界面為XFCE<br>
@@ -58,7 +58,8 @@ GPD Win掌機搭配Debian系統和XFCE4介面已經被司徒調校到相當不�
 
 <pre>
 $ cd
-$ git clone https://github.com/steward-fu/gpdwin_util
+$ wget https://github.com/steward-fu/gpdwin/releases/download/v1.0/util.7z
+$ 7za x util.7z
 $ cd gpdwin_util
 $ sudo ./run.sh
 $ sudo reboot
@@ -69,19 +70,19 @@ $ sudo reboot
 <img src="install_xfce/1.jpg" class="maxSize"><br><br>
 
 安裝完成後，音量快捷鍵已經支持，但是缺少亮度調整，因此，司徒使用使用<b>Win + Vol-</b>、<b>Win + Vol+</b>，當作亮度調整快捷鍵(配置檔位於：~/.brightness.cfg)：<br>
-Application &rArr; Settings &rArr; Keyboard<br>
+Application &gt; Settings &gt; Keyboard<br>
 <img src="install_xfce/2.jpg" class="maxSize"><br><br>
 
 <b>Win + D</b>顯示桌面：<br>
-Application &rArr; Settings &rArr; Window Manager<br>
+Application &gt; Settings &gt; Window Manager<br>
 <img src="install_xfce/3.jpg" class="maxSize"><br><br>
 
 設定開機亮度(自動讀取~/.brightness.cfg)：<br>
-Application &rArr; Settings &rArr; Session and Startup<br>
+Application &gt; Settings &gt; Session and Startup<br>
 <img src="install_xfce/4.jpg" class="maxSize"><br><br>
 
 設定Touchscreen<br>
-Application &rArr; Settings &rArr; Session and Startup<br>
+Application &gt; Settings &gt; Session and Startup<br>
 <img src="install_xfce/5.jpg" class="maxSize">
 </p>
 

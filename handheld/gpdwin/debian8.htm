@@ -52,7 +52,7 @@
 1. UEFI USB Boot Disk
 </p>
 <pre>
-$ cd ~/Downloads/
+$ cd
 $ sudo apt-get install gdisk
 $ sudo sgdisk --zap-all /dev/sdb
 $ sudo sgdisk --new=1:0:0 --typecode=1:ef00 /dev/sdb
@@ -71,43 +71,27 @@ $ sudo grub-install --removable --boot-directory=/mnt/boot --efi-directory=/mnt/
 
 <pre>
 $ sudo vim /etc/X11/xorg.conf.d/20-gpudriver.conf
-</pre>
+  Section "Device"
+   Identifier "gma500_gfx"
+   Driver "fbdev"
+   Option "Rotate" "CW"
+  EndSection
 
-<pre class="brush:cpp">
-Section "Device"
- Identifier "gma500_gfx"
- Driver "fbdev"
- Option "Rotate" "CW"
-EndSection
-</pre><br>
-
-<pre>
 $ sudo vim /etc/X11/xorg.conf.d/40-monitor.conf
-</pre>
+  Section "Monitor"
+   Identifier "LVDS-0"
+   Option "Rotate" "right"
+  EndSection
 
-<pre class="brush:cpp">
-Section "Monitor"
- Identifier "LVDS-0"
- Option "Rotate" "right"
-EndSection
-</pre><br>
-
-<pre>
 $ sudo nano /etc/default/grub
-</pre>
+  GRUB_CMDLINE_LINUX="fbcon=rotate:1"
 
-<pre class="brush:cpp">
-GRUB_CMDLINE_LINUX="fbcon=rotate:1"
-</pre>
-
-<pre>
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 </pre><br>
 
 <p>
 5. Wifi(brcmfmac4356-pcie.bin, brcmfmac4356-pcie.txt)
 </p>
-
 <pre>
 $ sudo apt-get update
 $ sudo apt-get install wpasupplicant network-manager-gnome
@@ -117,16 +101,13 @@ $ sudo cp brcmfmac* /lib/firmware/brcm/
 <p>
 6. Audio
 </p>
-
 <pre>
 $ sudo apt-get install firmware-intel-sound
 </pre><br>
 
 <p>
 完成<br>
-<img src="debian8/1.jpg" class="maxSize"><br>
-SDCard: Failed<br>
-Battery: Failed
+<img src="debian8/1.jpg" class="maxSize">
 </p>
 
 <p>

@@ -60,9 +60,10 @@
 $ cd ~
 $ wget https://github.com/steward-fu/miyoo/releases/download/v1.0/spi_stock_v1.7z
 $ 7za x spi_stock_v1.7z
-$ git clone https://github.com/linux-sunxi/sunxi-tools
-$ cd sunxi-tools
-$ make clean &amp;&amp; make
+$ wegt https://github.com/steward-fu/miyoo/releases/download/v1.0/devel.zip
+$ unzip devel.zip -d devel
+$ cd devel
+$ chmod a+x ./sunxi-fel
 $ sudo ./sunxi-fel -p spiflash-write 0 ../miyoo_stock_v1.bin
   100% [================================================]  8389 kB,  101.8 kB/s
 </pre><br>

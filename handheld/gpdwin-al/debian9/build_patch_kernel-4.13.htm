@@ -45,18 +45,18 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>GPD Win 上蓋鋁合金版 &rArr; Debian 9.0</h3>
-<p><b>Build Kernel 4.13(Hans de Goede's patched kernel)</b></p>
+<h3>GPD Win 上蓋鋁合金版 &gt;&gt; Debian 9.0</h3>
+<p><b>build kernel 4.13(Hans de Goede)</b></p>
 <hr size="1">
 <p>
-基本上，多數找到針對GPD Win客制化Kernel的資源，應該都是如下這位網友的貢獻：<br>
-Ref. <a href="http://hansdegoede.livejournal.com/17445.html">http://hansdegoede.livejournal.com/17445.html</a><br><br>
+參考資訊：<br>
+1. <a href="http://hansdegoede.livejournal.com/17445.html">hansdegoede</a><br><br>
 
 雖然該作者是針對Fedora系統客制，不過Arch Linux相關網頁卻也建議使用者依照該網頁編譯Kernel，剛好司徒習慣使用的Linux系統是Debian系統，於是司徒在Debian系統上編譯測試該客制Kernel，結果竟然可以完美地支援電池和音效等相關驅動，於是司徒借花獻佛、依樣畫葫蘆，整理成如下：
 </p>
 
 <pre>
-$ cd ~/Downloads/
+$ cd
 $ git clone https://github.com/jwrdegoede/linux-sunxi
 $ cd linux-sunxi
 $ make-kpkg clean
@@ -507,7 +507,7 @@ $ sudo udevadm hwdb --update
 </pre><br>
 
 <p>
-SDCard支援128GB容量<br>
+完成<br>
 <img src="build_patch_kernel-4.13/1.jpg" class="maxSize"><br>
 P.S. 開機後，如果發現PulseAudio無法連接，執行<b>sudo rmmod snd_hdmi_lpe_audio</b>
 </p>
