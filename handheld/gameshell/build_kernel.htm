@@ -46,13 +46,13 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>GameShell</h3>
-<p><b>Build Kernel 4.14.2</b></p>
+<p><b>build kernel 4.14.2</b></p>
 <hr size="1">
 <p>
 編譯步驟如下：
 </p>
 <pre>
-$ cd /Downloads/
+$ cd
 $ git clone https://github.com/clockworkpi/Kernel
 $ git clone https://github.com/clockworkpi/USB-Ethernet
 $ wget https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x/linux-4.14.2.tar.gz
@@ -84,9 +84,6 @@ $ patch -p0 &lt; usb_ethernet.patch
   patching file b/arch/arm/configs/clockworkpi_cpi3_defconfig
 
 $ mv b gameshell_kernel-4.14.2
-$ git clone https://github.com/steward-fu/gameshell_toolchain
-$ mv gameshell_toolchain /opt/gameshell
-$ export PATH=$PATH:/opt/gameshell/bin
 $ cd gameshell_kernel-4.14.2
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
 $ mkimage -A arm -O linux -T kernel -C none -a 0x40008000 -e 0x40008000 -n "Linux kernel" -d arch/arm/boot/zImage uImage
