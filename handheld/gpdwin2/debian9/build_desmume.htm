@@ -45,16 +45,17 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>GPD Win2 &rArr; Debian 9.0</h3>
-<p><b>Build DeSmuME 0.9.11</b></p>
+<h3>GPD Win2 &gt;&gt; Debian 9.0</h3>
+<p><b>build desmume 0.9.11</b></p>
 <hr size="1">
 <p>
-Ref. <a href="https://wiki.desmume.org/index.php?title=Installing_DeSmuME_from_source_on_Linux">https://wiki.desmume.org/index.php?title=Installing_DeSmuME_from_source_on_Linux</a><br><br>
+參考資訊：<br>
+1. <a href="https://wiki.desmume.org/index.php?title=Installing_DeSmuME_from_source_on_Linux">Installing_DeSmuME_from_source_on_Linux</a><br><br>
 
 RetroArch模擬器在載入NDS遊戲時(黃金太陽)，會有聲音不同步以及掉FPS的問題，司徒原本以為是RetroArch架構的問題，因此嘗試編譯獨立的DeSmuME模擬器，看看是否有改善，只是結果還是一樣，問題沒有得到解決，不過司徒覺得應該是優化問題，目前只能再找時間研究程式碼，看看是否可以改善，不過司徒還是把編譯的步驟寫下，供以後參考：
 </p>
 <pre>
-$ cd ~/Downloads/
+$ cd
 $ sudo apt-get install build-essential autoconf automake libgtk2.0-dev libglu1-mesa-dev libsdl1.2-dev libglade2-dev gettext zlib1g-dev libosmesa6-dev intltool libagg-dev libasound2-dev libsoundtouch-dev libpcap-dev
 $ wget http://sourceforge.net/projects/desmume/files/desmume/0.9.11/desmume-0.9.11.tar.gz/download
 $ mv download desmume-0.9.11.tar.gz

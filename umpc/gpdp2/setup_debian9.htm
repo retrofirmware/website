@@ -77,11 +77,23 @@ $ make -j8
 $ make modules
 $ sudo make modules_install
 $ sudo make install
-$ sudo reboot
 </pre><br>
 
 <p>
-5. 最佳DPI設定<br>
+5. Fix Tearing
+</p>
+<pre>
+$ sudo mkdir -p /etc/X11/xorg.conf.d
+$ sudo vim /etc/X11/xorg.conf.d/20-intel.conf
+  Section "Device"
+    Identifier  "Intel Graphics"
+    Driver      "intel"
+    Option      "TearFree" "true"
+  EndSection
+</pre><br>
+
+<p>
+6. 最佳DPI設定<br>
 Settings &gt; Appearance &gt; Fonts &gt; DPI &gt; 150<br>
 Settings &gt; Window Manager &gt; Style &gt; Default-hdpi<br>
 Settings &gt; Settings Manager &gt; Settings Editor &gt; xsettings &gt; Gtk &gt; IconSizes

@@ -45,11 +45,12 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>GPD Win2 &rArr; Debian 9.0</h3>
-<p><b>Build Mesa</b></p>
+<h3>GPD Win2 &gt;&gt; Debian 9.0</h3>
+<p><b>build mesa</b></p>
 <hr size="1">
 <p>
-Ref. <a href="https://linuxconfig.org/how-to-install-the-latest-mesa-version-on-debian-9-stretch-linux">https://linuxconfig.org/how-to-install-the-latest-mesa-version-on-debian-9-stretch-linux</a><br><br>
+參考資訊：<br>
+1. <a href="https://linuxconfig.org/how-to-install-the-latest-mesa-version-on-debian-9-stretch-linux">how-to-install-the-latest-mesa-version-on-debian-9-stretch-linux</a><br><br>
 
 如果使用者是熱愛Linux顯示相關的開發，那可以參考如下編譯安裝Mesa的步驟，如果不是的話，建議不要安裝使用。
 </p>
@@ -87,7 +88,7 @@ $ cd mesa
 $ ./autogen.sh --prefix=/usr --enable-texture-float --libdir=/usr/lib/x86_64-linux-gnu/ --with-gallium-drivers=i915,r300,r600,radeonsi,nouveau,swrast --with-egl-platforms=drm,x11 --enable-glx-tls --enable-shared-glapi --enable-glx --enable-driglx-direct --enable-gles1 --enable-gles2 --enable-gbm --enable-openmax --enable-xa --enable-osmesa --with-radeonsi-llvm-compiler --enable-sysfs --enable-vdpau --enable-xvmc --enable-openmax --enable-nine
 $ make -j5
 $ sudo make install
-</pre>
+</pre><br>
 
 <p>
 <br><a href="../../../handheld.htm">返回上一頁</a>
