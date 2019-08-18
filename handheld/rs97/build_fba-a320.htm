@@ -45,30 +45,29 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>Miyoo</h3>
-<p><b>build bard</b></p>
+<h3>RetroGame</h3>
+<p><b>build fba-a320</b></p>
 <hr size="1">
 <p>
 編譯步驟如下：
 </p>
 <pre>
 $ cd
-$ wget https://github.com/steward-fu/miyoo/releases/download/v1.0/toolchain.7z
-$ 7za x toolchain.7z
-$ sudo cp -a miyoo /opt/
-$ export PATH=$PATH:/opt/miyoo/bin
-$ export TARGETMACH=arm-linux
+$ wget https://github.com/steward-fu/rs97/releases/download/v1.1/toolchain.tar.gz
+$ tar xvf toolchain.7z
+$ sudo cp -a rs97 /opt
+$ export PATH=$PATH:/opt/rs97/bin
+$ export TARGETMACH=mipsel-linux
 $ export BUILDMACH=i686-pc-linux-gnu
-$ export CROSS=arm-linux
+$ export CROSS=mipsel-linux
 $ export CC=${CROSS}-gcc
 $ export LD=${CROSS}-ld
 $ export AS=${CROSS}-as
 $ export CXX=${CROSS}-g++
 
-$ wget https://github.com/steward-fu/miyoo/releases/download/v1.2/bard.7z
-$ 7za x bard.7z
-$ cd bard
-$ ./configure --host=$TARGETMACH
+$ wget https://github.com/steward-fu/rs97/releases/download/v1.0/fba-a320.7z
+$ 7za x fba-a320.7z
+$ cd fba-a320/fba
 $ make clean
 $ make
 </pre><br>

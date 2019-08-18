@@ -69,6 +69,12 @@ $ wget https://github.com/steward-fu/miyoo/releases/download/v1.2/flite.7z
 $ 7za x flite.7z
 $ cd flite
 $ ./configure --host=$TARGETMACH
+$ vim src/utils/cst_val.c +478
+  int utf8_sequence_length(char c0)
+
+$ vim ./src/utils/cst_tokenstream.c +269
+  int ts_utf8_sequence_length(char c0)
+
 $ make clean
 $ make
 </pre><br>
