@@ -46,12 +46,12 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>RetroGame</h3>
-<p><b>Write DMA framebuffer</b></p>
+<p><b>write dma framebuffer</b></p>
 <hr size="1">
 <p>
 多數掌機使用的LCD輸出模組都會搭配DMA使用，藉此減輕CPU負擔，而加速顯示的最快方式則是軟體程式直接操作DMA暫存器，最典型的例子就是Notaz於Wiz掌機實作的PCSX ReARMed模擬器，Notaz將Wiz的硬體DMA暫存器映射成一塊顯示Buffer，然後SDL最後輸出畫面時，直接更新到該Buffer，接著Toggle DMA旗標輸出，成功讓PS模擬器加速運行。<br><br>
 
-RS-97掌機由於具備較低的CPU速度，因此，司徒目前想到最快速的方式也就是Notaz這招，藉此提升PS模擬器的效能，但是，如何在RS-97實作出DMA操作，則需要一個小程式測試，證明可以直接操作DMA暫存器並且可以輸出LCD畫面，但是比較大的問題在於DMA暫存器，因為目前Kernel還是只能使用官方的版本，因此，無法直接從Kernel配置DMA Buffer並設定給DMA暫存器，相反的，司徒則是直接讀取DMA指標並重新映射Buffer給軟體程式使用，而在畫面更新時，則不能呼叫SDL_Flip()，測試程式碼如下：
+RS97掌機由於具備較低的CPU速度，因此，司徒目前想到最快速的方式也就是Notaz這招，藉此提升PS模擬器的效能，但是，如何在RS97實作出DMA操作，則需要一個小程式測試，證明可以直接操作DMA暫存器並且可以輸出LCD畫面，但是比較大的問題在於DMA暫存器，因為目前Kernel還是只能使用官方的版本，因此，無法直接從Kernel配置DMA Buffer並設定給DMA暫存器，相反的，司徒則是直接讀取DMA指標並重新映射Buffer給軟體程式使用，而在畫面更新時，則不能呼叫SDL_Flip()，測試程式碼如下：
 </p>
 <pre class="brush:cpp">
 #include &lt;stdio.h&gt;

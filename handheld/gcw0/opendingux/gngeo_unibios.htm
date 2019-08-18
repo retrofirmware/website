@@ -44,22 +44,16 @@
 <div id="content">
 <script type="text/javascript" src="../../../header.js"></script>
 <div id="page">
-<h3>GCW-Zero</h3>
-<p><b>如何設定非320x240解析度</b></p>
+<h3>GCW Zero &gt;&gt; OpenDingux</h3>
+<p><b>如何讓GnGeo載入unibios</b></p>
 <hr size="1">
 <p>
-Upgrade OS: gcw0-update-2014-08-20.opk
+方法如下：
 </p>
-
-<p>
-<b>For .gcw0.desktop file</b><br>
-X-OD-NeedsDownscaling=true
-</p>
-
-<p>
-<b>For develop</b><br>
-echo 1 > /sys/devices/platform/jz-lcd.0/allow_downscaling
-</p>
+<pre>
+$ nano /media/data/local/home/.gngeo/gngeorc
+  system unibios
+</pre><br>
 
 <p>
 <br><a href="../../../handheld.htm">返回上一頁</a>

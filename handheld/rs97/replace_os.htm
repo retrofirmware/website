@@ -49,36 +49,29 @@
 <p><b>如何替換系統</b></p>
 <hr size="1">
 <p>
-如果使用者想要替換自己編譯的系統，如：Buildroot，只要保留SDCard前8MB的Uboot以及Kernel即可，過程如下說明。<br><br>
+如果使用者想要替換自己編譯的系統，如：Buildroot，只要保留SDCard前8MB的Uboot以及Kernel即可，過程如下說明：<br>
 1. 從原本的SDCard提取UBoot和Kernel檔案
 </p>
 <pre>
-$ sudo dd if=/dev/mmcblk0 of=retrogame_head.img bs=1M count=8
+$ sudo dd if=/dev/mmcblk0 of=head.img bs=1M count=8
 </pre><br>
 
 <p>
 2. 格式化SDCard並保留前8MB空間<br>
 <img src="replace_os/1.jpg" class="maxSize"><br><br>
 
-3. 把編譯後的rootfs.tar解壓縮到SDCard根目錄
-</p>
-<pre>
-$ cd /media/steward/retro
-$ sudo tar xvfp rootfs.tar
-</pre><br>
-
-<p>
+3. 把編譯後的rootfs.tar解壓縮到SDCard根目錄<br>
 4. 還原原廠UBoot和Kernel檔案
 </p>
 <pre>
-$ sudo dd if=retrogame_head.img of=/dev/mmcblk0 bs=512 skip=1 seek=1
+$ sudo dd if=head.img of=/dev/mmcblk0 bs=512 skip=1 seek=1
 </pre><br>
 
 <p>
 5. 更新inittab檔案
 </p>
 <pre>
-$ sudo vim /media/steward/retro/etc/inittab
+$ sudo vim etc/inittab
 </pre>
 <pre class="brush:cpp">
 # /etc/inittab
@@ -159,7 +152,7 @@ null::shutdown:/usr/bin/killall klogd
 null::shutdown:/usr/bin/killall syslogd
 null::shutdown:/bin/umount -a -r
 null::shutdown:/sbin/swapoff -a
-</pre>
+</pre><br>
 
 <p>
 <br><a href="../../handheld.htm">返回上一頁</a>

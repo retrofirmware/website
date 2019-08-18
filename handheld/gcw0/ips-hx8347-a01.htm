@@ -44,74 +44,47 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>GCW-Zero</h3>
+<h3>GCW Zero</h3>
 <p><b>更換螢幕(3.5吋 IPS HX8347-A01 解析度320x240)</b></p>
 <hr size="1">
 <p>
-[Github] <a href="https://github.com/steward-fu/gh_gcw0_toolchain.git">https://github.com/steward-fu/gh_gcw0_toolchain.git</a><br>
-[Github] <a href="https://github.com/steward-fu/gh_gcw0_kernel-3.12.git">https://github.com/steward-fu/gh_gcw0_kernel-3.12.git</a><br>
+由於GCW0掌機使用的螢幕並非IPS規格，因此，司徒致力找尋可以替換的屏幕，最後在淘寶網找到一片3.5吋IPS屏，解析度也跟原本GCW0一樣，替換過程如下說明。<br><br>
+
+對應腳位：
 </p>
-
-<p>
-<img src="ips-hx8347-a01/1.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/2.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/3.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/4.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/5.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/6.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/7.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/8.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/9.jpg" class="maxSize"><br>
-</p>
-
-<p>
-周哥屏 V.S. IPS屏<br>
-<img src="ips-hx8347-a01/11.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/12.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/13.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/14.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/15.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/16.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/17.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/18.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/19.jpg" class="maxSize"><br>
-<img src="ips-hx8347-a01/20.jpg" class="maxSize"><br>
-</p>
-
-<pre>
-GCW0    HX8347-A01
-
-LED-K   LED-K(K1~K8)
-LED-A   LED-A
-RESET   NRESET
-CS      NCS
-SCK     DNC_SCL
-SDI     SDI
-B2      B0
-B3      B1
-B4      B2
-B5      B3
-B6      B4
-B7      B5
-G2      G0
-G3      G1
-G4      G2
-G5      G3
-G6      G4
-G7      G5
-R2      R0
-R3      R1
-R4      R2
-R5      R3
-R6      R4
-R7      R5
-HSYNC   HSYNC
-VSYNC   VSYNC
-DCLK    PCLK
-VDD     IOVCC, VCI, BS0. BS1, BS2, NRD, NWR
-ENB     DE
-GND     GND
-</pre>
+<table>
+<tr><th>GCW0</th><th>HX8347-A01</th></tr>
+<tr><td>LED-K</td><td>LED-K(K1~K8)</td></tr>
+<tr><td>LED-A</td><td>LED-A</td></tr>
+<tr><td>RESET</td><td>NRESET</td></tr>
+<tr><td>CS</td><td>NCS</td></tr>
+<tr><td>SCK</td><td>DNC_SCL</td></tr>
+<tr><td>SDI</td><td>SDI</td></tr>
+<tr><td>B2</td><td>B0</td></tr>
+<tr><td>B3</td><td>B1</td></tr>
+<tr><td>B4</td><td>B2</td></tr>
+<tr><td>B5</td><td>B3</td></tr>
+<tr><td>B6</td><td>B4</td></tr>
+<tr><td>B7</td><td>B5</td></tr>
+<tr><td>G2</td><td>G0</td></tr>
+<tr><td>G3</td><td>G1</td></tr>
+<tr><td>G4</td><td>G2</td></tr>
+<tr><td>G5</td><td>G3</td></tr>
+<tr><td>G6</td><td>G4</td></tr>
+<tr><td>G7</td><td>G5</td></tr>
+<tr><td>R2</td><td>R0</td></tr>
+<tr><td>R3</td><td>R1</td></tr>
+<tr><td>R4</td><td>R2</td></tr>
+<tr><td>R5</td><td>R3</td></tr>
+<tr><td>R6</td><td>R4</td></tr>
+<tr><td>R7</td><td>R5</td></tr>
+<tr><td>HSYNC</td><td>HSYNC</td></tr>
+<tr><td>VSYNC</td><td>VSYNC</td></tr>
+<tr><td>DCLK</td><td>PCLK</td></tr>
+<tr><td>VDD</td><td>IOVCC, VCI, BS0. BS1, BS2, NRD, NWR</td></tr>
+<tr><td>ENB</td><td>DE</td></tr>
+<tr><td>GND</td><td>GND</td></tr>
+</table><br>
 
 <p>
 drivers/video/displays/Kconfig
@@ -1184,7 +1157,7 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Lars-Peter Clausen &lt;lars@metafoo.de&gt;");
 MODULE_DESCRIPTION("JZ4740 SoC LCD framebuffer driver");
 MODULE_ALIAS("platform:jz4740-fb");
-</pre>
+</pre><br>
 
 <p>
 arch/mips/jz4770/board-gcw0.c
@@ -2078,7 +2051,47 @@ arch_initcall(gcw0_board_setup);
 </pre><br>
 
 <p>
-<img src="ips-hx8347-a01/10.jpg" class="maxSize"><br>
+menuconfig<br>
+<img src="ips-hx8347-a01/10.jpg" class="maxSize"><br><br>
+
+接著焊接轉板<br>
+<img src="ips-hx8347-a01/1.jpg" class="maxSize"><br><br>
+
+背面<br>
+<img src="ips-hx8347-a01/2.jpg" class="maxSize"><br><br>
+
+接著上3D打印的外殼<br>
+<img src="ips-hx8347-a01/3.jpg" class="maxSize"><br><br>
+
+感動的一刻<br>
+<img src="ips-hx8347-a01/4.jpg" class="maxSize"><br><br>
+
+正面<br>
+<img src="ips-hx8347-a01/5.jpg" class="maxSize"><br><br>
+
+下邊<br>
+<img src="ips-hx8347-a01/6.jpg" class="maxSize"><br><br>
+
+左邊<br>
+<img src="ips-hx8347-a01/7.jpg" class="maxSize"><br><br>
+
+上面<br>
+<img src="ips-hx8347-a01/8.jpg" class="maxSize"><br><br>
+
+右邊<br>
+<img src="ips-hx8347-a01/9.jpg" class="maxSize"><br><br>
+
+周哥屏對比IPS屏(感謝剃頭提供)<br>
+<img src="ips-hx8347-a01/11.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/12.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/13.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/14.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/15.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/16.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/17.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/18.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/19.jpg" class="maxSize"><br>
+<img src="ips-hx8347-a01/20.jpg" class="maxSize">
 </p>
 
 <p>

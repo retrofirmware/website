@@ -44,15 +44,16 @@
 <div id="content">
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
-<h3>GCW-Zero</h3>
-<p><b>Build Buildroot</b></p>
+<h3>GCW Zero</h3>
+<p><b>build buildroot</b></p>
 <hr size="1">
 <p>
-Ref. <a href="https://github.com/etnaviv/galcore_headers">https://github.com/etnaviv/galcore_headers</a><br>
-Ref. <a href="https://github.com/pbouda/buildroot-qt-dev/issues/6">https://github.com/pbouda/buildroot-qt-dev/issues/6</a><br>
-Ref. <a href="http://www.synerlab.ee/lang/v8/files/patch-src-objects.h">http://www.synerlab.ee/lang/v8/files/patch-src-objects.h</a><br>
-Ref. <a href="https://blog.csdn.net/weixin_42421766/article/details/82983170">https://blog.csdn.net/weixin_42421766/article/details/82983170</a><br>
-Ref. <a href="https://github.com/mono/mono/commit/16ee0252305fbd4f40ea39c3c4421dc7f103f8a0">https://github.com/mono/mono/commit/16ee0252305fbd4f40ea39c3c4421dc7f103f8a0</a><br><br>
+參考資訊：<br>
+1. <a href="https://github.com/pbouda/buildroot-qt-dev/issues/6">issue6</a><br>
+2. <a href="https://blog.csdn.net/weixin_42421766/article/details/82983170">82983170</a><br>
+3. <a href="https://github.com/etnaviv/galcore_headers">galcore_headers</a><br>
+4. <a href="http://www.synerlab.ee/lang/v8/files/patch-src-objects.h">patch-src-objects</a><br>
+5. <a href="https://github.com/mono/mono/commit/16ee0252305fbd4f40ea39c3c4421dc7f103f8a0">16ee0252305fbd4f40ea39c3c4421dc7f103f8a0</a><br><br>
 
 Debian 9 x64：
 </p>
@@ -259,7 +260,6 @@ $ vim output/build/host-lzo-2.06/src/miniacc.h
   6800     return (int)(r &gt;&gt; 18) &amp; 1;
   6801 #elif (ACC_ARCH_I386) &amp;&amp; (ACC_ASM_SYNTAX_MSC)
 </pre>
-
 <p>
 P.S. Toolchain(output/host)、rootfs(output/images/rootfs.squashfs)
 </p>
