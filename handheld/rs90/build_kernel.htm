@@ -46,19 +46,18 @@
 <script type="text/javascript" src="../../header.js"></script>
 <div id="page">
 <h3>RetroMini</h3>
-<p><b>Build Kernel</b></p>
+<p><b>build kernel</b></p>
 <hr size="1">
+
+編譯步驟如下：<br>
+1. 下載<a href="https://app.box.com/s/q0ac262jar1jeh7j5ax61t2qdnjeq38r">Toolchain</a>
 <pre>
-$ cd ~/Downloads/
-$ wget https://github.com/steward-fu/rs90/releases/download/v20190509_1/toolchain.7z
-$ 7za x toolchain.7z
-$ sudo mv rs90 /opt/rs90
-$ export PATH=$PATH:/opt/rs90/usr/bin
+$ cd
 $ git clone https://github.com/OpenDingux/linux
 $ cd linux
 $ make ARCH=mips distclean
 $ make ARCH=mips rs90_defconfig
-$ make ARCH=mips uzImage.bin -j4
+$ make ARCH=mips uzImage.bin
 </pre><br>
 
 <p>

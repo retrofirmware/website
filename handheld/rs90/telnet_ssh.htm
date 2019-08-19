@@ -49,22 +49,25 @@
 <p><b>Telnet/SSH登入</b></p>
 <hr size="1">
 <p>
-SSH: od@10.1.0.2<br>
-Telnet: 10.1.0.2<br>
-Password: odrocks
+預設帳號密碼如下：
 </p>
+<table>
+<tr><th>SSH</th><td>od@10.1.0.2</td></tr>
+<tr><th>Telnet</th><td>10.1.0.2</td></tr>
+<tr><th>Password</th><td>odrocks</td></tr>
+</table><br>
 <p>
-接著看下有無配到IP
+接著連接USB後，看下有無配到IP
 </p>
 <pre>
 enp0s20u3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet 10.1.0.1  netmask 255.255.255.252  broadcast 10.1.0.3
-        inet6 fe80::e31b:d728:3fcf:1797  prefixlen 64  scopeid 0x20<link>
-        ether 46:61:d9:ab:c3:7b  txqueuelen 1000  (Ethernet)
-        RX packets 3  bytes 702 (702.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 26  bytes 4011 (3.9 KiB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  inet 10.1.0.1  netmask 255.255.255.252  broadcast 10.1.0.3
+  inet6 fe80::e31b:d728:3fcf:1797  prefixlen 64  scopeid 0x20<link>
+  ether 46:61:d9:ab:c3:7b  txqueuelen 1000  (Ethernet)
+  RX packets 3  bytes 702 (702.0 B)
+  RX errors 0  dropped 0  overruns 0  frame 0
+  TX packets 26  bytes 4011 (3.9 KiB)
+  TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 $ telnet 10.1.0.2
   Trying 10.1.0.2...
@@ -79,12 +82,12 @@ $ telnet 10.1.0.2
 </p>
 <pre>
 enp0s20u1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet6 fe80::7255:543f:ddd:3f3  prefixlen 64  scopeid 0x20<link>
-        ether da:0a:90:11:46:24  txqueuelen 1000  (Ethernet)
-        RX packets 9  bytes 504 (504.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 135  bytes 20584 (20.1 KiB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  inet6 fe80::7255:543f:ddd:3f3  prefixlen 64  scopeid 0x20<link>
+  ether da:0a:90:11:46:24  txqueuelen 1000  (Ethernet)
+  RX packets 9  bytes 504 (504.0 B)
+  RX errors 0  dropped 0  overruns 0  frame 0
+  TX packets 135  bytes 20584 (20.1 KiB)
+  TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 $ sudo ifconfig enp0s20u1 10.1.0.1 netmask 255.255.255.0
 $ telnet 10.1.0.2
@@ -101,7 +104,6 @@ $ telnet 10.1.0.2
 <pre>
 $ rm ~/.ssh/known_hosts
 </pre><br>
-
 
 <p>
 <br><a href="../../handheld.htm">返回上一頁</a>
